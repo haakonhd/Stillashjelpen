@@ -18,6 +18,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class RegisterActivity extends AppCompatActivity {
 
     private TextView emailTextView;
@@ -45,6 +48,45 @@ public class RegisterActivity extends AppCompatActivity {
         String email = emailTextView.getText().toString().trim();
         String password = passwordTextView.getText().toString().trim();
 
+        if(checkIfInputExists(email, password)){
+            if(verifyEmail(email)){
+                if(verifyPassword(password)){
+                    registerUser(email, password);
+                }
+            }
+        }
+
+    }
+
+    public boolean checkIfInputExists(String email, String password){
+        if(email.equals("") || password.equals("")) {
+            Toast.makeText(this, "Fyll ut både email- og passord-felt", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean verifyEmail(String email){
+        String regex = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+
+        if(!matcher.matches()){
+            Toast.makeText(this, "Email har ikke et korrekt format", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean verifyPassword(String password){
+        if(password.length() < 6){
+            Toast.makeText(this, "Passord må bestå av minimum 6 tegn", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    public void registerUser(String email, String password){
         progressDialog.setMessage("Registrering pågår...");
         progressDialog.show();
 
@@ -56,17 +98,15 @@ public class RegisterActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             Intent i = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(i);
-                            Toast.makeText(getApplicationContext(),"Registrering fullført", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Registreringen er fullført", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(),"Registreringen feilet", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
 
-   /* @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        updateUI(currentUser);
-    }*/
+
 }

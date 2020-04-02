@@ -73,6 +73,10 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(i);
                             Toast.makeText(getApplicationContext(),"Innlogging fullført", Toast.LENGTH_SHORT).show();
                         }
+                        else{
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(),"Innloggingen feilet", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }
