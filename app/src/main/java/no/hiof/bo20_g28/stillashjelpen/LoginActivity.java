@@ -8,12 +8,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 public class LoginActivity extends AppCompatActivity {
 
     private TextView emailTextView;
     private TextView passwordTextView;
     private Button loginButton;
     private Button registerButton;
+
+    private FirebaseDatabase firebaseDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
