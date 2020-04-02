@@ -1,4 +1,5 @@
 package no.hiof.bo20_g28.stillashjelpen;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,63 +8,47 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-
-public class LoginActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     private TextView emailTextView;
     private TextView passwordTextView;
-    private TextView registerClickableTextView;
-    private Button loginButton;
-    private ProgressDialog progressDialog;
+    private Button registerButton;
+
     private FirebaseAuth firebaseAuth;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
 
-        progressDialog = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
+        progressDialog = new ProgressDialog(this);
 
         emailTextView = findViewById(R.id.emailTextView);
         passwordTextView = findViewById(R.id.passwordTextView);
-        registerClickableTextView = findViewById(R.id.registerClickableTextView);
-        loginButton = findViewById(R.id.loginButton);
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginButtonClicked();
-            }
-        });
-
-        registerClickableTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), RegisterActivity.class);
-                startActivity(i);
-            }
-        });
-
+        registerButton = findViewById(R.id.registerButton);
     }
 
-    public void loginButtonClicked() {
+    public void registerButtonClicked(View view) {
         String email = emailTextView.getText().toString().trim();
         String password = passwordTextView.getText().toString().trim();
 
-        progressDialog.setMessage("Logger inn...");
+        progressDialog.setMessage("Registrering pågår...");
         progressDialog.show();
 
-        firebaseAuth.signInWithEmailAndPassword(email, password)
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -71,9 +56,17 @@ public class LoginActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             Intent i = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(i);
-                            Toast.makeText(getApplicationContext(),"Innlogging fullført", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Registrering fullført", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
+
+   /* @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        updateUI(currentUser);
+    }*/
 }
