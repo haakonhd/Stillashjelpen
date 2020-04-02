@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "360006481278",
+    "firebase_url": "https://stillashjelper.firebaseio.com",
+    "project_id": "stillashjelper",
+    "storage_bucket": "stillashjelper.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360006481278:android:06a260adab6465fea46f2f",
+        "android_client_info": {
+          "package_name": "no.hiof.bo20_g28.stillashjelpen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "360006481278-l2688lkubpj1hsbqc9rrlcjm2900met8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUhTwTpmDoUbSZm9SK8gXcnlnABN4isLg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "360006481278-l2688lkubpj1hsbqc9rrlcjm2900met8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
