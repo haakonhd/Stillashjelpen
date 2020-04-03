@@ -129,7 +129,7 @@ hs_err_pid*
 # Generated files
 
 # Gradle files
-.gradle
+# .gradle (temporarily removed to troubleshoot)
 
 # Signing files
 .signing/
