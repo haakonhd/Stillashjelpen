@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.w3c.dom.Text;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -42,7 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginButtonClicked();
+                if(validateInput(emailTextView, passwordTextView))
+                    loginButtonClicked();
             }
         });
 
@@ -54,6 +57,19 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public boolean validateInput(TextView emailTextView, TextView passwordTextView) {
+
+        String email = emailTextView.getText().toString().trim();
+        String password = passwordTextView.getText().toString().trim();
+
+        if(email.equals("") || password.equals("")) {
+            Toast.makeText(this, "Du må fylle ut både epost og passord.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 
     public void loginButtonClicked() {
@@ -81,3 +97,4 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 }
+

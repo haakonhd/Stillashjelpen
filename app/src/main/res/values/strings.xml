@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Stillashjelpen</string>
+    <string name="message">Message</string>
+    <string name="chat">Chat</string>
+    <string name="profile">Profile</string>
+    <string name="communicate">Communicate</string>
+    <string name="share">Share</string>
+    <string name="send">Send</string>
+
+    <string name="navigation_drawer_open">Åpne sidemeny</string>
+    <string name="navigation_drawer_close">Lukk sidemeny</string>
 </resources>
