@@ -128,8 +128,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
-
-
     <fragment
         android:id="@+id/fragmentNavigationDrawer"
         android:name="no.hiof.bo20_g28.stillashjelpen.fragment.NavigationDrawerFragment"
@@ -140,5 +138,3 @@
         app:menu="@menu/drawer_menu"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
-      
-</androidx.constraintlayout.widget.ConstraintLayout>

@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     private RecyclerView mainRecyclerView;
     ProgressDialog progressDialog;
     private TextView testText;
+    private Toolbar toolbar;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,13 +140,6 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
             }
         });
     }
-
-    public void logOutButtonClicked(View view) {
-        FirebaseAuth.getInstance().signOut();
-        Intent i = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(i);
-    }
-
 
     private void setUpNavigationDrawer() {
         DrawerLayout drawerlayout = findViewById(R.id.drawer_layout);
