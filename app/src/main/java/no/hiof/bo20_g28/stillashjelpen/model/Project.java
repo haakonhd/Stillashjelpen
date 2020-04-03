@@ -9,6 +9,7 @@ public class Project implements Serializable {
     private String projectId, userId, projectName;
     private ArrayList<Object> messages;
     private ArrayList<Object> walls;
+    private ControlScheme controlScheme;
     private Date dateCreated;
 
 
@@ -55,6 +56,14 @@ public class Project implements Serializable {
 
     public void setWalls(ArrayList<Object> walls) {
         this.walls = walls;
+    }
+
+    public ControlScheme getControlScheme() {
+        return controlScheme;
+    }
+
+    public void setControlScheme(ControlScheme controlScheme) {
+        this.controlScheme = controlScheme;
     }
 
     public Date getDateCreated() {
