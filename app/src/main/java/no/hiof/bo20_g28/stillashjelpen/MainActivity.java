@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     private ArrayList<Project> projects = new ArrayList<>();
     private ProjectRecyclerViewAdapter projectRecyclerViewAdapter;
     private RecyclerView mainRecyclerView;
-    ProgressDialog progressDialog;
     private TextView testText;
     private Toolbar toolbar;
     private DrawerLayout drawer;
@@ -66,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
 
         testText = findViewById(R.id.testText);
         mainRecyclerView = findViewById(R.id.mainRecyclerView);
-        progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseProjects = FirebaseDatabase.getInstance().getReference("projects");
@@ -91,9 +89,6 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     }
 
     private void addNewProjectToDatabase(String name) {
-        progressDialog.setMessage("Lagrer nytt prosjekt...");
-        progressDialog.show();
-
         Project p = new Project();
         ControlScheme cs = new ControlScheme();
 
