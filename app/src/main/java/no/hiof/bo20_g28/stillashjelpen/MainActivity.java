@@ -203,7 +203,6 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
 
     public void allProjectsButtonClicked(View view) {
         Toast.makeText(this, "Du trykket på 'Alle Prosjekter'-knappen", Toast.LENGTH_SHORT).show();
-
     }
 
     public void fastCalcButtonClicked(View view) {

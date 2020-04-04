@@ -6,9 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity"
-
-    tools:openDrawer="left">
+    tools:context=".MainActivity">
     
     <LinearLayout
         android:layout_width="wrap_content"
@@ -33,13 +31,14 @@
                 android:id="@+id/testText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="Hello World!"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                />
 
             <Button
                 android:id="@+id/logOutButton"
@@ -54,7 +53,8 @@
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/TextAppearance.MaterialComponents.Button"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mainRecyclerView"
@@ -69,8 +69,8 @@
             app:layout_constraintEnd_toStartOf="@+id/mainButtonContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/logOutButton" />
-      
-          
+
+
             <LinearLayout
                 android:id="@+id/mainButtonContainer"
                 android:layout_width="202dp"
@@ -94,7 +94,9 @@
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 tools:layout_editor_absoluteX="250dp"
-                tools:layout_editor_absoluteY="71dp" />
+                tools:layout_editor_absoluteY="71dp"
+                style="@style/TextAppearance.MaterialComponents.Button"
+                />
 
             <Button
                 android:id="@+id/allProjectsButton"
@@ -109,6 +111,7 @@
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
+                style="@style/TextAppearance.MaterialComponents.Button"
                 app:layout_constraintEnd_toEndOf="@+id/newProjectButton"
                 app:layout_constraintTop_toBottomOf="@+id/newProjectButton" />
 
@@ -125,6 +128,7 @@
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
+                style="@style/TextAppearance.MaterialComponents.Button"
                 app:layout_constraintEnd_toEndOf="@+id/allProjectsButton"
                 app:layout_constraintTop_toBottomOf="@+id/allProjectsButton" />
             </LinearLayout>
@@ -138,7 +142,8 @@
         android:layout_height="fill_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu"/>
+        app:menu="@menu/drawer_menu"
+        app:itemTextAppearance="?android:attr/textAppearanceMedium" />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
