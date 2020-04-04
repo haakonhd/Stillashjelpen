@@ -5,21 +5,27 @@
     <group android:checkableBehavior="none">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_person_profile"
+            android:icon="@drawable/ic_home"
             android:title="Hjem" />
         <item
             android:id="@+id/nav_messages"
-            android:icon="@drawable/ic_person_profile"
+            android:icon="@drawable/ic_message"
             android:title="Meldinger" />
         <item
             android:id="@+id/nav_projects"
-            android:icon="@drawable/ic_person_profile"
+            android:icon="@drawable/ic_project"
             android:title="Alle Prosjekter" />
 
         <item
             android:id="@+id/nav_calculator"
-            android:icon="@drawable/ic_person_profile"
+            android:icon="@drawable/ic_calculator"
             android:title="Hurtigutregning" />
+
+        <item
+
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_exit"
+            android:title="@string/logout"/>
     </group>
 
 

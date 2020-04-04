@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
 
 
     public void logOutButtonClicked(View view) {
-        FirebaseAuth.getInstance().signOut();
+        firebaseAuth.signOut();
         Intent i = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(i);
     }

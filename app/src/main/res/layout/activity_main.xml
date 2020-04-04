@@ -7,12 +7,14 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".MainActivity"
-    tools:openDrawer="start">
+
+    tools:openDrawer="left">
     
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="10">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -54,88 +56,89 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mainRecyclerView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/mainButtonContainer"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/logOutButton" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mainRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:background="#E8E5E5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/mainButtonContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logOutButton" />
       
           
-    <LinearLayout
-        android:id="@+id/mainButtonContainer"
-        android:layout_width="202dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logOutButton">
+            <LinearLayout
+                android:id="@+id/mainButtonContainer"
+                android:layout_width="202dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/logOutButton">
 
-        <Button
-            android:id="@+id/newProjectButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_filled"
-            android:onClick="newProjectButtonClicked"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:text="Nytt prosjekt"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            tools:layout_editor_absoluteX="250dp"
-            tools:layout_editor_absoluteY="71dp" />
+            <Button
+                android:id="@+id/newProjectButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_filled"
+                android:onClick="newProjectButtonClicked"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="Nytt prosjekt"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="250dp"
+                tools:layout_editor_absoluteY="71dp" />
 
-        <Button
-            android:id="@+id/allProjectsButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/border_filled"
-            android:onClick="allProjectsButtonClicked"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:text="Alle Prosjekter"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/newProjectButton"
-            app:layout_constraintTop_toBottomOf="@+id/newProjectButton" />
+            <Button
+                android:id="@+id/allProjectsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/border_filled"
+                android:onClick="allProjectsButtonClicked"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="Alle Prosjekter"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/newProjectButton"
+                app:layout_constraintTop_toBottomOf="@+id/newProjectButton" />
 
-        <Button
-            android:id="@+id/fastCalcButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/border_filled"
-            android:onClick="fastCalcButtonClicked"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:text="Hurtig-utregning"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/allProjectsButton"
-            app:layout_constraintTop_toBottomOf="@+id/allProjectsButton" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/fastCalcButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/border_filled"
+                android:onClick="fastCalcButtonClicked"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="Hurtig-utregning"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/allProjectsButton"
+                app:layout_constraintTop_toBottomOf="@+id/allProjectsButton" />
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
     <fragment
         android:id="@+id/fragmentNavigationDrawer"
         android:name="no.hiof.bo20_g28.stillashjelpen.fragment.NavigationDrawerFragment"
-        android:layout_width="350dp"
-        android:layout_height="match_parent"
+        android:layout_width="340dp"
+        android:layout_height="fill_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu"/>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>
