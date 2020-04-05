@@ -1,6 +1,8 @@
 package no.hiof.bo20_g28.stillashjelpen.model;
 
-public class ControlScheme {
+import java.io.Serializable;
+
+public class ControlScheme implements Serializable {
 
     private String controlSchemeId;
 

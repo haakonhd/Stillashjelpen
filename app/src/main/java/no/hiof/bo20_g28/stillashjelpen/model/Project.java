@@ -7,8 +7,8 @@ import java.util.Date;
 public class Project implements Serializable {
 
     private String projectId, userId, projectName;
-    private ArrayList<Object> messages;
-    private ArrayList<Object> walls;
+    private ArrayList<Message> messages;
+    private ArrayList<Wall> walls;
     private ControlScheme controlScheme;
     private Date dateCreated;
 
@@ -42,19 +42,19 @@ public class Project implements Serializable {
         this.projectName = projectName;
     }
 
-    public ArrayList<Object> getMessages() {
+    public ArrayList<Message> getMessages() {
         return messages;
     }
 
-    public void setMessages(ArrayList<Object> messages) {
+    public void setMessages(ArrayList<Message> messages) {
         this.messages = messages;
     }
 
-    public ArrayList<Object> getWalls() {
+    public ArrayList<Wall> getWalls() {
         return walls;
     }
 
-    public void setWalls(ArrayList<Object> walls) {
+    public void setWalls(ArrayList<Wall> walls) {
         this.walls = walls;
     }
 

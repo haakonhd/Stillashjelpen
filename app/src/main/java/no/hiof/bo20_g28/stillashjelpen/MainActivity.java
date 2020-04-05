@@ -155,7 +155,10 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "Du trykket " + projectRecyclerViewAdapter.getItem(position) + " på rad nummer " + position, Toast.LENGTH_SHORT).show();
+        Project clickedItem = projectRecyclerViewAdapter.getItem(position);
+        Intent i = new Intent(this, ProjectActivity.class);
+        i.putExtra("passedProject", clickedItem);
+        startActivity(i);
     }
 
 
@@ -193,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
 
     public void logOutButtonClicked(View view) {
         firebaseAuth.signOut();
-        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
 

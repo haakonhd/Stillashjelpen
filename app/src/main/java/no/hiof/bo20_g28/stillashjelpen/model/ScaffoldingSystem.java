@@ -1,11 +1,13 @@
 package no.hiof.bo20_g28.stillashjelpen.model;
 
-public class ScaffoldingSystem {
+import java.io.Serializable;
+
+public class ScaffoldingSystem implements Serializable {
 
     private String scaffoldingSystemId;
     private String scaffoldingSystemName;
-    private int fagbredde;
-    private int faglengde;
+    private int bayWidth;
+    private int bayLength;
 
 
     public ScaffoldingSystem() {
@@ -29,19 +31,19 @@ public class ScaffoldingSystem {
         this.scaffoldingSystemName = scaffoldingSystemName;
     }
 
-    public int getFagbredde() {
-        return fagbredde;
+    public int getBayWidth() {
+        return bayWidth;
     }
 
-    public void setFagbredde(int fagbredde) {
-        this.fagbredde = fagbredde;
+    public void setBayWidth(int bayWidth) {
+        this.bayWidth = bayWidth;
     }
 
-    public int getFaglengde() {
-        return faglengde;
+    public int getBayLength() {
+        return bayLength;
     }
 
-    public void setFaglengde(int faglengde) {
-        this.faglengde = faglengde;
+    public void setBayLength(int bayLength) {
+        this.bayLength = bayLength;
     }
 }
