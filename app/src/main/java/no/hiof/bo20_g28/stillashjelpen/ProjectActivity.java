@@ -26,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -138,6 +139,13 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
         wallRef.setValue(wall);
     }
 
+    private void deleteMessageFromDatabase(String messageId){
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference messageRef = databaseReference.child("messages");
+
+        messageRef.child(messageId).removeValue();
+    }
+
     private void fillWallRecyclerList() {
         RecyclerView recyclerView = findViewById(R.id.wallRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -157,7 +165,15 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
 
     @Override
     public void onItemClick(View view, int position) {
+        Message clickedItem = messageRecyclerViewAdapter.getItem(position);
+        deleteMessageDialogbox(clickedItem.getMessageId());
+        Toast.makeText(this, "Du trykket på beskjed (id: " + clickedItem.getMessageId() + ")", Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void onWallItemClick(View view, int position) {
+        Wall clickedItem = wallRecyclerViewAdapter.getItem(position);
+        Toast.makeText(this, "Du trykket på " + clickedItem.getWallName(), Toast.LENGTH_SHORT).show();
     }
 
     //------------------------Button Click Handling-------------------------------------------------
@@ -220,6 +236,27 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 addNewWallToDatabase(input.getText().toString());
+            }
+        });
+        builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void deleteMessageDialogbox(final String messageId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Slett beskjed");
+
+        // Set up the buttons
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteMessageFromDatabase(messageId);
             }
         });
         builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
