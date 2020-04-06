@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WallActivity">
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimary"
+        android:text="TextView"
+        android:textSize="0dp"
+        app:layout_constraintEnd_toEndOf="@+id/wallNameTextView"
+        app:layout_constraintStart_toStartOf="@+id/textView9"
+        app:layout_constraintTop_toBottomOf="@+id/wallAnchorDistanceTextView" />
+
+    <ImageView
+        android:id="@+id/wallImageView"
+        android:layout_width="265dp"
+        android:layout_height="262dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/wallNameTextView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/border_primary" />
+
+    <TextView
+        android:id="@+id/wallNameTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="TextView"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/wallImageView"
+        app:layout_constraintTop_toTopOf="@+id/wallImageView" />
+
+    <TextView
+        android:id="@+id/soleBoardAreaTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/wallNameTextView"
+        app:layout_constraintStart_toStartOf="@+id/wallNameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <TextView
+        android:id="@+id/wallDescriptionTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/wallAnchorDistanceTextView"
+        app:layout_constraintStart_toStartOf="@+id/wallAnchorDistanceTextView"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/wallAnchorDistanceTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/soleBoardAreaTextView"
+        app:layout_constraintStart_toStartOf="@+id/soleBoardAreaTextView"
+        app:layout_constraintTop_toBottomOf="@+id/soleBoardAreaTextView" />
+
+    <ImageButton
+        android:id="@+id/cameraImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/border_filled"
+        android:onClick="cameraImageButtonClicked"
+        app:layout_constraintStart_toStartOf="@+id/wallImageView"
+        app:layout_constraintTop_toTopOf="@+id/wallImageView"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary"
+        android:text="TextView"
+        android:textSize="0dp"
+        app:layout_constraintEnd_toEndOf="@+id/wallNameTextView"
+        app:layout_constraintStart_toStartOf="@+id/wallNameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/wallNameTextView" />
+</androidx.constraintlayout.widget.ConstraintLayout>

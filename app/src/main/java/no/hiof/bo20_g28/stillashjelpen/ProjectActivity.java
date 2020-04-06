@@ -167,13 +167,14 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
     public void onItemClick(View view, int position) {
         Message clickedItem = messageRecyclerViewAdapter.getItem(position);
         deleteMessageDialogbox(clickedItem.getMessageId());
-        Toast.makeText(this, "Du trykket på beskjed (id: " + clickedItem.getMessageId() + ")", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onWallItemClick(View view, int position) {
         Wall clickedItem = wallRecyclerViewAdapter.getItem(position);
-        Toast.makeText(this, "Du trykket på " + clickedItem.getWallName(), Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, WallActivity.class);
+        i.putExtra("passedWall", clickedItem);
+        startActivity(i);
     }
 
     //------------------------Button Click Handling-------------------------------------------------

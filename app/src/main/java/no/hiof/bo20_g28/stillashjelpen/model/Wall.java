@@ -10,6 +10,7 @@ public class Wall implements Serializable {
     private String projectId;
     private String wallName;
     private String pictureId;
+    private String wallDescription;
     private int soleBoardArea;
     private int wallAnchorDistance;
     private Date dateCreated;
@@ -66,6 +67,14 @@ public class Wall implements Serializable {
 
     public void setPictureId(String pictureId) {
         this.pictureId = pictureId;
+    }
+
+    public String getWallDescription() {
+        return wallDescription;
+    }
+
+    public void setWallDescription(String wallDescription) {
+        this.wallDescription = wallDescription;
     }
 
     public int getSoleBoardArea() {
