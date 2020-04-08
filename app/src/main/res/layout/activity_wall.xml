@@ -29,7 +29,7 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/border_primary" />
+        app:srcCompat="@drawable/ic_domain_black_24dp" />
 
     <TextView
         android:id="@+id/wallNameTextView"
