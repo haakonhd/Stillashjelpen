@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         firebaseAuth = FirebaseAuth.getInstance();
         databaseProjects = FirebaseDatabase.getInstance().getReference("projects");
 
-
+        //check if user is signed in
         if (firebaseAuth.getCurrentUser() == null) {
             Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);

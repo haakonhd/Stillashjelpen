@@ -302,6 +302,7 @@ public class WallActivity extends AppCompatActivity {
         final EditText input = new EditText(this);
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setText(thisWall.getWallName());
         builder.setView(input);
 
         // Set up the buttons
@@ -309,6 +310,7 @@ public class WallActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 updateWallWithNewName(input.getText().toString());
+                wallNameTextView.setText(input.getText().toString());
             }
         });
         builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
@@ -329,6 +331,8 @@ public class WallActivity extends AppCompatActivity {
         final EditText input = new EditText(this);
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setText(thisWall.getWallDescription());
+
         builder.setView(input);
 
         // Set up the buttons
@@ -336,6 +340,7 @@ public class WallActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 updateWallWithDescription(input.getText().toString());
+                wallDescriptionTextView.setText(input.getText().toString());
             }
         });
         builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
