@@ -6,14 +6,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import no.hiof.bo20_g28.stillashjelpen.model.Wall;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -26,17 +31,26 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -51,6 +65,9 @@ public class WallActivity extends AppCompatActivity {
     private TextView wallAnchorDistanceTextView;
     private TextView wallDescriptionTextView;
     private String currentPhotoPath;
+    private Uri imageUri;
+    private ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +87,8 @@ public class WallActivity extends AppCompatActivity {
         soleBoardAreaTextView.setText("Underplankareal: " + thisWall.getSoleBoardArea());
         wallAnchorDistanceTextView.setText("Forankringsavstand: " + thisWall.getWallAnchorDistance());
         wallDescriptionTextView.setText(thisWall.getWallDescription());
+
+        progressDialog = new ProgressDialog(this);
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images");
 
@@ -99,24 +118,41 @@ public class WallActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
             File f = new File(currentPhotoPath);
-            wallImageView.setImageURI(Uri.fromFile(f));
 
             uploadImageToFirebase(f.getName());
             updateWallWithImage(f.getName());
         }
     }
 
+    private void addPhotoToImageView(Bitmap bitmap) {
+        RequestOptions options = new RequestOptions();
+
+        GlideApp.with(this)
+                .asBitmap()
+                .load(bitmap)
+                .apply(options)
+                .into(wallImageView);
+    }
+
     private void uploadImageToFirebase(String fileName) {
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         StorageReference image = storageRef.child("images").child(fileName);
-        Bitmap imageBitmap = BitmapFactory.decodeFile(currentPhotoPath);
+        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
+
+        Bitmap imageBitmap = null;
+        try {
+            imageBitmap = rotateImageIfRequired(this, bitmap, imageUri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Bitmap scaledBitmap;
         if (imageBitmap.getWidth() < imageBitmap.getHeight())
             scaledBitmap = Bitmap.createScaledBitmap(imageBitmap, 600, 800, false);
         else
             scaledBitmap = Bitmap.createScaledBitmap(imageBitmap, 800, 600, false);
         // Crop the picture to fit a square
-        Bitmap croppedBitmap;
+        final Bitmap croppedBitmap;
         if (scaledBitmap.getWidth() > scaledBitmap.getHeight())
             croppedBitmap = Bitmap.createBitmap(scaledBitmap, scaledBitmap.getWidth() / 2 - scaledBitmap.getHeight() / 2, 0, 600, 600);
         else
@@ -126,7 +162,57 @@ public class WallActivity extends AppCompatActivity {
         croppedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] imageData = byteArrayOutputStream.toByteArray();
 
-        image.putBytes(imageData);
+        progressDialog.setMessage("Lagrer bilde...");
+        progressDialog.show();
+
+        image.putBytes(imageData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Image uploaded successfully
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "Bilde lagret", Toast.LENGTH_SHORT).show();
+                        addPhotoToImageView(croppedBitmap);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Error, Image not uploaded
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "Lagring mislyktes", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private static Bitmap rotateImageIfRequired(Context context, Bitmap img, Uri selectedImage) throws IOException {
+
+        InputStream input = context.getContentResolver().openInputStream(selectedImage);
+        ExifInterface ei;
+        if (Build.VERSION.SDK_INT > 23)
+            ei = new ExifInterface(input);
+        else
+            ei = new ExifInterface(selectedImage.getPath());
+
+        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                return rotateImage(img, 90);
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                return rotateImage(img, 180);
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                return rotateImage(img, 270);
+            default:
+                return img;
+        }
+    }
+
+    private static Bitmap rotateImage(Bitmap img, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
+        img.recycle();
+        return rotatedImg;
     }
 
     @Override
@@ -162,6 +248,7 @@ public class WallActivity extends AppCompatActivity {
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(this, "no.hiof.bo20_g28.stillashjelpen.fileprovider", photoFile);
+                imageUri = photoURI;
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
