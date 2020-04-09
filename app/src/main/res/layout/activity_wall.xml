@@ -100,4 +100,48 @@
         app:layout_constraintEnd_toEndOf="@+id/wallNameTextView"
         app:layout_constraintStart_toStartOf="@+id/wallNameTextView"
         app:layout_constraintTop_toBottomOf="@+id/wallNameTextView" />
+
+    <ImageButton
+        android:id="@+id/editWallNameImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_filled"
+        android:onClick="editWallNameImageButtonClicked"
+        app:layout_constraintBottom_toTopOf="@+id/textView9"
+        app:layout_constraintEnd_toEndOf="@+id/wallNameTextView"
+        app:layout_constraintTop_toTopOf="@+id/wallNameTextView"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <ImageButton
+        android:id="@+id/editWallSoleBoardAreaImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_filled"
+        android:onClick="editWallSoleBoardAreaImageButtonClicked"
+        app:layout_constraintBottom_toBottomOf="@+id/soleBoardAreaTextView"
+        app:layout_constraintEnd_toEndOf="@+id/soleBoardAreaTextView"
+        app:layout_constraintTop_toTopOf="@+id/soleBoardAreaTextView"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <ImageButton
+        android:id="@+id/editWallAnchorDistanceImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_filled"
+        android:onClick="editWallAnchorDistanceImageButtonClicked"
+        app:layout_constraintBottom_toTopOf="@+id/textView10"
+        app:layout_constraintEnd_toEndOf="@+id/wallAnchorDistanceTextView"
+        app:layout_constraintTop_toTopOf="@+id/wallAnchorDistanceTextView"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <ImageButton
+        android:id="@+id/editWallDescriptionImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_filled"
+        android:onClick="editWallDescriptionImageButtonClicked"
+        app:layout_constraintBottom_toBottomOf="@+id/wallDescriptionTextView"
+        app:layout_constraintEnd_toEndOf="@+id/wallDescriptionTextView"
+        app:layout_constraintTop_toTopOf="@+id/wallDescriptionTextView"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,6 @@ package no.hiof.bo20_g28.stillashjelpen;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +14,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.View;
@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     private Toolbar toolbar;
     private DrawerLayout drawer;
 
+    static boolean calledAlready = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,15 +68,23 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         testText = findViewById(R.id.testText);
         mainRecyclerView = findViewById(R.id.mainRecyclerView);
 
+        // if statement fixes a crash that occurs when app opens MainActivity the second time from new Intent
+        if (!calledAlready) {
+            // offline/online sync
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            calledAlready = true;
+        }
+
         firebaseAuth = FirebaseAuth.getInstance();
         databaseProjects = FirebaseDatabase.getInstance().getReference("projects");
+
 
         if (firebaseAuth.getCurrentUser() == null) {
             Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);
         }
         else{
-            testText.setText("Logget inn på email: \n" + firebaseAuth.getCurrentUser().getEmail());
+            testText.setText(Html.fromHtml("Logget inn på email: <font color='#01C6DB'>" + firebaseAuth.getCurrentUser().getEmail() + "</font>"));
         }
     }
 
@@ -194,12 +204,6 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     //------------------------Button Click Handling-------------------------------------------------
 
 
-    public void logOutButtonClicked(View view) {
-        firebaseAuth.signOut();
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
-    }
-
     public void newProjectButtonClicked(View view) {
         openNewProjectDialogbox();
     }
@@ -209,6 +213,9 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     }
 
     public void fastCalcButtonClicked(View view) {
+        /*Intent i = new Intent(this, CalculationActivity.class);
+        i.putExtra("from", "fastCalculation");
+        startActivity(i);*/
         Toast.makeText(this, "Du trykket på 'Hurtig-utregning'-knappen", Toast.LENGTH_SHORT).show();
     }
 }

@@ -25,6 +25,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import no.hiof.bo20_g28.stillashjelpen.MainActivity;
+
 import no.hiof.bo20_g28.stillashjelpen.R;
 
 public class NavigationDrawerFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {

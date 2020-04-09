@@ -1,6 +1,7 @@
 package no.hiof.bo20_g28.stillashjelpen.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class ScaffoldingSystem implements Serializable {
 
@@ -8,6 +9,10 @@ public class ScaffoldingSystem implements Serializable {
     private String scaffoldingSystemName;
     private int bayWidth;
     private int bayLength;
+    private int scaffoldLoadClass;
+
+    private Date dateCreated;
+    private Date dateChanged;
 
 
     public ScaffoldingSystem() {
@@ -45,5 +50,29 @@ public class ScaffoldingSystem implements Serializable {
 
     public void setBayLength(int bayLength) {
         this.bayLength = bayLength;
+    }
+
+    public int getScaffoldLoadClass() {
+        return scaffoldLoadClass;
+    }
+
+    public void setScaffoldLoadClass(int scaffoldLoadClass) {
+        this.scaffoldLoadClass = scaffoldLoadClass;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getDateChanged() {
+        return dateChanged;
+    }
+
+    public void setDateChanged(Date dateChanged) {
+        this.dateChanged = dateChanged;
     }
 }

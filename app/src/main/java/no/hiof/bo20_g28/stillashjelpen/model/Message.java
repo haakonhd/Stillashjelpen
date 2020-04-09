@@ -11,7 +11,6 @@ public class Message implements Serializable {
     private String content;
     private Date dateCreated;
 
-
     public Message() {
 
     }

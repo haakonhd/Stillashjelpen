@@ -11,6 +11,7 @@ public class Project implements Serializable {
     private ArrayList<Wall> walls;
     private ControlScheme controlScheme;
     private Date dateCreated;
+    private Date dateChanged;
 
 
     public Project() {
@@ -72,5 +73,13 @@ public class Project implements Serializable {
 
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public Date getDateChanged() {
+        return dateChanged;
+    }
+
+    public void setDateChanged(Date dateChanged) {
+        this.dateChanged = dateChanged;
     }
 }

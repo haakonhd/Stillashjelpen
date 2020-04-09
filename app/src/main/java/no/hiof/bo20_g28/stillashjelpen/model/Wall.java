@@ -14,6 +14,7 @@ public class Wall implements Serializable {
     private int soleBoardArea;
     private int wallAnchorDistance;
     private Date dateCreated;
+    private Date dateChanged;
 
 
     public Wall(String wallId, String userId, String projectId, String wallName, Date dateCreated) {
@@ -99,5 +100,13 @@ public class Wall implements Serializable {
 
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public Date getDateChanged() {
+        return dateChanged;
+    }
+
+    public void setDateChanged(Date dateChanged) {
+        this.dateChanged = dateChanged;
     }
 }

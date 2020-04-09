@@ -1,10 +1,12 @@
 package no.hiof.bo20_g28.stillashjelpen;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import no.hiof.bo20_g28.stillashjelpen.model.Wall;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,9 +17,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -101,13 +106,6 @@ public class WallActivity extends AppCompatActivity {
         }
     }
 
-    private void updateWallWithImage(String name) {
-        thisWall.setPictureId(name);
-        DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("walls");
-        DatabaseReference wallRef = fDatabase.child(thisWall.getWallId());
-        wallRef.setValue(thisWall);
-    }
-
     private void uploadImageToFirebase(String fileName) {
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         StorageReference image = storageRef.child("images").child(fileName);
@@ -178,7 +176,115 @@ public class WallActivity extends AppCompatActivity {
     }
 
 
+    //------------------------Button Click Handling-------------------------------------------------
 
+
+    public void editWallNameImageButtonClicked(View view) {
+        editWallNameDialogbox();
+    }
+
+    public void editWallSoleBoardAreaImageButtonClicked(View view) {
+        /*Intent i = new Intent(this, CalculationActivity.class);
+        i.putExtra("passedWall", thisWall);
+        i.putExtra("from", "wallSoleBoardArea");
+        startActivity(i);*/
+        Toast.makeText(getApplicationContext(),"editWallSoleBoardAreaImageButton clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    public void editWallAnchorDistanceImageButtonClicked(View view) {
+        /*Intent i = new Intent(this, CalculationActivity.class);
+        i.putExtra("passedWall", thisWall);
+        i.putExtra("from", "anchorDistance");
+        startActivity(i);*/
+        Toast.makeText(getApplicationContext(),"editWallAnchorDistanceImageButton clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    public void editWallDescriptionImageButtonClicked(View view) {
+        editWallDescriptionDialogbox();
+    }
+
+
+    //------------------------Dialog boxes----------------------------------------------------------
+
+
+    private void editWallNameDialogbox() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Nytt veggnavn");
+
+        // Set up the input
+        final EditText input = new EditText(this);
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                updateWallWithNewName(input.getText().toString());
+            }
+        });
+        builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void editWallDescriptionDialogbox() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Legg til beskrivelse");
+
+        // Set up the input
+        final EditText input = new EditText(this);
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                updateWallWithDescription(input.getText().toString());
+            }
+        });
+        builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+
+    //------------------------Update Firebase-------------------------------------------------------
+
+
+    private void updateWallWithImage(String name) {
+        thisWall.setPictureId(name);
+        DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("walls");
+        DatabaseReference wallRef = fDatabase.child(thisWall.getWallId());
+        wallRef.setValue(thisWall);
+    }
+
+    private void updateWallWithNewName(String wallName) {
+        thisWall.setWallName(wallName);
+        DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("walls");
+        DatabaseReference wallRef = fDatabase.child(thisWall.getWallId());
+        wallRef.setValue(thisWall);
+    }
+
+    private void updateWallWithDescription(String wallDescription) {
+        thisWall.setWallDescription(wallDescription);
+        DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("walls");
+        DatabaseReference wallRef = fDatabase.child(thisWall.getWallId());
+        wallRef.setValue(thisWall);
+    }
 
     /*public void takePic() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
