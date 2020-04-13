@@ -11,6 +11,7 @@ public class ScaffoldingSystem implements Serializable {
     private int bayLength;
     private int scaffoldLoadClass;
 
+
     private Date dateCreated;
     private Date dateChanged;
 

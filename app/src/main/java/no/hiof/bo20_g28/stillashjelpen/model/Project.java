@@ -6,7 +6,10 @@ import java.util.Date;
 
 public class Project implements Serializable {
 
-    private String projectId, userId, projectName;
+    private String projectId;
+    private String userId;
+    private String projectName;
+    private String scaffoldType;
     private ArrayList<Message> messages;
     private ArrayList<Wall> walls;
     private ControlScheme controlScheme;
@@ -41,6 +44,14 @@ public class Project implements Serializable {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
+    }
+
+    public String getScaffoldType() {
+        return scaffoldType;
+    }
+
+    public void setScaffoldType(String scaffoldType) {
+        this.scaffoldType = scaffoldType;
     }
 
     public ArrayList<Message> getMessages() {

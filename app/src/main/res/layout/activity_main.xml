@@ -115,6 +115,15 @@
                     app:layout_constraintEnd_toEndOf="@+id/allProjectsButton"
                     app:layout_constraintTop_toBottomOf="@+id/allProjectsButton" />
             </LinearLayout>
+
+            <Spinner
+                android:id="@+id/testSpinner"
+                android:layout_width="194dp"
+                android:layout_height="41dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mainButtonContainer" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
