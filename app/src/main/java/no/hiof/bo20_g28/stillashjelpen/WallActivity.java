@@ -108,7 +108,7 @@ public class WallActivity extends AppCompatActivity {
 
     public void cameraImageButtonClicked(View view) {
         //takePic();
-        dispatchTakePictureIntent();
+        takePictureIntent();
     }
 
     @Override
@@ -233,7 +233,7 @@ public class WallActivity extends AppCompatActivity {
         return image;
     }
 
-    private void dispatchTakePictureIntent() {
+    private void takePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {

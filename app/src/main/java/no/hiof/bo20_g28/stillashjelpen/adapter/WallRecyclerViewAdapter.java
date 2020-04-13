@@ -4,23 +4,31 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
+import no.hiof.bo20_g28.stillashjelpen.GlideApp;
 import no.hiof.bo20_g28.stillashjelpen.R;
 import no.hiof.bo20_g28.stillashjelpen.model.Wall;
 
 public class WallRecyclerViewAdapter extends RecyclerView.Adapter<WallRecyclerViewAdapter.ViewHolder> {
 
     private List<Wall> mData;
+    private Context context;
     private LayoutInflater mInflater;
     private WallRecyclerViewAdapter.ItemClickListener mClickListener;
 
     // data is passed into the constructor
     public WallRecyclerViewAdapter(Context context, List<Wall> data) {
         this.mInflater = LayoutInflater.from(context);
+        this.context = context;
         this.mData = data;
     }
 
@@ -34,8 +42,20 @@ public class WallRecyclerViewAdapter extends RecyclerView.Adapter<WallRecyclerVi
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Wall w = mData.get(position);
-        holder.wallNameTextView.setText(w.getWallName());
+        Wall wall = mData.get(position);
+        holder.wallNameTextView.setText(wall.getWallName());
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images");
+        RequestOptions options = new RequestOptions();
+        options.centerCrop();
+
+        if (wall.getPictureId() != null) {
+            GlideApp.with(context)
+                    .asBitmap()
+                    .load(storageReference.child(wall.getPictureId()))
+                    .apply(options)
+                    .into(holder.wallListImageView);
+        }
     }
 
     // total number of rows
@@ -48,10 +68,12 @@ public class WallRecyclerViewAdapter extends RecyclerView.Adapter<WallRecyclerVi
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView wallNameTextView;
+        ImageView wallListImageView;
 
         ViewHolder(View itemView) {
             super(itemView);
             wallNameTextView = itemView.findViewById(R.id.wallNameTextView);
+            wallListImageView = itemView.findViewById(R.id.wallListImageView);
             itemView.setOnClickListener(this);
         }
 
