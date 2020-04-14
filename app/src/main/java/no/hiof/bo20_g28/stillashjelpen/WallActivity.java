@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import no.hiof.bo20_g28.stillashjelpen.model.Wall;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -23,6 +25,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -139,24 +142,7 @@ public class WallActivity extends AppCompatActivity {
         StorageReference image = storageRef.child("images").child(fileName);
         Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
 
-        Bitmap imageBitmap = null;
-        try {
-            imageBitmap = rotateImageIfRequired(this, bitmap, imageUri);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Bitmap scaledBitmap;
-        if (imageBitmap.getWidth() < imageBitmap.getHeight())
-            scaledBitmap = Bitmap.createScaledBitmap(imageBitmap, 600, 800, false);
-        else
-            scaledBitmap = Bitmap.createScaledBitmap(imageBitmap, 800, 600, false);
-        // Crop the picture to fit a square
-        final Bitmap croppedBitmap;
-        if (scaledBitmap.getWidth() > scaledBitmap.getHeight())
-            croppedBitmap = Bitmap.createBitmap(scaledBitmap, scaledBitmap.getWidth() / 2 - scaledBitmap.getHeight() / 2, 0, 600, 600);
-        else
-            croppedBitmap = Bitmap.createBitmap(scaledBitmap, 0, scaledBitmap.getHeight() / 2 - scaledBitmap.getWidth() / 2, 600, 600);
+        final Bitmap croppedBitmap = imageFormating(bitmap);
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         croppedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
@@ -182,6 +168,29 @@ public class WallActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Lagring mislyktes", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private Bitmap imageFormating(Bitmap bitmap){
+        Bitmap imageBitmap = null;
+        try {
+            imageBitmap = rotateImageIfRequired(this, bitmap, imageUri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Bitmap scaledBitmap;
+        if (imageBitmap.getWidth() < imageBitmap.getHeight())
+            scaledBitmap = Bitmap.createScaledBitmap(imageBitmap, 600, 800, false);
+        else
+            scaledBitmap = Bitmap.createScaledBitmap(imageBitmap, 800, 600, false);
+        // Crop the picture to fit a square
+        Bitmap croppedBitmap;
+        if (scaledBitmap.getWidth() > scaledBitmap.getHeight())
+            croppedBitmap = Bitmap.createBitmap(scaledBitmap, scaledBitmap.getWidth() / 2 - scaledBitmap.getHeight() / 2, 0, 600, 600);
+        else
+            croppedBitmap = Bitmap.createBitmap(scaledBitmap, 0, scaledBitmap.getHeight() / 2 - scaledBitmap.getWidth() / 2, 600, 600);
+
+        return croppedBitmap;
     }
 
     private static Bitmap rotateImageIfRequired(Context context, Bitmap img, Uri selectedImage) throws IOException {
@@ -215,10 +224,20 @@ public class WallActivity extends AppCompatActivity {
         return rotatedImg;
     }
 
+    //Rotation crash fix. Saves necessary globals that onRestoreInstanceState needs to restore activity if orientation changes while in "camera mode"
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelable("pic", imageBitmap);
+        outState.putString("currentPhotoPath", currentPhotoPath);
+        outState.putParcelable("imageUri", imageUri);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        currentPhotoPath = savedInstanceState.getString("currentPhotoPath");
+        imageUri = savedInstanceState.getParcelable("imageUri");
     }
 
     private File createImageFile() throws IOException {
@@ -259,7 +278,6 @@ public class WallActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 
 
