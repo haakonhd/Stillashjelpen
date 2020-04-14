@@ -123,7 +123,6 @@ public class WallActivity extends AppCompatActivity {
             File f = new File(currentPhotoPath);
 
             uploadImageToFirebase(f.getName());
-            updateWallWithImage(f.getName());
         }
     }
 
@@ -137,15 +136,15 @@ public class WallActivity extends AppCompatActivity {
                 .into(wallImageView);
     }
 
-    private void uploadImageToFirebase(String fileName) {
+    private void uploadImageToFirebase(final String fileName) {
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         StorageReference image = storageRef.child("images").child(fileName);
         Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
 
-        final Bitmap croppedBitmap = imageFormating(bitmap);
+        final Bitmap formattedBitmap = imageFormating(bitmap);
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        croppedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        formattedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] imageData = byteArrayOutputStream.toByteArray();
 
         progressDialog.setMessage("Lagrer bilde...");
@@ -157,8 +156,10 @@ public class WallActivity extends AppCompatActivity {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // Image uploaded successfully
                         progressDialog.dismiss();
+                        deleteWallsOldPicture();
+                        updateWallWithImage(fileName);
                         Toast.makeText(getApplicationContext(), "Bilde lagret", Toast.LENGTH_SHORT).show();
-                        addPhotoToImageView(croppedBitmap);
+                        addPhotoToImageView(formattedBitmap);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -272,6 +273,12 @@ public class WallActivity extends AppCompatActivity {
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
         }
+    }
+
+    private void deleteWallsOldPicture(){
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images");
+        StorageReference imageReference = storageReference.child(thisWall.getPictureId());
+        imageReference.delete();
     }
 
 
