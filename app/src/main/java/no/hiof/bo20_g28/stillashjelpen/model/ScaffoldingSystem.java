@@ -7,8 +7,8 @@ public class ScaffoldingSystem implements Serializable {
 
     private String scaffoldingSystemId;
     private String scaffoldingSystemName;
-    private int bayWidth;
-    private int bayLength;
+    private double bayWidth;
+    private double bayLength;
     private int scaffoldLoadClass;
 
 
@@ -37,19 +37,19 @@ public class ScaffoldingSystem implements Serializable {
         this.scaffoldingSystemName = scaffoldingSystemName;
     }
 
-    public int getBayWidth() {
+    public double getBayWidth() {
         return bayWidth;
     }
 
-    public void setBayWidth(int bayWidth) {
+    public void setBayWidth(double bayWidth) {
         this.bayWidth = bayWidth;
     }
 
-    public int getBayLength() {
+    public double getBayLength() {
         return bayLength;
     }
 
-    public void setBayLength(int bayLength) {
+    public void setBayLength(double bayLength) {
         this.bayLength = bayLength;
     }
 

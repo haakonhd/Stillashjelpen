@@ -18,7 +18,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ProjectActivity extends AppCompatActivity implements WallRecyclerViewAdapter.ItemClickListener, MessageRecyclerViewAdapter.ItemClickListener {
 
@@ -59,6 +62,7 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
         databaseWalls = FirebaseDatabase.getInstance().getReference("walls");
         databaseMessages = FirebaseDatabase.getInstance().getReference("messages");
     }
+
 
     private void getMessagesFromDatabase(String userId, DataSnapshot dataSnapshot){
         messages.clear();

@@ -276,9 +276,11 @@ public class WallActivity extends AppCompatActivity {
     }
 
     private void deleteWallsOldPicture(){
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images");
-        StorageReference imageReference = storageReference.child(thisWall.getPictureId());
-        imageReference.delete();
+        if(thisWall.getPictureId() != null) {
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images");
+            StorageReference imageReference = storageReference.child(thisWall.getPictureId());
+            imageReference.delete();
+        }
     }
 
 

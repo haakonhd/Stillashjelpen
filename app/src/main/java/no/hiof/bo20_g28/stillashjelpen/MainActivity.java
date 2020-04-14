@@ -15,8 +15,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
@@ -31,6 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements ProjectRecyclerViewAdapter.ItemClickListener {
 
@@ -44,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     private TextView testText;
     private Toolbar toolbar;
     private DrawerLayout drawer;
+    private final List<String> scaffoldingSystemList = new ArrayList<String>();
+
 
     static boolean calledAlready = false;
 
@@ -79,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         else{
             testText.setText(Html.fromHtml("Logget inn på email: <font color='#01C6DB'>" + firebaseAuth.getCurrentUser().getEmail() + "</font>"));
         }
+
     }
 
     @Override
@@ -91,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         super.onBackPressed();
     }
 
-    private void addNewProjectToDatabase(String name) {
+    private void addNewProjectToDatabase(String name, String scaffoldingSystem) {
         Project p = new Project();
         ControlScheme cs = new ControlScheme();
 
@@ -99,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         DatabaseReference projectRef = databaseReference.child("projects").push();
 
         cs.setControlSchemeId(projectRef.getKey() + "-cs");
+        p.setScaffoldType(scaffoldingSystem);
         p.setProjectId(projectRef.getKey());
         p.setUserId(firebaseAuth.getCurrentUser().getUid());
         p.setProjectName(name);
@@ -164,23 +172,59 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         startActivity(i);
     }
 
+    public void uploadScaffoldingSystemsFromFirebase(){
 
-    public void openNewProjectDialogbox(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference fDatabaseRoot = database.getReference().child("scaffoldingSystems");
 
+        scaffoldingSystemList.clear();
+
+        fDatabaseRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                scaffoldingSystemList.add("Velg et stillassystem");
+
+                for (DataSnapshot addressSnapshot : dataSnapshot.getChildren()) {
+                    String project = addressSnapshot.child("scaffoldingSystemName").getValue(String.class);
+                    if (project != null) {
+                        scaffoldingSystemList.add(project);
+                    }
+                }
+                openNewProjectCustomDialogbox();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("FirebaseError", databaseError.toException());
+            }
+        });
+
+
+    }
+
+    private void openNewProjectCustomDialogbox() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.new_project_dialog_box, null);
         builder.setTitle("Nytt prosjekt");
 
+        final Spinner spinner = (Spinner) view.findViewById(R.id.scaffoldingSystemsSpinner);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, scaffoldingSystemList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
         // Set up the input
-        final EditText input = new EditText(this);
-        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
+        final EditText input = (EditText) view.findViewById(R.id.editText);
 
         // Set up the buttons
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                addNewProjectToDatabase(input.getText().toString());
+                //TODO Better sanitation and handling of input
+                if(!spinner.getSelectedItem().toString().equalsIgnoreCase("Velg et stillassystem")) {
+                    addNewProjectToDatabase(input.getText().toString(), spinner.getSelectedItem().toString());
+                }
             }
         });
         builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
@@ -190,15 +234,17 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
             }
         });
 
-        builder.show();
+        builder.setView(view);
+        AlertDialog ad = builder.create();
+        ad.show();
     }
 
 
-    //------------------------Button Click Handling-------------------------------------------------
+            //------------------------Button Click Handling-------------------------------------------------
 
 
     public void newProjectButtonClicked(View view) {
-        openNewProjectDialogbox();
+        uploadScaffoldingSystemsFromFirebase();
     }
 
     public void allProjectsButtonClicked(View view) {
@@ -211,4 +257,53 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         startActivity(i);*/
         Toast.makeText(this, "Du trykket på 'Hurtig-utregning'-knappen", Toast.LENGTH_SHORT).show();
     }
+
+
+
+    /*private void uploadScaffoldingSystemTest(){
+        ScaffoldingSystem ss = new ScaffoldingSystem();
+
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference scaffoldingSystemsRef = databaseRef.child("scaffoldingSystems").push();
+
+        ss.setScaffoldingSystemId(scaffoldingSystemsRef.getKey());
+        ss.setScaffoldingSystemName("Jamax");
+        ss.setBayLength(3);
+        ss.setBayWidth(0.7);
+        ss.setScaffoldLoadClass(3);
+
+        scaffoldingSystemsRef.setValue(ss);
+    }*/
+
+    /*private void spinner(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference fDatabaseRoot = database.getReference();
+
+        fDatabaseRoot.child("scaffoldingSystems").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Is better to use a List, because you don't know the size
+                // of the iterator returned by dataSnapshot.getChildren() to
+                // initialize the array
+                final List<String> projectsList = new ArrayList<String>();
+
+                for (DataSnapshot addressSnapshot: dataSnapshot.getChildren()) {
+                    String project = addressSnapshot.child("scaffoldingSystemName").getValue(String.class);
+                    if (project!=null){
+                        projectsList.add(project);
+                    }
+                }
+
+                Spinner spinnerProperty = (Spinner) findViewById(R.id.testSpinner);
+                ArrayAdapter<String> scaffoldSystemAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, projectsList);
+                scaffoldSystemAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerProperty.setAdapter(scaffoldSystemAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }*/
 }
