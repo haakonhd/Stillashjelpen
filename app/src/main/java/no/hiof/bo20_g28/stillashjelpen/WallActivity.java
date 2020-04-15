@@ -64,19 +64,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class WallActivity extends AppCompatActivity {
-
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-    private Bitmap imageBitmap;
-    private ImageView wallImageView;
-    private Wall thisWall;
-    private TextView wallNameTextView;
-    private TextView soleBoardAreaTextView;
-    private TextView wallAnchorDistanceTextView;
-    private TextView wallDescriptionTextView;
-    private String currentPhotoPath;
-    private Uri imageUri;
-    private ProgressDialog progressDialog;
-
     TabLayout tabLayout;
     ViewPager2 viewPager;
 
@@ -97,162 +84,32 @@ public class WallActivity extends AppCompatActivity {
         viewPager.setAdapter(tabCalculationAdapter());
         new TabLayoutMediator(tabLayout, viewPager,
                 new TabLayoutMediator.TabConfigurationStrategy() {
-                    @Override public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                    @Override
+                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                         tab.setText(getTabTextFromPosition(position));
                         setTabIcon(position);
                     }
                 }).attach();
     }
 
-    private static Bitmap rotateImageIfRequired(Context context, Bitmap img, Uri selectedImage) throws IOException {
 
-    private String getTabTextFromPosition(int position){
-        if(position == 0) return "Vegginformasjon";
-        if(position == 1) return "Areal for underlagsplank";
-        if(position == 2) return "Forankringsavstand";
-        //TODO: handle error
+    private String getTabTextFromPosition(int position) {
+        if (position == 0) return "Vegginformasjon";
+        if (position == 1) return "Areal for underlagsplank";
+        if (position == 2) return "Forankringsavstand";
+            //TODO: handle error
         else return "error";
     }
 
-    private void setTabIcon(int position){
+    private void setTabIcon(int position) {
         int[] tabIcons = {
                 R.drawable.ic_wall_info,
                 R.drawable.ic_wall_info,
                 R.drawable.ic_wall_info
         };
         TabLayout.Tab tab = tabLayout.getTabAt(position);
-        if(tab != null){
+        if (tab != null) {
             tab.setIcon(tabIcons[position]);
         }
     }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
-
-     */
-
-    //------------------------Button Click Handling-------------------------------------------------
-//        public void editWallNameImageButtonClicked(View view) {
-//            editWallNameDialogbox();
-//        }
-//
-//    public void editWallSoleBoardAreaImageButtonClicked(View view) {
-//        /*Intent i = new Intent(this, CalculationActivity.class);
-//        i.putExtra("passedWall", thisWall);
-//        i.putExtra("from", "wallSoleBoardArea");
-//        startActivity(i);*/
-//        Toast.makeText(getApplicationContext(),"editWallSoleBoardAreaImageButton clicked", Toast.LENGTH_SHORT).show();
-//    }
-
-
-//    public void editWallAnchorDistanceImageButtonClicked(View view) {
-//        /*Intent i = new Intent(this, CalculationActivity.class);
-//        i.putExtra("passedWall", thisWall);
-//        i.putExtra("from", "anchorDistance");
-//        startActivity(i);*/
-//        Toast.makeText(getApplicationContext(),"editWallAnchorDistanceImageButton clicked", Toast.LENGTH_SHORT).show();
-//    }
-//
-//public void editWallDescriptionImageButtonClicked(View view) {
-//        editWallDescriptionDialogbox();
-//    }
-//
-//    //------------------------Dialog boxes----------------------------------------------------------
-//
-//
-//    private void editWallNameDialogbox() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("Nytt veggnavn");
-//
-//        // Set up the input
-//        final EditText input = new EditText(this);
-//        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-//        input.setInputType(InputType.TYPE_CLASS_TEXT);
-//        input.setText(thisWall.getWallName());
-//        builder.setView(input);
-//
-//        // Set up the buttons
-//        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                updateWallWithNewName(input.getText().toString());
-//                wallNameTextView.setText(input.getText().toString());
-//            }
-//        });
-//        builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.cancel();
-//            }
-//        });
-//
-//        builder.show();
-//    }
-//
-//    private void editWallDescriptionDialogbox() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("Legg til beskrivelse");
-//
-//        // Set up the input
-//        final EditText input = new EditText(this);
-//        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-//        input.setInputType(InputType.TYPE_CLASS_TEXT);
-//        input.setText(thisWall.getWallDescription());
-//
-//        builder.setView(input);
-//
-//        // Set up the buttons
-//        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                updateWallWithDescription(input.getText().toString());
-//                wallDescriptionTextView.setText(input.getText().toString());
-//            }
-//        });
-//        builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.cancel();
-//            }
-//        });
-//
-//        builder.show();
-//    }
-//
-//
-//    //------------------------Update Firebase-------------------------------------------------------
-//
-//
-//    private void updateWallWithImage(String name) {
-//        thisWall.setPictureId(name);
-//        DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("walls");
-//        DatabaseReference wallRef = fDatabase.child(thisWall.getWallId());
-//        wallRef.setValue(thisWall);
-//    }
-//
-//    private void updateWallWithNewName(String wallName) {
-//        thisWall.setWallName(wallName);
-//        DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("walls");
-//        DatabaseReference wallRef = fDatabase.child(thisWall.getWallId());
-//        wallRef.setValue(thisWall);
-//    }
-//
-//    private void updateWallWithDescription(String wallDescription) {
-//        thisWall.setWallDescription(wallDescription);
-//        DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("walls");
-//        DatabaseReference wallRef = fDatabase.child(thisWall.getWallId());
-//        wallRef.setValue(thisWall);
-//    }
-//
-//    /*public void takePic() {
-//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//
-//        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-//            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-//        }
-//    }*/
 }

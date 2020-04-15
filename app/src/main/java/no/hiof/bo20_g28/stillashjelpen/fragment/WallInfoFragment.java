@@ -27,4 +27,6 @@ public class WallInfoFragment extends Fragment {
         Bundle args = getArguments();
     }
 
+
+
 }
