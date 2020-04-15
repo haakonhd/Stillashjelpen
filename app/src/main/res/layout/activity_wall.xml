@@ -1,147 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WallActivity">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/colorPrimary"
-        android:text="TextView"
-        android:textSize="0dp"
-        app:layout_constraintEnd_toEndOf="@+id/wallNameTextView"
-        app:layout_constraintStart_toStartOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/wallAnchorDistanceTextView" />
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-    <ImageView
-        android:id="@+id/wallImageView"
-        android:layout_width="265dp"
-        android:layout_height="262dp"
-        android:layout_marginStart="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/wallNameTextView"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_domain_black_24dp" />
-
-    <TextView
-        android:id="@+id/wallNameTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:text="TextView"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/wallImageView"
-        app:layout_constraintTop_toTopOf="@+id/wallImageView" />
-
-    <TextView
-        android:id="@+id/soleBoardAreaTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/wallNameTextView"
-        app:layout_constraintStart_toStartOf="@+id/wallNameTextView"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
-
-    <TextView
-        android:id="@+id/wallDescriptionTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/wallAnchorDistanceTextView"
-        app:layout_constraintStart_toStartOf="@+id/wallAnchorDistanceTextView"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
-    <TextView
-        android:id="@+id/wallAnchorDistanceTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/soleBoardAreaTextView"
-        app:layout_constraintStart_toStartOf="@+id/soleBoardAreaTextView"
-        app:layout_constraintTop_toBottomOf="@+id/soleBoardAreaTextView" />
-
-    <ImageButton
-        android:id="@+id/cameraImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/border_filled"
-        android:onClick="cameraImageButtonClicked"
-        app:layout_constraintStart_toStartOf="@+id/wallImageView"
-        app:layout_constraintTop_toTopOf="@+id/wallImageView"
-        app:srcCompat="@android:drawable/ic_menu_camera" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/colorPrimary"
-        android:text="TextView"
-        android:textSize="0dp"
-        app:layout_constraintEnd_toEndOf="@+id/wallNameTextView"
-        app:layout_constraintStart_toStartOf="@+id/wallNameTextView"
-        app:layout_constraintTop_toBottomOf="@+id/wallNameTextView" />
-
-    <ImageButton
-        android:id="@+id/editWallNameImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border_filled"
-        android:onClick="editWallNameImageButtonClicked"
-        app:layout_constraintBottom_toTopOf="@+id/textView9"
-        app:layout_constraintEnd_toEndOf="@+id/wallNameTextView"
-        app:layout_constraintTop_toTopOf="@+id/wallNameTextView"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
-
-    <ImageButton
-        android:id="@+id/editWallSoleBoardAreaImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border_filled"
-        android:onClick="editWallSoleBoardAreaImageButtonClicked"
-        app:layout_constraintBottom_toBottomOf="@+id/soleBoardAreaTextView"
-        app:layout_constraintEnd_toEndOf="@+id/soleBoardAreaTextView"
-        app:layout_constraintTop_toTopOf="@+id/soleBoardAreaTextView"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
-
-    <ImageButton
-        android:id="@+id/editWallAnchorDistanceImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border_filled"
-        android:onClick="editWallAnchorDistanceImageButtonClicked"
-        app:layout_constraintBottom_toTopOf="@+id/textView10"
-        app:layout_constraintEnd_toEndOf="@+id/wallAnchorDistanceTextView"
-        app:layout_constraintTop_toTopOf="@+id/wallAnchorDistanceTextView"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
-
-    <ImageButton
-        android:id="@+id/editWallDescriptionImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border_filled"
-        android:onClick="editWallDescriptionImageButtonClicked"
-        app:layout_constraintBottom_toBottomOf="@+id/wallDescriptionTextView"
-        app:layout_constraintEnd_toEndOf="@+id/wallDescriptionTextView"
-        app:layout_constraintTop_toTopOf="@+id/wallDescriptionTextView"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>
