@@ -29,9 +29,13 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,30 +90,48 @@ public class WallActivity extends AppCompatActivity {
                 new TabLayoutMediator.TabConfigurationStrategy() {
                     @Override
                     public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                        tab.setText(getTabTextFromPosition(position));
-                        setTabIcon(position);
                     }
                 }).attach();
+        setTabLayout();
+        setTabText();
     }
 
-
-    private String getTabTextFromPosition(int position) {
-        if (position == 0) return "Vegginformasjon";
-        if (position == 1) return "Areal for underlagsplank";
-        if (position == 2) return "Forankringsavstand";
-            //TODO: handle error
-        else return "error";
+    private void setTabText(){
+        tabLayout.getTabAt(0).setText(getString(R.string.tab_wall_info));
+        tabLayout.getTabAt(1).setText(getString(R.string.tab_soleboard));
+        tabLayout.getTabAt(2).setText(getString(R.string.tab_anchor));
     }
 
-    private void setTabIcon(int position) {
-        int[] tabIcons = {
-                R.drawable.ic_wall_info,
-                R.drawable.ic_wall_info,
-                R.drawable.ic_wall_info
-        };
-        TabLayout.Tab tab = tabLayout.getTabAt(position);
-        if (tab != null) {
-            tab.setIcon(tabIcons[position]);
+    private int[] tabIcons = {
+        R.drawable.ic_wall_info_light,
+        R.drawable.ic_soleboard,
+        R.drawable.ic_anchor
+    };
+
+    private int[] tabLabels = {
+            R.string.tab_wall_info,
+            R.string.tab_soleboard,
+            R.string.tab_anchor
+    };
+
+
+    private void setTabLayout(){
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            LinearLayout tab = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+
+            TextView tab_label = (TextView) tab.findViewById(R.id.tab_label);
+            ImageView tab_icon = (ImageView) tab.findViewById(R.id.tab_icon);
+            tab_label.setText(tabLabels[i]);
+
+            // set the home to be active at first
+            if(i == 0) {
+//                tab_label.setTextColor(getResources().getColor(R.color.efent_color));
+                tab_icon.setImageResource(tabIcons[i]);
+            } else {
+                tab_icon.setImageResource(tabIcons[i]);
+            }
+            tabLayout.getTabAt(i).setCustomView(tab);
         }
     }
+
 }

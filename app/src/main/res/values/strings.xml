@@ -11,9 +11,15 @@
     <string name="navigation_drawer_close">Lukk sidemeny</string>
     <string name="logout">Log ut</string>
 
+    <string name="tab_wall_info">Vegginformasjon</string>
+    <string name="tab_soleboard">Underlagsplank-areal</string>
+    <string name="tab_anchor">Forankringsavstand</string>
+
+
     <string name="projects_file">projects.txt</string>
     <string name="walls_file">walls.txt</string>
     <string name="messages_file">messages.txt</string>
     <string name="control_schemes_file">control_schemes.txt</string>
     <string name="scaffolding_systems_file">scaffolding_systems.txt</string>
+    <string name="tab_icon">tab icon</string>
 </resources>
