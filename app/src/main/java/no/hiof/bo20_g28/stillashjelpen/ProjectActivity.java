@@ -178,6 +178,7 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
         Wall clickedItem = wallRecyclerViewAdapter.getItem(position);
         Intent i = new Intent(this, WallActivity.class);
         i.putExtra("passedWall", clickedItem);
+        WallActivity.isQuickCalculation = false;
         startActivity(i);
     }
 
