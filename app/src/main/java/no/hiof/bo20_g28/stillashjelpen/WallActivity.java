@@ -7,6 +7,7 @@ import androidx.core.content.FileProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import no.hiof.bo20_g28.stillashjelpen.adapter.TabCalculationAdapter;
+import no.hiof.bo20_g28.stillashjelpen.fragment.WallInfoFragment;
 import no.hiof.bo20_g28.stillashjelpen.model.Wall;
 
 import android.app.Activity;
