@@ -3,6 +3,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 import no.hiof.bo20_g28.stillashjelpen.adapter.TabCalculationAdapter;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
@@ -27,19 +29,11 @@ public class WallActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wall);
 
-        Intent i = getIntent();
-        from = i.getStringExtra("from");
-
-        if(from.equals("fastCalculation")){
-            //TODO - Make wall tab go away
-        }
-
         viewPager = findViewById(R.id.pager);
         tabLayout = findViewById(R.id.tab_layout);
 
         viewPager.setAdapter(tabCalculationAdapter());
-        new TabLayoutMediator(tabLayout, viewPager,
-                new TabLayoutMediator.TabConfigurationStrategy() {
+        new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
                     @Override
                     public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                     }

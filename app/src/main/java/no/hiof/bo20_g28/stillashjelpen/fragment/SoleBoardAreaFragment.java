@@ -33,6 +33,7 @@ import androidx.fragment.app.Fragment;
 
 import no.hiof.bo20_g28.stillashjelpen.MainActivity;
 import no.hiof.bo20_g28.stillashjelpen.R;
+import no.hiof.bo20_g28.stillashjelpen.WallActivity;
 import no.hiof.bo20_g28.stillashjelpen.model.ScaffoldingSystem;
 import no.hiof.bo20_g28.stillashjelpen.model.Wall;
 
@@ -54,16 +55,19 @@ public class SoleBoardAreaFragment extends Fragment {
     private int weight = 800;
 
     private Wall thisWall;
+    private int soleBoardArea;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_soleboard_tab, container, false);
 
-        Intent i = getActivity().getIntent();
-        thisWall = (Wall) i.getSerializableExtra("passedWall");
-
         saveSoleBoardAreaButton = view.findViewById(R.id.saveSoleBoardAreaButton);
+        saveSoleBoardAreaButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                saveSoleBoardAreaButtonClicked();
+            }
+        });
         weightEditText = view.findViewById(R.id.weightEditText);
         bayLengthEditText = view.findViewById(R.id.bayLengthEditText);
         bayWidthEditText = view.findViewById(R.id.bayWidthEditText);
@@ -74,6 +78,17 @@ public class SoleBoardAreaFragment extends Fragment {
         resultTextView = view.findViewById(R.id.resultTextView);
         nrOfFloorsLabelTextView = view.findViewById(R.id.nrOfFloorsLabelTextView);
         loadClassLabelTextView = view.findViewById(R.id.loadClassLabelTextView);
+
+        if(WallActivity.isQuickCalculation){
+            thisWall = new Wall();
+            thisWall.setScaffoldType("none");
+            saveSoleBoardAreaButton.setVisibility(View.INVISIBLE);
+        }
+        if(!WallActivity.isQuickCalculation){
+            Intent i = getActivity().getIntent();
+            thisWall = (Wall) i.getSerializableExtra("passedWall");
+            saveSoleBoardAreaButton.setVisibility(View.VISIBLE);
+        }
 
         startSpinner();
         startNrOfFloorsSeekBar();
@@ -86,7 +101,6 @@ public class SoleBoardAreaFragment extends Fragment {
 
         getPresetInputsFromScaffoldingSystem();
         updateSoleBoardCalculation();
-
 
         return view;
     }
@@ -362,6 +376,7 @@ public class SoleBoardAreaFragment extends Fragment {
         int resultInnerSpearFinishedCeil = (int)Math.ceil(resultInnerSpearFinished);
 
         updateResultTextView(resultOuterSpearFinishedCeil, resultInnerSpearFinishedCeil);
+        soleBoardArea = resultInnerSpearFinishedCeil;
     }
 
     private void updateResultTextView(int outerResult, int innerResult){
@@ -369,4 +384,14 @@ public class SoleBoardAreaFragment extends Fragment {
                 " cm2</font><br><br>" + "Innerspir underlagsplank-areal:<br><font color=blue>" + innerResult + " cm2</font>"));
     }
 
+    private void saveSoleBoardAreaButtonClicked(){
+        updateWallWithSoleBoardArea(soleBoardArea);
+    }
+
+    private void updateWallWithSoleBoardArea(int soleBoardArea) {
+        thisWall.setSoleBoardArea(soleBoardArea);
+        DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("walls");
+        DatabaseReference wallRef = fDatabase.child(thisWall.getWallId());
+        wallRef.setValue(thisWall);
+    }
 }

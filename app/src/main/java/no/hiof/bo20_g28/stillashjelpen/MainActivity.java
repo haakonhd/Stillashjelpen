@@ -266,11 +266,11 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         DatabaseReference scaffoldingSystemsRef = databaseRef.child("scaffoldingSystems").push();
 
         ss.setScaffoldingSystemId(scaffoldingSystemsRef.getKey());
-        ss.setScaffoldingSystemName("Jamax");
-        ss.setBayLength(3);
-        ss.setBayWidth(0.7);
-        ss.setWeight(800);
-        ss.setScaffoldLoadClass(3);
+        ss.setScaffoldingSystemName("none");
+        ss.setBayLength(0);
+        ss.setBayWidth(0);
+        ss.setWeight(0);
+        ss.setScaffoldLoadClass(1);
 
         scaffoldingSystemsRef.setValue(ss);
     }
