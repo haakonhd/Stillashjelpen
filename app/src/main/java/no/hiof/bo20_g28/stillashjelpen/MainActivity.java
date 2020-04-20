@@ -251,10 +251,10 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     }
 
     public void fastCalcButtonClicked(View view) {
-        /*Intent i = new Intent(this, WallActivity.class);
+        Intent i = new Intent(this, WallActivity.class);
         i.putExtra("from", "fastCalculation");
-        startActivity(i);*/
-        Toast.makeText(this, "Du trykket på 'Hurtig-utregning'-knappen", Toast.LENGTH_SHORT).show();
+        WallActivity.isQuickCalculation = true;
+        startActivity(i);
     }
 
 

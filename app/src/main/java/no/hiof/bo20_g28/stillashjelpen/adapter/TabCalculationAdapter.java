@@ -14,6 +14,8 @@ import no.hiof.bo20_g28.stillashjelpen.fragment.WallInfoFragment;
 
 public class TabCalculationAdapter extends FragmentStateAdapter {
 
+    private boolean isQuickCalculation;
+
     public TabCalculationAdapter(Fragment fragment) {
         super(fragment);
     }
@@ -26,20 +28,18 @@ public class TabCalculationAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         // Return a NEW fragment instance in createFragment(int)
-        Fragment fragment;
-        if(position == 0) fragment = new WallInfoFragment();
-        else if(position == 1) fragment = new SoleBoardAreaFragment();
-        else if(position == 2) fragment = new WallAnchorDistanceFragment();
-        else  fragment = new WallAnchorDistanceFragment();
-        Bundle args = new Bundle();
-        // Our object is just an integer :-P
-        args.putInt(SoleBoardAreaFragment.ARG_OBJECT, position + 1);
-        fragment.setArguments(args);
-        return fragment;
+        // if quick calculation, the first if-statement will be skipped
+        if(WallActivity.isQuickCalculation) position += 1;
+
+        if(position == 0) return new WallInfoFragment();
+        else if(position == 1) return new SoleBoardAreaFragment();
+        else if(position == 2) return new WallAnchorDistanceFragment();
+        else return new WallInfoFragment();
     }
 
     @Override
     public int getItemCount() {
+        if(WallActivity.isQuickCalculation) return 2;
         return 3;
     }
 

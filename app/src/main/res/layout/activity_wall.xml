@@ -8,7 +8,14 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="#2196F3"
+        app:tabIndicatorColor="#E91E63"
+        app:tabTextColor="#C5E8FF"
+        app:tabSelectedTextColor="#FFFFFF"
+        app:tabRippleColor="#447797"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"
+        />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
