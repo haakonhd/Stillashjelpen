@@ -63,7 +63,6 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
         databaseMessages = FirebaseDatabase.getInstance().getReference("messages");
     }
 
-
     private void getMessagesFromDatabase(String userId, DataSnapshot dataSnapshot){
         messages.clear();
 
@@ -138,7 +137,7 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
         DatabaseReference wallRef = databaseReference.child("walls").push();
 
         Date dateCreated = new Date();
-        Wall wall = new Wall(wallRef.getKey(), firebaseAuth.getCurrentUser().getUid(), thisProject.getProjectId(), wallName, dateCreated);
+        Wall wall = new Wall(wallRef.getKey(), firebaseAuth.getCurrentUser().getUid(), thisProject.getProjectId(), thisProject.getScaffoldType(), wallName, dateCreated);
 
         wallRef.setValue(wall);
     }
@@ -177,6 +176,7 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
     public void onWallItemClick(View view, int position) {
         Wall clickedItem = wallRecyclerViewAdapter.getItem(position);
         Intent i = new Intent(this, WallActivity.class);
+        i.putExtra("from", "project");
         i.putExtra("passedWall", clickedItem);
         startActivity(i);
     }

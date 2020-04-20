@@ -25,6 +25,7 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import no.hiof.bo20_g28.stillashjelpen.model.ScaffoldingSystem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         else{
             testText.setText(Html.fromHtml("Logget inn på email: <font color='#01C6DB'>" + firebaseAuth.getCurrentUser().getEmail() + "</font>"));
         }
-
+        //uploadScaffoldingSystemTest();
     }
 
     @Override
@@ -199,8 +200,6 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
                 Log.w("FirebaseError", databaseError.toException());
             }
         });
-
-
     }
 
     private void openNewProjectCustomDialogbox() {
@@ -252,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     }
 
     public void fastCalcButtonClicked(View view) {
-        /*Intent i = new Intent(this, CalculationActivity.class);
+        /*Intent i = new Intent(this, WallActivity.class);
         i.putExtra("from", "fastCalculation");
         startActivity(i);*/
         Toast.makeText(this, "Du trykket på 'Hurtig-utregning'-knappen", Toast.LENGTH_SHORT).show();
@@ -260,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
 
 
 
-    /*private void uploadScaffoldingSystemTest(){
+    private void uploadScaffoldingSystemTest(){
         ScaffoldingSystem ss = new ScaffoldingSystem();
 
         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
@@ -270,10 +269,11 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         ss.setScaffoldingSystemName("Jamax");
         ss.setBayLength(3);
         ss.setBayWidth(0.7);
+        ss.setWeight(800);
         ss.setScaffoldLoadClass(3);
 
         scaffoldingSystemsRef.setValue(ss);
-    }*/
+    }
 
     /*private void spinner(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();

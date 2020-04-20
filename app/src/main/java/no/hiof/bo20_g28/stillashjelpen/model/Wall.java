@@ -8,6 +8,7 @@ public class Wall implements Serializable {
     private String wallId;
     private String userId;
     private String projectId;
+    private String scaffoldType;
     private String wallName;
     private String pictureId;
     private String wallDescription;
@@ -17,10 +18,11 @@ public class Wall implements Serializable {
     private Date dateChanged;
 
 
-    public Wall(String wallId, String userId, String projectId, String wallName, Date dateCreated) {
+    public Wall(String wallId, String userId, String projectId, String scaffoldType, String wallName, Date dateCreated) {
         this.wallId = wallId;
         this.userId = userId;
         this.projectId = projectId;
+        this.scaffoldType = scaffoldType;
         this.wallName = wallName;
         this.dateCreated = dateCreated;
     }
@@ -52,6 +54,14 @@ public class Wall implements Serializable {
 
     public void setProjectId(String projectId) {
         this.projectId = projectId;
+    }
+
+    public String getScaffoldType() {
+        return scaffoldType;
+    }
+
+    public void setScaffoldType(String scaffoldType) {
+        this.scaffoldType = scaffoldType;
     }
 
     public String getWallName() {
