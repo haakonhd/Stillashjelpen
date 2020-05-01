@@ -13,6 +13,7 @@
         app:tabIndicatorColor="#E91E63"
         app:tabTextColor="#C5E8FF"
         app:tabSelectedTextColor="#FFFFFF"
+        app:tabIndicatorHeight="4dp"
         app:tabRippleColor="#447797"
         app:tabTextAppearance="@style/TabLayoutTextStyle"
         />

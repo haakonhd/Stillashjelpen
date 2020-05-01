@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WallActivity"
+    android:background="#F6F6F6"
+    >
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.66" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.25" />
+
+
+    <!--  DEKKE  -->
+
+    <TextView
+        android:id="@+id/coverDescriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/trekk"
+        android:textAlignment="textEnd"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/forceFactorTextView"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Button
+        android:id="@+id/coverTarpButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#3DA8D8"
+        android:paddingHorizontal="10dp"
+        android:text="@string/presenning"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/coverNetButton"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toEndOf="@+id/coverNetButton"
+        app:layout_constraintTop_toTopOf="@+id/coverNetButton" />
+
+    <Button
+        android:id="@+id/coverNetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#3DA8D8"
+        android:paddingHorizontal="10dp"
+        android:text="@string/netting"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/coverNoneButton"
+        app:layout_constraintEnd_toStartOf="@+id/coverTarpButton"
+        app:layout_constraintStart_toEndOf="@+id/coverNoneButton"
+        app:layout_constraintTop_toTopOf="@+id/coverNoneButton" />
+
+    <Button
+        android:id="@+id/coverNoneButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#9A9A9A"
+        android:paddingHorizontal="10dp"
+        android:text="@string/udekket"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/coverDescriptionTextView"
+        app:layout_constraintEnd_toStartOf="@+id/coverNetButton"
+        app:layout_constraintStart_toEndOf="@+id/coverDescriptionTextView"
+        app:layout_constraintTop_toTopOf="@+id/coverDescriptionTextView"
+        />
+
+
+    <!-- Kraftfaktor -->
+
+    <TextView
+        android:id="@+id/forceFactorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/kraftfaktor_mot_fasade"
+        android:textAlignment="textEnd"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/anchorForceTextView"
+        app:layout_constraintEnd_toEndOf="@+id/coverDescriptionTextView"
+        app:layout_constraintTop_toBottomOf="@+id/coverDescriptionTextView" />
+
+    <Button
+        android:id="@+id/forceFactorNormalButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#3DA8D8"
+        android:paddingHorizontal="10dp"
+        android:text="@string/normalt"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/forceFactorTextView"
+        app:layout_constraintEnd_toEndOf="@+id/coverNoneButton"
+        app:layout_constraintStart_toStartOf="@+id/coverNoneButton"
+        app:layout_constraintTop_toTopOf="@+id/forceFactorTextView" />
+
+
+    <!-- Forankringskraft -->
+
+    <Button
+        android:id="@+id/forceFactorParallelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#3DA8D8"
+        android:paddingHorizontal="10dp"
+        android:text="@string/parallelt"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/forceFactorNormalButton"
+        app:layout_constraintEnd_toEndOf="@+id/coverNetButton"
+        app:layout_constraintStart_toStartOf="@+id/coverNetButton"
+        app:layout_constraintTop_toTopOf="@+id/forceFactorNormalButton" />
+
+    <TextView
+        android:id="@+id/anchorForceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/forankringskraft"
+        android:textAlignment="textEnd"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/scaffoldHeightTextView"
+        app:layout_constraintEnd_toEndOf="@+id/forceFactorTextView"
+        app:layout_constraintTop_toBottomOf="@+id/forceFactorTextView" />
+
+    <EditText
+        android:id="@+id/anchorForceEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/editTextHeight"
+        android:background="@drawable/et_style"
+        android:ems="3"
+        android:inputType="numberDecimal"
+        android:maxLength="3"
+        android:textAlignment="center"
+        android:paddingVertical="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/anchorForceTextView"
+        app:layout_constraintStart_toStartOf="@+id/forceFactorNormalButton"
+        app:layout_constraintTop_toTopOf="@+id/anchorForceTextView"
+        app:layout_constraintVertical_bias="0.473" />
+
+    <TextView
+        android:id="@+id/anchorForceLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/kn"
+        app:layout_constraintBottom_toBottomOf="@+id/anchorForceEditText"
+        app:layout_constraintStart_toEndOf="@+id/anchorForceEditText"
+        app:layout_constraintTop_toTopOf="@+id/anchorForceEditText" />
+
+
+<!--    StillasHøyde-->
+
+    <TextView
+        android:id="@+id/scaffoldHeightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stillash_yde"
+        android:textAlignment="textEnd"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/bayLengthDescriptionTextView"
+        app:layout_constraintEnd_toEndOf="@+id/anchorForceTextView"
+        app:layout_constraintTop_toBottomOf="@+id/anchorForceTextView" />
+
+    <TextView
+        android:id="@+id/scaffoldHeightLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        app:layout_constraintBottom_toTopOf="@+id/scaffoldHeightSeekBar"
+        app:layout_constraintEnd_toEndOf="@+id/scaffoldHeightSeekBar"
+        app:layout_constraintStart_toStartOf="@+id/scaffoldHeightSeekBar"
+        android:layout_marginBottom="2dp"/>
+
+    <SeekBar
+        android:id="@+id/scaffoldHeightSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:max="24"
+        android:thumb="@drawable/thumb_image"
+
+
+        app:layout_constraintBottom_toBottomOf="@+id/scaffoldHeightTextView"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="@+id/anchorForceEditText"
+        app:layout_constraintTop_toTopOf="@+id/scaffoldHeightTextView" />
+
+<!--    Faglengde -->
+    <TextView
+        android:id="@+id/bayLengthDescriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/faglengde"
+        android:textAlignment="textEnd"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/scaffoldHeightTextView"
+        app:layout_constraintTop_toBottomOf="@+id/scaffoldHeightTextView"
+        android:labelFor="@+id/bayLengthEditText"/>
+
+    <EditText
+        android:id="@+id/bayLengthEditText"
+        android:layout_width="80dp"
+        android:layout_height="@dimen/editTextHeight"
+        android:ems="4"
+        android:inputType="numberDecimal"
+        android:maxLength="4"
+        android:paddingVertical="15dp"
+        android:textAlignment="center"
+        android:background="@drawable/et_style"
+        app:layout_constraintBottom_toBottomOf="@+id/bayLengthDescriptionTextView"
+        app:layout_constraintStart_toStartOf="@+id/scaffoldHeightSeekBar"
+        app:layout_constraintTop_toTopOf="@+id/bayLengthDescriptionTextView"
+        android:autofillHints="3" />
+
+    <TextView
+        android:id="@+id/bayLengthLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/m"
+        app:layout_constraintBottom_toBottomOf="@+id/bayLengthEditText"
+        app:layout_constraintStart_toEndOf="@+id/bayLengthEditText"
+        app:layout_constraintTop_toTopOf="@+id/bayLengthEditText" />
+
+
+<!--Resultat-->
+    <TextView
+        android:id="@+id/resultTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="Fyll ut alle felter for å regne ut maksimal avstand mellom forankringer"
+        android:paddingVertical="20dp"
+        android:background="@color/white"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/saveAnchorDistanceButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/saveAnchorDistanceButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_filled"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:text="Lagre"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/resultTextView"
+        app:layout_constraintStart_toStartOf="@+id/resultTextView"
+        app:layout_constraintTop_toBottomOf="@+id/resultTextView" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

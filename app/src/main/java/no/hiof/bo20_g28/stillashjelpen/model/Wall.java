@@ -13,7 +13,7 @@ public class Wall implements Serializable {
     private String pictureId;
     private String wallDescription;
     private int soleBoardArea;
-    private int wallAnchorDistance;
+    private double wallAnchorDistance;
     private Date dateCreated;
     private Date dateChanged;
 
@@ -96,11 +96,11 @@ public class Wall implements Serializable {
         this.soleBoardArea = soleBoardArea;
     }
 
-    public int getWallAnchorDistance() {
+    public double getWallAnchorDistance() {
         return wallAnchorDistance;
     }
 
-    public void setWallAnchorDistance(int wallAnchorDistance) {
+    public void setWallAnchorDistance(double wallAnchorDistance) {
         this.wallAnchorDistance = wallAnchorDistance;
     }
 

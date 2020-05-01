@@ -93,7 +93,7 @@ public class WallInfoFragment extends Fragment{
 
         wallNameTextView.setText(thisWall.getWallName());
         soleBoardAreaTextView.setText("Underplankareal: " + thisWall.getSoleBoardArea());
-        wallAnchorDistanceTextView.setText("Forankringsavstand: " + thisWall.getWallAnchorDistance());
+        wallAnchorDistanceTextView.setText("Forankringsavstand: " +  String.format("%.2f", thisWall.getWallAnchorDistance()));
         wallDescriptionTextView.setText(thisWall.getWallDescription());
 
         progressDialog = new ProgressDialog(getContext());

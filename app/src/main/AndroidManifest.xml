@@ -12,7 +12,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -21,10 +22,12 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".WallActivity"></activity>
+        <activity
+            android:name=".WallActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ProjectActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />

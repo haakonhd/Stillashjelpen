@@ -252,8 +252,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
 
     public void fastCalcButtonClicked(View view) {
         Intent i = new Intent(this, WallActivity.class);
-        i.putExtra("from", "fastCalculation");
-        WallActivity.isQuickCalculation = true;
+        i.putExtra("isQuickCalculation", true);
         startActivity(i);
     }
 

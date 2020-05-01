@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.util.Objects;
+
 public class WallActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
@@ -26,6 +28,9 @@ public class WallActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent intent = getIntent();
+        isQuickCalculation = Objects.requireNonNull(intent.getExtras()).getBoolean("isQuickCalculation");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wall);
 
