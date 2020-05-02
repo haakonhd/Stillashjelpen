@@ -222,7 +222,15 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
             public void onClick(DialogInterface dialog, int which) {
                 //TODO Better sanitation and handling of input
                 if(!spinner.getSelectedItem().toString().equalsIgnoreCase("Velg et stillassystem")) {
-                    addNewProjectToDatabase(input.getText().toString(), spinner.getSelectedItem().toString());
+                    if(input.getText().toString().length() > 0) {
+                        addNewProjectToDatabase(input.getText().toString(), spinner.getSelectedItem().toString());
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Mislykket - Gi veggen et navn", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Mislykket - Velg en type stillas", Toast.LENGTH_SHORT).show();
                 }
             }
         });

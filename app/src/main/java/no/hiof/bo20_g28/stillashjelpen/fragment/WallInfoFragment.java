@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,8 +30,12 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -54,6 +59,7 @@ import no.hiof.bo20_g28.stillashjelpen.R;
 import no.hiof.bo20_g28.stillashjelpen.model.Wall;
 
 import static android.app.Activity.RESULT_OK;
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class WallInfoFragment extends Fragment{
     public static final String ARG_OBJECT = "object";
@@ -64,6 +70,7 @@ public class WallInfoFragment extends Fragment{
     private Wall thisWall;
     private TextView wallNameTextView;
     private TextView soleBoardAreaTextView;
+    private TextView soleBoardAreaOuterTextView;
     private TextView wallAnchorDistanceTextView;
     private TextView wallDescriptionTextView;
     private String currentPhotoPath;
@@ -71,8 +78,6 @@ public class WallInfoFragment extends Fragment{
     private ProgressDialog progressDialog;
     private ImageButton cameraImageButton;
     private ImageButton editWallNameImageButton;
-    private ImageButton editWallSoleBoardAreaImageButton;
-    private ImageButton editWallAnchorDistanceImageButton;
     private ImageButton editWallDescriptionImageButton;
     View view;
 
@@ -88,6 +93,7 @@ public class WallInfoFragment extends Fragment{
         wallImageView = view.findViewById(R.id.wallImageView);
         wallNameTextView = view.findViewById(R.id.wallNameTextView);
         soleBoardAreaTextView = view.findViewById(R.id.soleBoardAreaTextView);
+        soleBoardAreaOuterTextView = view.findViewById(R.id.soleBoardAreaOuterTextView);
         wallAnchorDistanceTextView = view.findViewById(R.id.wallAnchorDistanceTextView);
         wallDescriptionTextView = view.findViewById(R.id.wallDescriptionTextView);
 
@@ -126,20 +132,6 @@ public class WallInfoFragment extends Fragment{
             }
         });
 
-        editWallSoleBoardAreaImageButton = (ImageButton) view.findViewById(R.id.editWallSoleBoardAreaImageButton);
-        editWallSoleBoardAreaImageButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                editWallSoleBoardAreaImageButtonClicked();
-            }
-        });
-
-        editWallAnchorDistanceImageButton = (ImageButton) view.findViewById(R.id.editWallAnchorDistanceImageButton);
-        editWallAnchorDistanceImageButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                editWallAnchorDistanceImageButtonClicked();
-            }
-        });
-
         editWallDescriptionImageButton = (ImageButton) view.findViewById(R.id.editWallDescriptionImageButton);
         editWallDescriptionImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -147,6 +139,7 @@ public class WallInfoFragment extends Fragment{
             }
         });
 
+        startListeners();
 
         return view;
     }
@@ -454,6 +447,40 @@ public class WallInfoFragment extends Fragment{
         wallRef.setValue(thisWall);
     }
 
+    private void startListeners() {
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference wallSoleAreaRef = database.child("walls").child(thisWall.getWallId()).child("soleBoardArea");
+        DatabaseReference wallAnchorDistanceRef = database.child("walls").child(thisWall.getWallId()).child("wallAnchorDistance");
 
+        ValueEventListener soleListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String area = dataSnapshot.getValue().toString();
+                int areaInt = Integer.parseInt(area);
+
+                soleBoardAreaTextView.setText("Innerspir: " + areaInt);
+                soleBoardAreaOuterTextView.setText("Ytterspir: " + areaInt/2);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+        wallSoleAreaRef.addValueEventListener(soleListener);
+
+        ValueEventListener anchorListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String maxDistance = dataSnapshot.getValue().toString();
+
+                wallAnchorDistanceTextView.setText("Forangkringsavstand: " + maxDistance);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+        wallAnchorDistanceRef.addValueEventListener(anchorListener);
+    }
 
 }

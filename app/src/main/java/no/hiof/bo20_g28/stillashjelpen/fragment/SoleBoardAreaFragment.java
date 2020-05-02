@@ -80,6 +80,8 @@ public class SoleBoardAreaFragment extends Fragment {
         loadClassLabelTextView = view.findViewById(R.id.loadClassLabelTextView);
         kNLabelTextView = view.findViewById(R.id.kNLabelTextView);
 
+        kNLabelTextView.setText(Html.fromHtml("kN/m<sup>2</sup>"));
+
         if(WallActivity.isQuickCalculation){
             thisWall = new Wall();
             thisWall.setScaffoldType("none");
@@ -394,9 +396,12 @@ public class SoleBoardAreaFragment extends Fragment {
         float result = (float) (load * bayWidth * bayLength);
         float result2 = result * nrOfFloors;
         float result3 = result2 + weight;
+        float maxPayload = (float) (load * bayWidth * bayLength);
+        float totalPayload = maxPayload * nrOfFloors;
+        float totalLoad = totalPayload + weight;
 
-        float resultOuterSpear = result3 / 4;
-        float resultInnerSpear = result3 / 2;
+        float resultOuterSpear = totalLoad / 4;
+        float resultInnerSpear = totalLoad / 2;
 
         float groundKiloPrCm2 = (float) (groundKiloNewton / 100);
 
