@@ -47,12 +47,12 @@ public class SoleBoardAreaFragment extends Fragment {
     private Spinner groundSpinner;
     private SeekBar loadClassSeekBar, floorSeekBar;
 
-    private int load = 75;
-    private int nrOfFloors = 1;
-    private double groundKiloNewton = 500;
-    private double bayLength = 3;
-    private double bayWidth = 0.7;
-    private int weight = 800;
+    private int load; //75
+    private int nrOfFloors; //1
+    private double groundKiloNewton;// 500
+    private double bayLength; // 3
+    private double bayWidth; //0.7
+    private int weight; //800
 
     private Wall thisWall;
     private int soleBoardArea;
@@ -78,6 +78,7 @@ public class SoleBoardAreaFragment extends Fragment {
         resultTextView = view.findViewById(R.id.resultTextView);
         nrOfFloorsLabelTextView = view.findViewById(R.id.nrOfFloorsLabelTextView);
         loadClassLabelTextView = view.findViewById(R.id.loadClassLabelTextView);
+        kNLabelTextView = view.findViewById(R.id.kNLabelTextView);
 
         if(WallActivity.isQuickCalculation){
             thisWall = new Wall();
@@ -90,6 +91,7 @@ public class SoleBoardAreaFragment extends Fragment {
             saveSoleBoardAreaButton.setVisibility(View.VISIBLE);
         }
 
+        setKnLabelTextViewText();
         startSpinner();
         startNrOfFloorsSeekBar();
         startLoadClassSeekBar();
@@ -103,6 +105,10 @@ public class SoleBoardAreaFragment extends Fragment {
         updateSoleBoardCalculation();
 
         return view;
+    }
+
+    private void setKnLabelTextViewText(){
+        kNLabelTextView.setText(Html.fromHtml("kN/m<sup>2</sup>"));
     }
 
     private void startSpinner(){
@@ -243,10 +249,9 @@ public class SoleBoardAreaFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //Check if input exists
-                if(s.length() > 0) {
-                    groundKiloNewton = Integer.parseInt(s.toString());
-                    updateSoleBoardCalculation();
-                }
+                if(s.length() > 0) groundKiloNewton = Integer.parseInt(s.toString());
+                else groundKiloNewton = 0;
+                updateSoleBoardCalculation();
             }
         });
     }
@@ -266,12 +271,18 @@ public class SoleBoardAreaFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //Check if input exists
                 if(s.length() > 0) {
-                    String lastChar = String.valueOf(s.charAt(s.length() - 1));
-                    if (!lastChar.equals(".")) {
-                        bayLength = Float.parseFloat(s.toString());
-                        updateSoleBoardCalculation();
-                    }
+//                    String lastChar = String.valueOf(s.charAt(s.length() - 1));
+//                    if (!lastChar.equals(".")) {
+                        bayLength = Double.parseDouble(s.toString());
+//                    }
+//                    else{
+//                        bayLengthEditText.getText().clear();
+//                        bayLength = 0;
+//                    }
                 }
+                else bayLength = 0;
+
+                updateSoleBoardCalculation();
             }
         });
     }
@@ -291,12 +302,16 @@ public class SoleBoardAreaFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //Check if input exists
                 if(s.length() > 0) {
-                    String lastChar = String.valueOf(s.charAt(s.length() - 1));
-                    if (!lastChar.equals(".")) {
-                        bayWidth = Float.parseFloat(s.toString());
-                        updateSoleBoardCalculation();
-                    }
+//                    String lastChar = String.valueOf(s.charAt(s.length() - 1));
+//                    if (!lastChar.equals("."))
+                        bayWidth = Double.parseDouble(s.toString());
+//                    else {
+//                        bayWidthEditText.getText().clear();
+//                        bayWidth = 0;
+//                    }
                 }
+                else bayWidth = 0;
+                updateSoleBoardCalculation();
             }
         });
     }
@@ -315,10 +330,10 @@ public class SoleBoardAreaFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //Check if input exists
-                if(s.length() > 0) {
-                    weight = Integer.parseInt(s.toString());
-                    updateSoleBoardCalculation();
-                }
+                if(s.length() > 0) weight = Integer.parseInt(s.toString());
+                else weight = 0;
+
+                updateSoleBoardCalculation();
             }
         });
     }
@@ -359,7 +374,23 @@ public class SoleBoardAreaFragment extends Fragment {
         weightEditText.setText(String.valueOf(weight));
     }
 
+    private boolean inputsAreFilled(){
+        return(
+            load != 0 &&
+            bayWidth != 0 &&
+            bayLength != 0 &&
+            nrOfFloors != 0 &&
+            weight != 0 &&
+            groundKiloNewton != 0
+        );
+    }
+
     private void updateSoleBoardCalculation(){
+        if(!inputsAreFilled()){
+            resultTextView.setText("Vennligst fyll ut alle feltene for å regne ut underlagsplank-areal");
+            soleBoardArea = 0;
+            return;
+        }
         float result = (float) (load * bayWidth * bayLength);
         float result2 = result * nrOfFloors;
         float result3 = result2 + weight;
@@ -381,7 +412,7 @@ public class SoleBoardAreaFragment extends Fragment {
 
     private void updateResultTextView(int outerResult, int innerResult){
         resultTextView.setText(Html.fromHtml("Resultat:<br><br>Ytterspir underlagsplank-areal:<br><font color=blue>" + outerResult +
-                " cm2</font><br><br>" + "Innerspir underlagsplank-areal:<br><font color=blue>" + innerResult + " cm2</font>"));
+                " cm<sup>2</sup></font><br><br>" + "Innerspir underlagsplank-areal:<br><font color=blue>" + innerResult + " cm<sup>2</sup></font>"));
     }
 
     private void saveSoleBoardAreaButtonClicked(){
