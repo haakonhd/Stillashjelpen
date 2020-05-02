@@ -11,16 +11,31 @@ public class ScaffoldingSystem implements Serializable {
     private double bayLength;
     private int weight;
     private int scaffoldLoadClass;
-
-
+    private int maxHeight;
     private Date dateCreated;
     private Date dateChanged;
 
+    public enum Cover {
+        UNCOVERED,
+        NET,
+        TARP
+    }
+    public enum ForceFactor {
+        NORMAL,
+        PARALLEL
+    }
 
     public ScaffoldingSystem() {
 
     }
 
+    public int getMaxHeight() {
+        return maxHeight;
+    }
+
+    public void setMaxHeight(int maxHeight) {
+        this.maxHeight = maxHeight;
+    }
 
     public String getScaffoldingSystemId() {
         return scaffoldingSystemId;

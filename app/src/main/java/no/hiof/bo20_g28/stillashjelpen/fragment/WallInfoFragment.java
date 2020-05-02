@@ -463,9 +463,10 @@ public class WallInfoFragment extends Fragment{
         ValueEventListener anchorListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String maxDistance = dataSnapshot.getValue().toString();
+                double maxDistance = (double)dataSnapshot.getValue();
+//                Double.parseDouble(maxDistance);
 
-                wallAnchorDistanceTextView.setText("Forangkringsavstand: " + maxDistance);
+                wallAnchorDistanceTextView.setText("Forangkringsavstand: " + String.format("%.2f", maxDistance));
             }
 
             @Override

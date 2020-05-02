@@ -24,7 +24,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import no.hiof.bo20_g28.stillashjelpen.R;
 import no.hiof.bo20_g28.stillashjelpen.WallActivity;
+import no.hiof.bo20_g28.stillashjelpen.model.ScaffoldingSystem;
 import no.hiof.bo20_g28.stillashjelpen.model.Wall;
+import no.hiof.bo20_g28.stillashjelpen.model.ScaffoldingSystem.Cover;
+import no.hiof.bo20_g28.stillashjelpen.model.ScaffoldingSystem.ForceFactor;
 
 public class WallAnchorDistanceFragment extends Fragment {
     public static final String ARG_OBJECT = "object";
@@ -37,19 +40,11 @@ public class WallAnchorDistanceFragment extends Fragment {
     private static int unselectedColor = Color.parseColor("#9A9A9A");
     private static int selectedColor = Color.parseColor("#FF3DA8D8");
 
-    private static enum cover {
-        UNCOVERED,
-        NET,
-        TARP
-    }
-    private static enum forceFactor {
-        NORMAL,
-        PARALLEL
-    }
 
 
-    private cover selectedCover;
-    private forceFactor selectedForceFactor;
+
+    private Cover selectedCover;
+    private ForceFactor selectedForceFactor;
     private double anchorForce;
     private int scaffoldHeight;
     private double bayLength;
@@ -108,27 +103,50 @@ public class WallAnchorDistanceFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Bundle args = getArguments();
     }
+//    private cover selectedCover;
+//    private forceFactor selectedForceFactor;
+//    private double anchorForce;
+//    private int scaffoldHeight;
+//    private double bayLength;
+//    private double constructionFactor = 0;
+//    private double powerFactor = 0;
+//    private double densityFactor = 0;
+//    private double velocityPressure = 0;
+
+    private void setPresetInputsFromScaffoldingSystem(ScaffoldingSystem ss){
+        /*selectedCover = getLoadClassLoad(ss.getScaffoldLoadClass());
+
+        bayLength = ss.getBayLength();
+        bayWidth = ss.getBayWidth();
+        weight = ss.getWeight();
+
+        loadClassSeekBar.setProgress(ss.getScaffoldLoadClass() - 1);
+        bayLengthEditText.setText(String.valueOf(bayLength));
+        bayWidthEditText.setText(String.valueOf(bayWidth));
+        weightEditText.setText(String.valueOf(weight));
+         */
+    }
 
     private void coverButtonsListener(){
         resetCoverButtonColors();
         //Setting onclick functions
         coverNoneButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                selectedCover = cover.UNCOVERED;
+                selectedCover = Cover.UNCOVERED;
                 resetCoverButtonColors();
                 coverNoneButton.setBackgroundColor(selectedColor);
                 updateAnchorDistanceCalculation(); }
         });
         coverNetButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                selectedCover = cover.NET;
+                selectedCover = Cover.NET;
                 resetCoverButtonColors();
                 coverNetButton.setBackgroundColor(selectedColor);
                 updateAnchorDistanceCalculation();}
         });
         coverTarpButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                selectedCover = cover.TARP;
+                selectedCover = Cover.TARP;
                 resetCoverButtonColors();
                 coverTarpButton.setBackgroundColor(selectedColor);
                 updateAnchorDistanceCalculation();}
@@ -154,8 +172,8 @@ public class WallAnchorDistanceFragment extends Fragment {
         forceFactorNormalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedForceFactor = forceFactor.NORMAL;
                 BayLengthDescriptionTextView.setText(R.string.faglengde);
+                selectedForceFactor = ForceFactor.NORMAL;
                 resetForceFactorButtonColors();
                 forceFactorNormalButton.setBackgroundColor(selectedColor);
                 updateAnchorDistanceCalculation(); }
@@ -163,8 +181,8 @@ public class WallAnchorDistanceFragment extends Fragment {
         forceFactorParallelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedForceFactor = forceFactor.PARALLEL;
                 BayLengthDescriptionTextView.setText(R.string.fagbredde);
+                selectedForceFactor = ForceFactor.PARALLEL;
                 resetForceFactorButtonColors();
                 forceFactorParallelButton.setBackgroundColor(selectedColor);
                 updateAnchorDistanceCalculation();}
@@ -244,14 +262,14 @@ public class WallAnchorDistanceFragment extends Fragment {
 
     // finding cosnstruction factor (cs konstruksjonsfaktor)
     private void setConstructionFactor(){
-        if(selectedCover == cover.UNCOVERED && selectedForceFactor == forceFactor.NORMAL)
+        if(selectedCover == Cover.UNCOVERED && selectedForceFactor == ForceFactor.NORMAL)
             constructionFactor = 0.75;
         else constructionFactor = 1.0;
     }
 
     //finding power factor (cf kraftfaktor)
     private void setPowerFactor(){
-        if(selectedCover != cover.UNCOVERED && selectedForceFactor == forceFactor.PARALLEL)
+        if(selectedCover != Cover.UNCOVERED && selectedForceFactor == ForceFactor.PARALLEL)
             powerFactor = 0.1;
         else powerFactor = 1.3;
     }
@@ -316,7 +334,7 @@ public class WallAnchorDistanceFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Kalkulasjon");
         final TextView textView = new TextView(getActivity());
-        textView.setPadding(20,20,20,20);
+        textView.setPadding(40,20,40,20);
         if(inputsArefilled()) {
             textView.setText(Html.fromHtml("Formel: <br><div style='text-align:center;'> " +
                     "<u>c</u><sub>s</sub> <u>x c</u><sub>f</sub><u> x faglengde x tetthetsfaktor x q</u><sub>1</sub><u> x 0,7</u>" +
@@ -325,7 +343,7 @@ public class WallAnchorDistanceFragment extends Fragment {
                     "</div>" +
                     "Utregning: <br><div style='text-align:center;'><u>"+
                     constructionFactor + " x " + powerFactor + " x " + bayLength + " x " + densityFactor + " x " + velocityPressure + " x 0.7 </u><br>" +
-                    "(" + anchorForce + " / 1.2)</div>"
+                    "(" + anchorForce + " x 1.2)</div>"
             ));
 //            return (constructionFactor * powerFactor * bayLength * densityFactor * velocityPressure * 0.7) / (anchorForce / 1.2);
         }

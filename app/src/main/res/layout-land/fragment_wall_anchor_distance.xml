@@ -136,7 +136,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/editTextHeight"
         android:background="@drawable/et_style"
-        android:ems="3"
+        android:ems="4"
         android:inputType="numberDecimal"
         android:maxLength="4"
         android:textAlignment="center"
