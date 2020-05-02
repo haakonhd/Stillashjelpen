@@ -17,7 +17,6 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.android.gms.common.util.Strings;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,8 +29,6 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import no.hiof.bo20_g28.stillashjelpen.MainActivity;
 import no.hiof.bo20_g28.stillashjelpen.R;
 import no.hiof.bo20_g28.stillashjelpen.WallActivity;
 import no.hiof.bo20_g28.stillashjelpen.model.ScaffoldingSystem;
@@ -393,9 +390,6 @@ public class SoleBoardAreaFragment extends Fragment {
             soleBoardArea = 0;
             return;
         }
-        float result = (float) (load * bayWidth * bayLength);
-        float result2 = result * nrOfFloors;
-        float result3 = result2 + weight;
         float maxPayload = (float) (load * bayWidth * bayLength);
         float totalPayload = maxPayload * nrOfFloors;
         float totalLoad = totalPayload + weight;

@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +15,13 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import org.w3c.dom.Text;
-
 import no.hiof.bo20_g28.stillashjelpen.R;
 import no.hiof.bo20_g28.stillashjelpen.WallActivity;
 import no.hiof.bo20_g28.stillashjelpen.model.Wall;
@@ -35,7 +31,7 @@ public class WallAnchorDistanceFragment extends Fragment {
 
     private Button coverNoneButton, coverNetButton, coverTarpButton, forceFactorNormalButton, forceFactorParallelButton, saveAnchorDistanceButton, showCalculationButton;
     private EditText anchorForceEditText, bayLengthEditText;
-    private TextView resultTextView, scaffoldHeightLabelTextView;
+    private TextView resultTextView, scaffoldHeightLabelTextView, BayLengthDescriptionTextView;
     private SeekBar scaffoldHeightSeekBar;
 
     private static int unselectedColor = Color.parseColor("#9A9A9A");
@@ -85,6 +81,7 @@ public class WallAnchorDistanceFragment extends Fragment {
         resultTextView = view.findViewById(R.id.resultTextView);
         scaffoldHeightLabelTextView = view.findViewById(R.id.scaffoldHeightLabelTextView);
         scaffoldHeightSeekBar = view.findViewById(R.id.scaffoldHeightSeekBar);
+        BayLengthDescriptionTextView = view.findViewById(R.id.bayLengthDescriptionTextView);
         scaffoldHeight = 1;
 
         if(WallActivity.isQuickCalculation){
@@ -158,6 +155,7 @@ public class WallAnchorDistanceFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 selectedForceFactor = forceFactor.NORMAL;
+                BayLengthDescriptionTextView.setText(R.string.faglengde);
                 resetForceFactorButtonColors();
                 forceFactorNormalButton.setBackgroundColor(selectedColor);
                 updateAnchorDistanceCalculation(); }
@@ -166,6 +164,7 @@ public class WallAnchorDistanceFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 selectedForceFactor = forceFactor.PARALLEL;
+                BayLengthDescriptionTextView.setText(R.string.fagbredde);
                 resetForceFactorButtonColors();
                 forceFactorParallelButton.setBackgroundColor(selectedColor);
                 updateAnchorDistanceCalculation();}
@@ -239,7 +238,7 @@ public class WallAnchorDistanceFragment extends Fragment {
         String result = String.format("%.2f", getCalculateAnchorDistance());
 //        resultTextView.setText("Resultat:\n Vertikal avstand mellom forankringer:\n Maksimum " + result + " cm");
         resultTextView.setText(Html.fromHtml("Resultat:<br><br>Vertikal avstand mellom forankringer:<br><font color=blue>" + result +
-                " cm</font>"
+                " m</font>"
         ));
     }
 
@@ -274,7 +273,8 @@ public class WallAnchorDistanceFragment extends Fragment {
 
     // finding velocity factor (q1 hastighetstrykk)
     private void setVelocityPressure(){
-        velocityPressure = 12.5 * scaffoldHeight + 800;
+        double velocityPressureInNewton = (12.5 * scaffoldHeight) + 800;
+        velocityPressure = velocityPressureInNewton / 1000;
     }
 
     private double getCalculateAnchorDistance(){
@@ -283,7 +283,7 @@ public class WallAnchorDistanceFragment extends Fragment {
         setDensityFactor();
         setVelocityPressure();
         // cs x cf x faglengde x tetthetsfaktor x q1 x 0.7 / Fw
-        return (constructionFactor * powerFactor * bayLength * densityFactor * velocityPressure * 0.7) / (anchorForce / 1.2);
+        return (anchorForce / 1.2) / (constructionFactor * powerFactor * bayLength * densityFactor * velocityPressure * 0.7);
     }
 
     private void updateWallWithAnchorDistance() {

@@ -138,7 +138,7 @@
         android:background="@drawable/et_style"
         android:ems="3"
         android:inputType="numberDecimal"
-        android:maxLength="3"
+        android:maxLength="4"
         android:textAlignment="center"
         android:nextFocusDown="@+id/bayLengthEditText"
         android:paddingVertical="15dp"
