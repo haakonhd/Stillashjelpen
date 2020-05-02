@@ -77,8 +77,6 @@ public class SoleBoardAreaFragment extends Fragment {
         loadClassLabelTextView = view.findViewById(R.id.loadClassLabelTextView);
         kNLabelTextView = view.findViewById(R.id.kNLabelTextView);
 
-        kNLabelTextView.setText(Html.fromHtml("kN/m<sup>2</sup>"));
-
         if(WallActivity.isQuickCalculation){
             thisWall = new Wall();
             thisWall.setScaffoldType("none");
@@ -107,7 +105,7 @@ public class SoleBoardAreaFragment extends Fragment {
     }
 
     private void setKnLabelTextViewText(){
-        kNLabelTextView.setText(Html.fromHtml("kN/m<sup>2</sup>"));
+        kNLabelTextView.setText(Html.fromHtml("<font>kN/m<sup><small>2</small></sup></font>"));
     }
 
     private void startSpinner(){
@@ -411,7 +409,7 @@ public class SoleBoardAreaFragment extends Fragment {
 
     private void updateResultTextView(int outerResult, int innerResult){
         resultTextView.setText(Html.fromHtml("Resultat:<br><br>Ytterspir underlagsplank-areal:<br><font color=blue>" + outerResult +
-                " cm<sup>2</sup></font><br><br>" + "Innerspir underlagsplank-areal:<br><font color=blue>" + innerResult + " cm<sup>2</sup></font>"));
+                " cm<sup><small>2</small></sup></font><br><br>" + "Innerspir underlagsplank-areal:<br><font color=blue>" + innerResult + " cm<sup><small>2</small></sup></font>"));
     }
 
     private void saveSoleBoardAreaButtonClicked(){

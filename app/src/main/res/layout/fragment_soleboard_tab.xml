@@ -47,7 +47,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="kN/m2"
-        android:textSize="14sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/groundKiloNewtonEditText"
         app:layout_constraintStart_toEndOf="@+id/groundKiloNewtonEditText"
         app:layout_constraintTop_toTopOf="@+id/groundKiloNewtonEditText" />
@@ -242,6 +242,7 @@
         android:layout_marginEnd="24dp"
         android:text="Resultater følger..."
         android:textAlignment="center"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/saveSoleBoardAreaButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Html;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,7 +92,8 @@ public class WallInfoFragment extends Fragment{
 
         wallNameTextView.setText(thisWall.getWallName());
         soleBoardAreaTextView.setText("Underplankareal: " + thisWall.getSoleBoardArea());
-        wallAnchorDistanceTextView.setText("Forankringsavstand: " +  String.format("%.2f", thisWall.getWallAnchorDistance()));
+        String stringResult = String.format("%.2f", thisWall.getWallAnchorDistance());
+        wallAnchorDistanceTextView.setText(Html.fromHtml("Forankringsavstand: " +  stringResult));
         wallDescriptionTextView.setText(thisWall.getWallDescription());
 
         progressDialog = new ProgressDialog(getContext());
@@ -450,8 +452,8 @@ public class WallInfoFragment extends Fragment{
                 String area = dataSnapshot.getValue().toString();
                 int areaInt = Integer.parseInt(area);
 
-                soleBoardAreaTextView.setText("Innerspir: " + areaInt);
-                soleBoardAreaOuterTextView.setText("Ytterspir: " + areaInt/2);
+                soleBoardAreaTextView.setText(Html.fromHtml("Innerspir: " + areaInt + " <font>cm<sup><small>2</small></sup></font>"));
+                soleBoardAreaOuterTextView.setText(Html.fromHtml("Ytterspir: " + areaInt/2 + " <font>cm<sup><small>2</small></sup></font>"));
             }
 
             @Override

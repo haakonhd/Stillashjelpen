@@ -256,8 +256,7 @@ public class WallAnchorDistanceFragment extends Fragment {
         String result = String.format("%.2f", getCalculateAnchorDistance());
 //        resultTextView.setText("Resultat:\n Vertikal avstand mellom forankringer:\n Maksimum " + result + " cm");
         resultTextView.setText(Html.fromHtml("Resultat:<br><br>Vertikal avstand mellom forankringer:<br><font color=blue>" + result +
-                " m</font>"
-        ));
+                " m</font>"));
     }
 
     // finding cosnstruction factor (cs konstruksjonsfaktor)
@@ -295,13 +294,13 @@ public class WallAnchorDistanceFragment extends Fragment {
         velocityPressure = velocityPressureInNewton / 1000;
     }
 
-    private double getCalculateAnchorDistance(){
+    private float getCalculateAnchorDistance(){
         setConstructionFactor();
         setPowerFactor();
         setDensityFactor();
         setVelocityPressure();
-        // cs x cf x faglengde x tetthetsfaktor x q1 x 0.7 / Fw
-        return (anchorForce / 1.2) / (constructionFactor * powerFactor * bayLength * densityFactor * velocityPressure * 0.7);
+        //  Fw / cs x cf x faglengde x tetthetsfaktor x q1 x 0.7
+        return (float) ((anchorForce / 1.2) / (constructionFactor * powerFactor * bayLength * densityFactor * velocityPressure * 0.7));
     }
 
     private void updateWallWithAnchorDistance() {
