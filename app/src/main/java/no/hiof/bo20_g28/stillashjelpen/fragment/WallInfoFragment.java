@@ -468,7 +468,7 @@ public class WallInfoFragment extends Fragment{
                 double maxDistance = (double)dataSnapshot.getValue();
 //                Double.parseDouble(maxDistance);
 
-                wallAnchorDistanceTextView.setText("Forangkringsavstand: " + String.format("%.2f", maxDistance));
+                wallAnchorDistanceTextView.setText("Forangkringsavstand: " + String.format("%.2f", maxDistance) + " m");
             }
 
             @Override
