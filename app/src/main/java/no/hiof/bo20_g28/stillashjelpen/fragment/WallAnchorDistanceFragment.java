@@ -1,5 +1,6 @@
 package no.hiof.bo20_g28.stillashjelpen.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,7 +8,9 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,8 +18,11 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -95,8 +101,13 @@ public class WallAnchorDistanceFragment extends Fragment {
         startScaffoldHeightSeekBar();
         bayLengthEditTextListener();
 
+        getPresetInputsFromScaffoldingSystem();
+        updateAnchorDistanceCalculation();
+
         return view;
     }
+
+
 
 
     @Override
@@ -219,6 +230,31 @@ public class WallAnchorDistanceFragment extends Fragment {
 
             @Override public void onStopTrackingTouch(SeekBar seekBar) { }
         });
+
+        scaffoldHeightSeekBar.setOnTouchListener(new SeekBar.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                int action = event.getAction();
+                switch (action)
+                {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+
+                // Handle Seekbar touch events.
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
     }
 
 
@@ -301,6 +337,30 @@ public class WallAnchorDistanceFragment extends Fragment {
         setVelocityPressure();
         //  Fw / cs x cf x faglengde x tetthetsfaktor x q1 x 0.7
         return (float) ((anchorForce / 1.2) / (constructionFactor * powerFactor * bayLength * densityFactor * velocityPressure * 0.7));
+    }
+
+    private void getPresetInputsFromScaffoldingSystem(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference fDatabaseRoot = database.getReference().child("scaffoldingSystems");
+
+        fDatabaseRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot scaffoldingSystemsSnapshot : dataSnapshot.getChildren()) {
+                    ScaffoldingSystem ss = scaffoldingSystemsSnapshot.getValue(ScaffoldingSystem.class);
+
+                    if (ss.getScaffoldingSystemName().equals(thisWall.getScaffoldType())) {
+                        setPresetInputsFromScaffoldingSystem(ss);
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("FirebaseError", databaseError.toException());
+            }
+        });
     }
 
     private void updateWallWithAnchorDistance() {
