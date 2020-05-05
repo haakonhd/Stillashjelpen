@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -188,8 +187,9 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
     }
 
     public void controlSchemeButtonClicked(View view) {
-        Toast.makeText(this, "Du trykket på 'Kontrollskjema'-knappen", Toast.LENGTH_SHORT).show();
-    }
+        Intent i = new Intent(this, ControlSchemeActivity.class);
+        i.putExtra("passedProject", thisProject);
+        startActivity(i);    }
 
 
     //------------------------Dialog boxes----------------------------------------------------------

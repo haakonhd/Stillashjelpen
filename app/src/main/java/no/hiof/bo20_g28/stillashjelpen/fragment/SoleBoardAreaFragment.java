@@ -37,7 +37,7 @@ import no.hiof.bo20_g28.stillashjelpen.model.Wall;
 public class SoleBoardAreaFragment extends Fragment {
     public static final String ARG_OBJECT = "object";
 
-    private Button saveSoleBoardAreaButton;
+    private Button saveSoleBoardAreaButton, showCalculationButton;
     private TextView resultTextView, nrOfFloorsLabelTextView, loadClassLabelTextView, bayLengthMeterLabelTextView, kgLabelTextView, bayWidthMeterLabelTextView,
             nrOfFloorsDescriptionTextView, bayLengthDescriptionTextView, bayWidthDescriptionTextView, loadClassDescriptionTextView, kNLabelTextView, groundDescriptionTextView;
     private EditText weightEditText, bayLengthEditText, bayWidthEditText, groundKiloNewtonEditText;
@@ -65,6 +65,14 @@ public class SoleBoardAreaFragment extends Fragment {
                 saveSoleBoardAreaButtonClicked();
             }
         });
+
+        showCalculationButton = view.findViewById(R.id.showCalculationButton);
+        showCalculationButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //openCalculationDialog();
+            }
+        });
+
         weightEditText = view.findViewById(R.id.weightEditText);
         bayLengthEditText = view.findViewById(R.id.bayLengthEditText);
         bayWidthEditText = view.findViewById(R.id.bayWidthEditText);
@@ -422,4 +430,37 @@ public class SoleBoardAreaFragment extends Fragment {
         DatabaseReference wallRef = fDatabase.child(thisWall.getWallId());
         wallRef.setValue(thisWall);
     }
+
+    /*private void openCalculationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Kalkulasjon");
+        final TextView textView = new TextView(getActivity());
+        textView.setPadding(40,20,40,20);
+        if(inputsAreFilled()) {
+            textView.setText(Html.fromHtml("Formel: <br><div style='text-align:center;'> " +
+                    "<u>c</u><sub>s</sub> <u>x c</u><sub>f</sub><u> x faglengde x tetthetsfaktor x q</u><sub>1</sub><u> x 0,7</u>" +
+                    "<br>" +
+                    "F<sub>w</sub>" +
+                    "</div>" +
+                    "Utregning: <br><div style='text-align:center;'><u>"+
+                    constructionFactor + " x " + powerFactor + " x " + bayLength + " x " + densityFactor + " x " + velocityPressure + " x 0.7 </u><br>" +
+                    "(" + anchorForce + " x 1.2)</div>"
+            ));
+//            return (constructionFactor * powerFactor * bayLength * densityFactor * velocityPressure * 0.7) / (anchorForce / 1.2);
+        }
+        else{
+            textView.setText("Vennligst fyll ut alle felter");
+        }
+        textView.setTextSize(20);
+        builder.setView(textView);
+
+        builder.setNegativeButton("Lukk", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }*/
 }

@@ -72,7 +72,7 @@ public class WallInfoFragment extends Fragment{
     private ImageButton cameraImageButton;
     private ImageButton editWallNameImageButton;
     private ImageButton editWallDescriptionImageButton;
-    View view;
+    private View view;
 
     @Nullable
     @Override

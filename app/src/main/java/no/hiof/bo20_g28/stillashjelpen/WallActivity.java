@@ -1,19 +1,20 @@
 package no.hiof.bo20_g28.stillashjelpen;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager2.widget.ViewPager2;
-import no.hiof.bo20_g28.stillashjelpen.adapter.TabCalculationAdapter;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.Objects;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
+import no.hiof.bo20_g28.stillashjelpen.adapter.TabCalculationAdapter;
 
 public class WallActivity extends AppCompatActivity {
     private TabLayout tabLayout;
