@@ -28,7 +28,7 @@ public class FourthControlSchemeFragment extends Fragment {
         thisProject = (Project) i.getSerializableExtra("passedProject");
 
         textView = view.findViewById(R.id.cs4TestTextView);
-        textView.setText("Fourth " + thisProject.getProjectName() + " tab");
+        textView.setText(getResources().getString(R.string.tab_cs_fourth) + " for prosjekt: " + thisProject.getProjectName());
 
         return view;
     }

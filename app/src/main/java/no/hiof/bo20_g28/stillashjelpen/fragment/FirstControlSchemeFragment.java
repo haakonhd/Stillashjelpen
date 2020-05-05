@@ -28,7 +28,7 @@ public class FirstControlSchemeFragment extends Fragment {
         thisProject = (Project) i.getSerializableExtra("passedProject");
 
         textView = view.findViewById(R.id.cs1TestTextView);
-        textView.setText("First " + thisProject.getProjectName() + " tab");
+        textView.setText(getResources().getString(R.string.tab_cs_first) + " for prosjekt: " + thisProject.getProjectName());
 
         return view;
     }

@@ -15,10 +15,10 @@
     <string name="tab_soleboard">Underlagsplank-areal</string>
     <string name="tab_anchor">Forankringsavstand</string>
 
-    <string name="tab_cs_first">first</string>
-    <string name="tab_cs_second">second</string>
-    <string name="tab_cs_third">third</string>
-    <string name="tab_cs_fourth">fourth</string>
+    <string name="tab_cs_first">Kontroll-detaljer</string>
+    <string name="tab_cs_second">Teknisk data</string>
+    <string name="tab_cs_third">Sjekkliste</string>
+    <string name="tab_cs_fourth">Kontroll-logg</string>
 
 
     <string name="projects_file">projects.txt</string>

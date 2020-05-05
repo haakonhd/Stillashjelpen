@@ -69,8 +69,6 @@ public class ControlSchemeActivity extends AppCompatActivity {
             TextView tab_label = (TextView) tab.findViewById(R.id.tab_cs_label);
 
             tab_label.setText(tabLabels[i]);
-
-
         }
     }
 }

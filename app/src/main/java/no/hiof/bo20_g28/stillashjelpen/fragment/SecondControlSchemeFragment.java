@@ -28,7 +28,7 @@ public class SecondControlSchemeFragment extends Fragment {
         thisProject = (Project) i.getSerializableExtra("passedProject");
 
         textView = view.findViewById(R.id.cs2TestTextView);
-        textView.setText("Second " + thisProject.getProjectName() + " tab");
+        textView.setText(getResources().getString(R.string.tab_cs_second) + " for prosjekt: " + thisProject.getProjectName());
 
         return view;
     }
