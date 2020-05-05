@@ -7,6 +7,7 @@ import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -187,6 +188,31 @@ public class SoleBoardAreaFragment extends Fragment {
                 // stops touching the SeekBar
             }
         });
+
+        floorSeekBar.setOnTouchListener(new SeekBar.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                int action = event.getAction();
+                switch (action)
+                {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+
+                // Handle Seekbar touch events.
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
     }
 
     private void startLoadClassSeekBar(){
@@ -212,6 +238,31 @@ public class SoleBoardAreaFragment extends Fragment {
                 // This method will automatically
                 // called when the user
                 // stops touching the SeekBar
+            }
+        });
+
+        loadClassSeekBar.setOnTouchListener(new SeekBar.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                int action = event.getAction();
+                switch (action)
+                {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+
+                // Handle Seekbar touch events.
+                v.onTouchEvent(event);
+                return true;
             }
         });
     }

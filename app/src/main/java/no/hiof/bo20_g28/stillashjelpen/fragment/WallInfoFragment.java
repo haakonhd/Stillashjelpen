@@ -452,8 +452,8 @@ public class WallInfoFragment extends Fragment{
                 String area = dataSnapshot.getValue().toString();
                 int areaInt = Integer.parseInt(area);
 
-                soleBoardAreaTextView.setText(Html.fromHtml("Innerspir: " + areaInt + " <font>cm<sup><small>2</small></sup></font>"));
-                soleBoardAreaOuterTextView.setText(Html.fromHtml("Ytterspir: " + areaInt/2 + " <font>cm<sup><small>2</small></sup></font>"));
+                soleBoardAreaTextView.setText(Html.fromHtml("Underlagsplank-areal for innerspir: " + areaInt + " <font>cm<sup><small>2</small></sup></font>"));
+                soleBoardAreaOuterTextView.setText(Html.fromHtml("Underlagsplank-areal for ytterspir: " + areaInt/2 + " <font>cm<sup><small>2</small></sup></font>"));
             }
 
             @Override
@@ -465,10 +465,10 @@ public class WallInfoFragment extends Fragment{
         ValueEventListener anchorListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                double maxDistance = (double)dataSnapshot.getValue();
-//                Double.parseDouble(maxDistance);
+                String maxDistanceString = dataSnapshot.getValue().toString();
+                double maxDistance = Double.parseDouble(maxDistanceString);
 
-                wallAnchorDistanceTextView.setText("Forangkringsavstand: " + String.format("%.2f", maxDistance) + " m");
+                wallAnchorDistanceTextView.setText("Maksimal forangkringsavstand: " + String.format("%.2f", maxDistance) + " m");
             }
 
             @Override
