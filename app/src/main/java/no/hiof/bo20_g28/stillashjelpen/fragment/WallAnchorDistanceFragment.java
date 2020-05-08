@@ -135,7 +135,7 @@ public class WallAnchorDistanceFragment extends Fragment {
         setForceFactorButtonColors();
         if(anchorForce > 0) anchorForceEditText.setText(String.format(Locale.ENGLISH,"%f", anchorForce));
         if(scaffoldHeight > 0) {
-            scaffoldHeightSeekBar.setProgress(scaffoldHeight);
+            scaffoldHeightSeekBar.setProgress(scaffoldHeight - 1);
             scaffoldHeightLabelTextView.setText(scaffoldHeight + " m");
         }
         if(bayLength > 0) bayLengthEditText.setText(String.format(Locale.ENGLISH,"%f", bayLength));
@@ -318,6 +318,7 @@ public class WallAnchorDistanceFragment extends Fragment {
 //        resultTextView.setText("Resultat:\n Vertikal avstand mellom forankringer:\n Maksimum " + result + " cm");
         resultTextView.setText(Html.fromHtml("Resultat:<br><br>Vertikal avstand mellom forankringer:<br><font color=blue>" + result +
                 " m</font>"));
+        WallActivity.wallAnchorDistance = getCalculateAnchorDistance();
     }
 
     // finding cosnstruction factor (cs konstruksjonsfaktor)

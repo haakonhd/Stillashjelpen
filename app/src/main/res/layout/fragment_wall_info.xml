@@ -51,12 +51,24 @@
         android:id="@+id/soleBoardAreaTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="TextView"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/wallNameTextView"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/soleBoardAreaOuterTextView"
+        app:layout_constraintStart_toStartOf="@+id/soleBoardAreaOuterTextView"
+        app:layout_constraintTop_toBottomOf="@+id/soleBoardAreaOuterTextView" />
+
+
+    <TextView
+        android:id="@+id/soleBoardAreaOuterTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginTop="10dp"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/editWallNameImageButton"
         app:layout_constraintStart_toStartOf="@+id/wallNameTextView"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/wallNameTextView" />
 
     <TextView
         android:id="@+id/wallDescriptionTextView"
@@ -74,12 +86,13 @@
         android:id="@+id/wallAnchorDistanceTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="TextView"
         android:textSize="24sp"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="@+id/soleBoardAreaOuterTextView"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/soleBoardAreaOuterTextView"
-        app:layout_constraintTop_toBottomOf="@+id/soleBoardAreaOuterTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/soleBoardAreaTextView" />
 
     <ImageButton
         android:id="@+id/cameraImageButton"
@@ -124,14 +137,4 @@
         app:layout_constraintTop_toTopOf="@+id/wallDescriptionTextView"
         app:srcCompat="@android:drawable/ic_menu_edit" />
 
-    <TextView
-        android:id="@+id/soleBoardAreaOuterTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/soleBoardAreaTextView"
-        app:layout_constraintStart_toStartOf="@+id/soleBoardAreaTextView"
-        app:layout_constraintTop_toBottomOf="@+id/soleBoardAreaTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

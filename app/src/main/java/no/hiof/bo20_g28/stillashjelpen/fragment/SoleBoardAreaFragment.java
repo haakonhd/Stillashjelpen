@@ -519,6 +519,7 @@ public class SoleBoardAreaFragment extends Fragment {
 
         updateResultTextView(resultOuterSpearFinishedCeil, resultInnerSpearFinishedCeil);
         soleBoardArea = resultInnerSpearFinishedCeil;
+        WallActivity.soleBoardArea = soleBoardArea;
     }
 
     private void updateResultTextView(int outerResult, int innerResult){

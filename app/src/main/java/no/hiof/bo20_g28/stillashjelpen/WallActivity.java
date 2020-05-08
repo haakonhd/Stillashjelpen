@@ -20,6 +20,8 @@ public class WallActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
     public static boolean isQuickCalculation;
+    public static double wallAnchorDistance;
+    public static int soleBoardArea;
 
 
     private TabCalculationAdapter tabCalculationAdapter() {

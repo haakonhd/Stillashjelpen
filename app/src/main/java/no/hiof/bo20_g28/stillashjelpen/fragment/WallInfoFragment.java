@@ -50,6 +50,7 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import no.hiof.bo20_g28.stillashjelpen.GlideApp;
 import no.hiof.bo20_g28.stillashjelpen.R;
+import no.hiof.bo20_g28.stillashjelpen.WallActivity;
 import no.hiof.bo20_g28.stillashjelpen.model.Wall;
 
 import static android.app.Activity.RESULT_OK;
@@ -142,6 +143,7 @@ public class WallInfoFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Bundle args = getArguments();
     }
+
 
 
     @Override
@@ -319,6 +321,11 @@ public class WallInfoFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
+        if(WallActivity.wallAnchorDistance > 0) wallAnchorDistanceTextView.setText("Maksimal forangkringsavstand: " + String.format("%.2f", WallActivity.wallAnchorDistance) + " m");
+        if(WallActivity.soleBoardArea > 0) {
+            soleBoardAreaTextView.setText(Html.fromHtml("Underlagsplank-areal for innerspir: " + WallActivity.soleBoardArea + " <font>cm<sup><small>2</small></sup></font>"));
+            soleBoardAreaOuterTextView.setText(Html.fromHtml("Underlagsplank-areal for ytterspir: " + WallActivity.soleBoardArea/2 + " <font>cm<sup><small>2</small></sup></font>"));
+        }
     }
 
 
@@ -467,7 +474,6 @@ public class WallInfoFragment extends Fragment{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String maxDistanceString = dataSnapshot.getValue().toString();
                 double maxDistance = Double.parseDouble(maxDistanceString);
-
                 wallAnchorDistanceTextView.setText("Maksimal forangkringsavstand: " + String.format("%.2f", maxDistance) + " m");
             }
 
