@@ -22,6 +22,16 @@ public class ControlScheme implements Serializable {
     private String builderControlDate;
     private String userControlDate;
 
+    private String scaffoldType;
+    private String scaffoldLength;
+    private String scaffoldWidth;
+    private String scaffoldHeight;
+    private String numOfWallAnchors;
+    private String numOfWallAnchorTests;
+    private String wallAnchorHolds;
+    private String wallAnchorTestResult;
+
+
 
     public ControlScheme(String controlSchemeId) {
         this.controlSchemeId = controlSchemeId;
@@ -141,5 +151,69 @@ public class ControlScheme implements Serializable {
 
     public void setUserControlDate(String userControlDate) {
         this.userControlDate = userControlDate;
+    }
+
+    public String getScaffoldType() {
+        return scaffoldType;
+    }
+
+    public void setScaffoldType(String scaffoldType) {
+        this.scaffoldType = scaffoldType;
+    }
+
+    public String getScaffoldLength() {
+        return scaffoldLength;
+    }
+
+    public void setScaffoldLength(String scaffoldLength) {
+        this.scaffoldLength = scaffoldLength;
+    }
+
+    public String getScaffoldWidth() {
+        return scaffoldWidth;
+    }
+
+    public void setScaffoldWidth(String scaffoldWidth) {
+        this.scaffoldWidth = scaffoldWidth;
+    }
+
+    public String getScaffoldHeight() {
+        return scaffoldHeight;
+    }
+
+    public void setScaffoldHeight(String scaffoldHeight) {
+        this.scaffoldHeight = scaffoldHeight;
+    }
+
+    public String getNumOfWallAnchors() {
+        return numOfWallAnchors;
+    }
+
+    public void setNumOfWallAnchors(String numOfWallAnchors) {
+        this.numOfWallAnchors = numOfWallAnchors;
+    }
+
+    public String getNumOfWallAnchorTests() {
+        return numOfWallAnchorTests;
+    }
+
+    public void setNumOfWallAnchorTests(String numOfWallAnchorTests) {
+        this.numOfWallAnchorTests = numOfWallAnchorTests;
+    }
+
+    public String getWallAnchorHolds() {
+        return wallAnchorHolds;
+    }
+
+    public void setWallAnchorHolds(String wallAnchorHolds) {
+        this.wallAnchorHolds = wallAnchorHolds;
+    }
+
+    public String getWallAnchorTestResult() {
+        return wallAnchorTestResult;
+    }
+
+    public void setWallAnchorTestResult(String wallAnchorTestResult) {
+        this.wallAnchorTestResult = wallAnchorTestResult;
     }
 }
