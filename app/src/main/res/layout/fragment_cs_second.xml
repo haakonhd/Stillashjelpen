@@ -8,14 +8,301 @@
     tools:context=".fragment.SecondControlSchemeFragment">
 
     <TextView
-        android:id="@+id/cs2TestTextView"
+        android:id="@+id/typeLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="First"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="32dp"
+        android:text="Type:"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/csLengthLabelTextView"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/typeFacadeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="#3DA8D8"
+        android:paddingHorizontal="10dp"
+        android:text="Fasade"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/typeLabelTextView"
+        app:layout_constraintStart_toEndOf="@+id/typeLabelTextView"
+        app:layout_constraintTop_toTopOf="@+id/typeLabelTextView" />
+
+    <Button
+        android:id="@+id/typeTowerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="#3DA8D8"
+        android:paddingHorizontal="10dp"
+        android:textColor="@color/white"
+        android:text="Tårn"
+        app:layout_constraintStart_toEndOf="@+id/typeFacadeButton"
+        app:layout_constraintTop_toTopOf="@+id/typeFacadeButton" />
+
+    <Button
+        android:id="@+id/typeRollerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="#3DA8D8"
+        android:paddingHorizontal="10dp"
+        android:textColor="@color/white"
+        android:text="Rulle"
+        app:layout_constraintStart_toEndOf="@+id/typeTowerButton"
+        app:layout_constraintTop_toTopOf="@+id/typeTowerButton" />
+
+    <Button
+        android:id="@+id/typeOtherButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="#3DA8D8"
+        android:paddingHorizontal="10dp"
+        android:textColor="@color/white"
+        android:text="Andre"
+        app:layout_constraintStart_toEndOf="@+id/typeRollerButton"
+        app:layout_constraintTop_toTopOf="@+id/typeRollerButton" />
+
+    <TextView
+        android:id="@+id/controlSchemeDimensionLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Dimensjon"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/csLengthEditText"
+        app:layout_constraintTop_toBottomOf="@+id/typeLabelTextView" />
+
+    <TextView
+        android:id="@+id/csLengthLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Lengde:"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/csNumOfWallAnchorsLabelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/controlSchemeDimensionLabelTextView" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="m"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/csLengthEditText"
+        app:layout_constraintStart_toEndOf="@+id/csLengthEditText"
+        app:layout_constraintTop_toTopOf="@+id/csLengthEditText" />
+
+    <EditText
+        android:id="@+id/csLengthEditText"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/csLengthLabelTextView"
+        app:layout_constraintStart_toEndOf="@+id/csLengthLabelTextView"
+        app:layout_constraintTop_toTopOf="@+id/csLengthLabelTextView"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/csWidthEditText"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/csWidthLabelTextView"
+        app:layout_constraintStart_toEndOf="@+id/csWidthLabelTextView"
+        app:layout_constraintTop_toTopOf="@+id/csWidthLabelTextView"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/csHeightEditText"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/csHeightLabelTextView"
+        app:layout_constraintStart_toEndOf="@+id/csHeightLabelTextView"
+        app:layout_constraintTop_toTopOf="@+id/csHeightLabelTextView"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="m"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/csWidthEditText"
+        app:layout_constraintStart_toEndOf="@+id/csWidthEditText"
+        app:layout_constraintTop_toTopOf="@+id/csWidthEditText" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="m"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/csHeightEditText"
+        app:layout_constraintStart_toEndOf="@+id/csHeightEditText"
+        app:layout_constraintTop_toTopOf="@+id/csHeightEditText" />
+
+    <TextView
+        android:id="@+id/csWidthLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="Bredde:"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="@+id/csLengthLabelTextView" />
+
+    <TextView
+        android:id="@+id/csHeightLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="Høyde:"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintTop_toTopOf="@+id/csWidthLabelTextView" />
+
+    <TextView
+        android:id="@+id/csNumOfWallAnchorsLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:text="Antall veggfester:"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/csLengthLabelTextView" />
+
+    <TextView
+        android:id="@+id/csNumOfWallAnchorTestsLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="Antall trekkprøver:"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/csNumOfWallAnchorsEditText"
+        app:layout_constraintTop_toTopOf="@+id/csNumOfWallAnchorsLabelTextView" />
+
+    <EditText
+        android:id="@+id/csNumOfWallAnchorsEditText"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/csNumOfWallAnchorsLabelTextView"
+        app:layout_constraintStart_toEndOf="@+id/csNumOfWallAnchorsLabelTextView"
+        app:layout_constraintTop_toTopOf="@+id/csNumOfWallAnchorsLabelTextView"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/csNumOfWallAnchorTestsEditText"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/csNumOfWallAnchorTestsLabelTextView"
+        app:layout_constraintStart_toEndOf="@+id/csNumOfWallAnchorTestsLabelTextView"
+        app:layout_constraintTop_toTopOf="@+id/csNumOfWallAnchorTestsLabelTextView" />
+
+    <EditText
+        android:id="@+id/csWallAnchorHoldsEditText"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/csWallAnchorsHoldsLabelTextView"
+        app:layout_constraintStart_toEndOf="@+id/csWallAnchorsHoldsLabelTextView"
+        app:layout_constraintTop_toTopOf="@+id/csWallAnchorsHoldsLabelTextView" />
+
+    <EditText
+        android:id="@+id/csWallAnchorTestResultEditText"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/csWallAnchorTestResultLabelTextView"
+        app:layout_constraintStart_toEndOf="@+id/csWallAnchorTestResultLabelTextView"
+        app:layout_constraintTop_toTopOf="@+id/csWallAnchorTestResultLabelTextView" />
+
+    <TextView
+        android:id="@+id/csWallAnchorsHoldsLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Festet tåler:"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/csNumOfWallAnchorsLabelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/csNumOfWallAnchorsLabelTextView" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="kg"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/csWallAnchorHoldsEditText"
+        app:layout_constraintStart_toEndOf="@+id/csWallAnchorHoldsEditText"
+        app:layout_constraintTop_toTopOf="@+id/csWallAnchorHoldsEditText" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="kg"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/csWallAnchorTestResultEditText"
+        app:layout_constraintStart_toEndOf="@+id/csWallAnchorTestResultEditText"
+        app:layout_constraintTop_toTopOf="@+id/csWallAnchorTestResultEditText" />
+
+    <TextView
+        android:id="@+id/csWallAnchorTestResultLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="Trekkprøve, overlast 20%:"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/textView18"
+        app:layout_constraintTop_toTopOf="@+id/csWallAnchorsHoldsLabelTextView" />
+
+    <Button
+        android:id="@+id/saveTechnicalDataButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/border_filled"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:text="Lagre"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/csWallAnchorsHoldsLabelTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

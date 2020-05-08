@@ -7,9 +7,31 @@ public class ControlScheme implements Serializable {
 
     private String controlSchemeId;
 
-
     private Date dateCreated;
     private Date dateChanged;
+
+    private String builderCompanyName;
+    private String refNum;
+    private String placeName;
+    private String builtByName;
+    private String userCompanyName;
+    private String userPhoneNum;
+    private String contactPersonName;
+    private String builderNameControlName;
+    private String userNameControlName;
+    private String builderControlDate;
+    private String userControlDate;
+
+    private String scaffoldType;
+    private String scaffoldLength;
+    private String scaffoldWidth;
+    private String scaffoldHeight;
+    private String numOfWallAnchors;
+    private String numOfWallAnchorTests;
+    private String wallAnchorHolds;
+    private String wallAnchorTestResult;
+
+
 
     public ControlScheme(String controlSchemeId) {
         this.controlSchemeId = controlSchemeId;
@@ -41,5 +63,157 @@ public class ControlScheme implements Serializable {
 
     public void setDateChanged(Date dateChanged) {
         this.dateChanged = dateChanged;
+    }
+
+    public String getBuilderCompanyName() {
+        return builderCompanyName;
+    }
+
+    public void setBuilderCompanyName(String builderCompanyName) {
+        this.builderCompanyName = builderCompanyName;
+    }
+
+    public String getRefNum() {
+        return refNum;
+    }
+
+    public void setRefNum(String refNum) {
+        this.refNum = refNum;
+    }
+
+    public String getPlaceName() {
+        return placeName;
+    }
+
+    public void setPlaceName(String placeName) {
+        this.placeName = placeName;
+    }
+
+    public String getBuiltByName() {
+        return builtByName;
+    }
+
+    public void setBuiltByName(String builtByName) {
+        this.builtByName = builtByName;
+    }
+
+    public String getUserCompanyName() {
+        return userCompanyName;
+    }
+
+    public void setUserCompanyName(String userCompanyName) {
+        this.userCompanyName = userCompanyName;
+    }
+
+    public String getUserPhoneNum() {
+        return userPhoneNum;
+    }
+
+    public void setUserPhoneNum(String userPhoneNum) {
+        this.userPhoneNum = userPhoneNum;
+    }
+
+    public String getContactPersonName() {
+        return contactPersonName;
+    }
+
+    public void setContactPersonName(String contactPersonName) {
+        this.contactPersonName = contactPersonName;
+    }
+
+    public String getBuilderNameControlName() {
+        return builderNameControlName;
+    }
+
+    public void setBuilderNameControlName(String builderNameControlName) {
+        this.builderNameControlName = builderNameControlName;
+    }
+
+    public String getUserNameControlName() {
+        return userNameControlName;
+    }
+
+    public void setUserNameControlName(String userNameControlName) {
+        this.userNameControlName = userNameControlName;
+    }
+
+    public String getBuilderControlDate() {
+        return builderControlDate;
+    }
+
+    public void setBuilderControlDate(String builderControlDate) {
+        this.builderControlDate = builderControlDate;
+    }
+
+    public String getUserControlDate() {
+        return userControlDate;
+    }
+
+    public void setUserControlDate(String userControlDate) {
+        this.userControlDate = userControlDate;
+    }
+
+    public String getScaffoldType() {
+        return scaffoldType;
+    }
+
+    public void setScaffoldType(String scaffoldType) {
+        this.scaffoldType = scaffoldType;
+    }
+
+    public String getScaffoldLength() {
+        return scaffoldLength;
+    }
+
+    public void setScaffoldLength(String scaffoldLength) {
+        this.scaffoldLength = scaffoldLength;
+    }
+
+    public String getScaffoldWidth() {
+        return scaffoldWidth;
+    }
+
+    public void setScaffoldWidth(String scaffoldWidth) {
+        this.scaffoldWidth = scaffoldWidth;
+    }
+
+    public String getScaffoldHeight() {
+        return scaffoldHeight;
+    }
+
+    public void setScaffoldHeight(String scaffoldHeight) {
+        this.scaffoldHeight = scaffoldHeight;
+    }
+
+    public String getNumOfWallAnchors() {
+        return numOfWallAnchors;
+    }
+
+    public void setNumOfWallAnchors(String numOfWallAnchors) {
+        this.numOfWallAnchors = numOfWallAnchors;
+    }
+
+    public String getNumOfWallAnchorTests() {
+        return numOfWallAnchorTests;
+    }
+
+    public void setNumOfWallAnchorTests(String numOfWallAnchorTests) {
+        this.numOfWallAnchorTests = numOfWallAnchorTests;
+    }
+
+    public String getWallAnchorHolds() {
+        return wallAnchorHolds;
+    }
+
+    public void setWallAnchorHolds(String wallAnchorHolds) {
+        this.wallAnchorHolds = wallAnchorHolds;
+    }
+
+    public String getWallAnchorTestResult() {
+        return wallAnchorTestResult;
+    }
+
+    public void setWallAnchorTestResult(String wallAnchorTestResult) {
+        this.wallAnchorTestResult = wallAnchorTestResult;
     }
 }
