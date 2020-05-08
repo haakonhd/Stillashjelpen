@@ -28,12 +28,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+
+import java.util.Locale;
+
 import no.hiof.bo20_g28.stillashjelpen.R;
 import no.hiof.bo20_g28.stillashjelpen.WallActivity;
 import no.hiof.bo20_g28.stillashjelpen.model.ScaffoldingSystem;
 import no.hiof.bo20_g28.stillashjelpen.model.Wall;
-import no.hiof.bo20_g28.stillashjelpen.model.ScaffoldingSystem.Cover;
-import no.hiof.bo20_g28.stillashjelpen.model.ScaffoldingSystem.ForceFactor;
+import no.hiof.bo20_g28.stillashjelpen.model.Wall.Cover;
+import no.hiof.bo20_g28.stillashjelpen.model.Wall.ForceFactor;
 
 public class WallAnchorDistanceFragment extends Fragment {
     public static final String ARG_OBJECT = "object";
@@ -43,8 +46,8 @@ public class WallAnchorDistanceFragment extends Fragment {
     private TextView resultTextView, scaffoldHeightLabelTextView, BayLengthDescriptionTextView;
     private SeekBar scaffoldHeightSeekBar;
 
-    private static int unselectedColor = Color.parseColor("#9A9A9A");
-    private static int selectedColor = Color.parseColor("#FF3DA8D8");
+    private static int colorUnselectedButton = Color.parseColor("#9A9A9A");
+    private static int colorSelectedButton = Color.parseColor("#FF3DA8D8");
 
 
 
@@ -101,7 +104,11 @@ public class WallAnchorDistanceFragment extends Fragment {
         startScaffoldHeightSeekBar();
         bayLengthEditTextListener();
 
-        getPresetInputsFromScaffoldingSystem();
+        //setting preset values from scaffold system if it's the first time the wall is used
+        if(thisWall.isFirstTimeCreatingAnchorDistance())getPresetInputsFromScaffoldingSystem();
+        //setting values from the last time the wall was used
+        else setVariablesAndInputsFromWall(thisWall);
+        thisWall.setFirstTimeCreatingAnchorDistance(false);
         updateAnchorDistanceCalculation();
 
         return view;
@@ -114,79 +121,100 @@ public class WallAnchorDistanceFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Bundle args = getArguments();
     }
-//    private cover selectedCover;
-//    private forceFactor selectedForceFactor;
-//    private double anchorForce;
-//    private int scaffoldHeight;
-//    private double bayLength;
-//    private double constructionFactor = 0;
-//    private double powerFactor = 0;
-//    private double densityFactor = 0;
-//    private double velocityPressure = 0;
+
+    private void setVariablesAndInputsFromWall(Wall wall){
+        // setting variables
+        selectedCover = wall.getCover();
+        selectedForceFactor = wall.getForceFactor();
+        anchorForce = wall.getAnchorForce();
+        scaffoldHeight = wall.getScaffoldHeight();
+        bayLength = wall.getBayLength();
+
+        //updating views
+        setCoverButtonColors();
+        setForceFactorButtonColors();
+        if(anchorForce > 0) anchorForceEditText.setText(String.format(Locale.ENGLISH,"%f", anchorForce));
+        if(scaffoldHeight > 0) {
+            scaffoldHeightSeekBar.setProgress(scaffoldHeight);
+            scaffoldHeightLabelTextView.setText(scaffoldHeight + " m");
+        }
+        if(bayLength > 0) bayLengthEditText.setText(String.format(Locale.ENGLISH,"%f", bayLength));
+    }
 
     private void setPresetInputsFromScaffoldingSystem(ScaffoldingSystem ss){
-        /*selectedCover = getLoadClassLoad(ss.getScaffoldLoadClass());
+        setCoverButtonColors();
+        setForceFactorButtonColors();
+        if(ss.getBayLength() > 0) bayLength = ss.getBayLength();
+        if(thisWall.getBayLength() > 0) bayLength = thisWall.getBayLength();
+        if(ss.getMaxHeight() > 0) scaffoldHeightSeekBar.setMax(ss.getMaxHeight());
+        if(bayLength > 0) bayLengthEditText.setText(String.format(Locale.ENGLISH, "%f", bayLength));
+        scaffoldHeight = 1;
+        updateAnchorDistanceCalculation();
+    }
 
-        bayLength = ss.getBayLength();
-        bayWidth = ss.getBayWidth();
-        weight = ss.getWeight();
+    private void setCoverButtonColors(){
+        coverNoneButton.setBackgroundColor(colorUnselectedButton);
+        coverNetButton.setBackgroundColor(colorUnselectedButton);
+        coverTarpButton.setBackgroundColor(colorUnselectedButton);
 
-        loadClassSeekBar.setProgress(ss.getScaffoldLoadClass() - 1);
-        bayLengthEditText.setText(String.valueOf(bayLength));
-        bayWidthEditText.setText(String.valueOf(bayWidth));
-        weightEditText.setText(String.valueOf(weight));
-         */
+        if(selectedCover == null) return;
+
+        switch (selectedCover) {
+            case UNCOVERED:
+                coverNoneButton.setBackgroundColor(colorSelectedButton);
+                break;
+            case NET:
+                coverNetButton.setBackgroundColor(colorSelectedButton);
+                break;
+            case TARP:
+                coverTarpButton.setBackgroundColor(colorSelectedButton);
+                break;
+        }
+    }
+
+    private void setForceFactorButtonColors(){
+        forceFactorNormalButton.setBackgroundColor(colorUnselectedButton);
+        forceFactorParallelButton.setBackgroundColor(colorUnselectedButton);
+        if(selectedForceFactor == null) return;
+        switch (selectedForceFactor) {
+            case NORMAL:
+                forceFactorNormalButton.setBackgroundColor(colorSelectedButton);
+                break;
+            case PARALLEL:
+                forceFactorParallelButton.setBackgroundColor(colorSelectedButton);
+                break;
+        }
     }
 
     private void coverButtonsListener(){
-        resetCoverButtonColors();
         //Setting onclick functions
-        coverNoneButton.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                selectedCover = Cover.UNCOVERED;
-                resetCoverButtonColors();
-                coverNoneButton.setBackgroundColor(selectedColor);
-                updateAnchorDistanceCalculation(); }
-        });
-        coverNetButton.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                selectedCover = Cover.NET;
-                resetCoverButtonColors();
-                coverNetButton.setBackgroundColor(selectedColor);
-                updateAnchorDistanceCalculation();}
-        });
-        coverTarpButton.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                selectedCover = Cover.TARP;
-                resetCoverButtonColors();
-                coverTarpButton.setBackgroundColor(selectedColor);
-                updateAnchorDistanceCalculation();}
-        });
-    }
+        coverNoneButton.setOnClickListener(v -> {
+            selectedCover = Cover.UNCOVERED;
+            coverNoneButton.setBackgroundColor(colorSelectedButton);
+            setCoverButtonColors();
+            updateAnchorDistanceCalculation(); });
 
-    private void resetCoverButtonColors(){
-        coverNoneButton.setBackgroundColor(unselectedColor);
-        coverNetButton.setBackgroundColor(unselectedColor);
-        coverTarpButton.setBackgroundColor(unselectedColor);
-    }
+        coverNetButton.setOnClickListener(v -> {
+            selectedCover = Cover.NET;
+            coverNetButton.setBackgroundColor(colorSelectedButton);
+            setCoverButtonColors();
+            updateAnchorDistanceCalculation();});
 
-    private void resetForceFactorButtonColors(){
-        forceFactorNormalButton.setBackgroundColor(unselectedColor);
-        forceFactorParallelButton.setBackgroundColor(unselectedColor);
+        coverTarpButton.setOnClickListener(v -> {
+            selectedCover = Cover.TARP;
+            coverTarpButton.setBackgroundColor(colorSelectedButton);
+            setCoverButtonColors();
+            updateAnchorDistanceCalculation();});
     }
 
     private void forceFactorButtonsListener(){
-        // Setting button colors
-        resetForceFactorButtonColors();
-
         //Setting onclick functions
         forceFactorNormalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BayLengthDescriptionTextView.setText(R.string.faglengde);
                 selectedForceFactor = ForceFactor.NORMAL;
-                resetForceFactorButtonColors();
-                forceFactorNormalButton.setBackgroundColor(selectedColor);
+                setForceFactorButtonColors();
                 updateAnchorDistanceCalculation(); }
         });
         forceFactorParallelButton.setOnClickListener(new View.OnClickListener() {
@@ -194,12 +222,10 @@ public class WallAnchorDistanceFragment extends Fragment {
             public void onClick(View v) {
                 BayLengthDescriptionTextView.setText(R.string.fagbredde);
                 selectedForceFactor = ForceFactor.PARALLEL;
-                resetForceFactorButtonColors();
-                forceFactorParallelButton.setBackgroundColor(selectedColor);
+                setForceFactorButtonColors();
                 updateAnchorDistanceCalculation();}
         });
     }
-
 
     private void anchorForceEditTextListener() {
         anchorForceEditText.addTextChangedListener(new TextWatcher() {
@@ -221,7 +247,7 @@ public class WallAnchorDistanceFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 String text = String.valueOf(progress + 1);
-                scaffoldHeightLabelTextView.setText(text);
+                scaffoldHeightLabelTextView.setText(text + " m");
                 scaffoldHeight = progress + 1;
                 updateAnchorDistanceCalculation();
             }
@@ -256,7 +282,6 @@ public class WallAnchorDistanceFragment extends Fragment {
             }
         });
     }
-
 
     private void bayLengthEditTextListener(){
         bayLengthEditText.addTextChangedListener(new TextWatcher() {
@@ -363,27 +388,14 @@ public class WallAnchorDistanceFragment extends Fragment {
         });
     }
 
+
     private void updateWallWithAnchorDistance() {
-        if(!inputsArefilled()){
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Lagre");
-            final TextView textView = new TextView(getActivity());
-            textView.setPadding(20,20,20,20);
-            textView.setText("Vennligst fyll ut alle felter");
-            textView.setTextSize(20);
-            builder.setView(textView);
-
-            builder.setNegativeButton("Lukk", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-
-            builder.show();
-            return;
-        }
         thisWall.setWallAnchorDistance(getCalculateAnchorDistance());
+        thisWall.setCover(selectedCover);
+        thisWall.setForceFactor(selectedForceFactor);
+        thisWall.setAnchorForce(anchorForce);
+        thisWall.setScaffoldHeight(scaffoldHeight);
+        thisWall.setBayLength(bayLength);
         DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("walls");
         DatabaseReference wallRef = fDatabase.child(thisWall.getWallId());
         wallRef.setValue(thisWall);

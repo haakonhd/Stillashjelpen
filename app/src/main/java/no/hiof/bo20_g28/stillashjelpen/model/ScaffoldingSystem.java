@@ -15,16 +15,6 @@ public class ScaffoldingSystem implements Serializable {
     private Date dateCreated;
     private Date dateChanged;
 
-    public enum Cover {
-        UNCOVERED,
-        NET,
-        TARP
-    }
-    public enum ForceFactor {
-        NORMAL,
-        PARALLEL
-    }
-
     public ScaffoldingSystem() {
 
     }

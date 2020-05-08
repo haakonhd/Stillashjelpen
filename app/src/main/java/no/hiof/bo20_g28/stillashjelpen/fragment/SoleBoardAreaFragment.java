@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,12 +46,16 @@ public class SoleBoardAreaFragment extends Fragment {
     private Spinner groundSpinner;
     private SeekBar loadClassSeekBar, floorSeekBar;
 
+    private double groundKiloNewton;// 500
     private int load; //75
     private int nrOfFloors; //1
-    private double groundKiloNewton;// 500
     private double bayLength; // 3
     private double bayWidth; //0.7
     private int weight; //800
+
+    private int groundSpinnerPosition;
+    private int loadSeekbarPosition;
+    private final List<Integer> groundKNList = new ArrayList<>();
 
     private Wall thisWall;
     private int soleBoardArea;
@@ -107,10 +112,47 @@ public class SoleBoardAreaFragment extends Fragment {
         bayWidthEditTextListener();
         weightEditTextListener();
 
-        getPresetInputsFromScaffoldingSystem();
+        //setting preset values from scaffold system if it's the first time the wall is used
+        if(thisWall.isFirstTimeCreatingSoleBoardArea()) getPresetInputsFromScaffoldingSystem();
+        //setting values from the last time the wall was used
+        else setVariablesAndInputsFromWall(thisWall);
+        thisWall.setFirstTimeCreatingSoleBoardArea(false);
         updateSoleBoardCalculation();
 
         return view;
+    }
+
+    private void setVariablesAndInputsFromWall(Wall wall){
+        if(wall.getGroundKiloNewton() > 0) {
+            groundKiloNewton = wall.getGroundKiloNewton();
+            groundSpinnerPosition = wall.getGroundSpinnerPosition();
+            groundSpinner.setSelection(groundSpinnerPosition);
+            groundKiloNewtonEditText.setText(String.format(Locale.ENGLISH,"%d",groundKNList.get(groundSpinnerPosition)));
+        }
+        if(wall.getLoad() > 0) {
+            load = wall.getLoad();
+            loadSeekbarPosition = wall.getLoadSeekerPosition();
+            loadClassSeekBar.setProgress(loadSeekbarPosition);
+            loadClassLabelTextView.setText(String.format(Locale.ENGLISH,"Klasse %d", loadSeekbarPosition + 1));
+        }
+        if(wall.getBayLength() > 0) {
+            bayLength = wall.getBayLength();
+            bayLengthEditText.setText(String.format(Locale.ENGLISH, "%f", bayLength));
+        }
+        if(wall.getBayWidth() > 0) {
+            bayWidth = wall.getBayWidth();
+            bayWidthEditText.setText(String.format(Locale.ENGLISH, "%f", bayWidth));
+        }
+        if(wall.getNrOfFloors() > 0) {
+            nrOfFloors = wall.getNrOfFloors();
+            floorSeekBar.setProgress(nrOfFloors -1);
+            nrOfFloorsLabelTextView.setText(String.format(Locale.ENGLISH, "%d",nrOfFloors));
+        }
+        if(wall.getWeight() > 0) {
+            weight = wall.getWeight();
+            weightEditText.setText(String.format(Locale.ENGLISH, "%d",weight));
+        }
+
     }
 
     private void setKnLabelTextViewText(){
@@ -128,7 +170,6 @@ public class SoleBoardAreaFragment extends Fragment {
         groundList.add("Fin sand, løst lagret");
         groundList.add("Leire");
 
-        final List<Integer> groundKNList = new ArrayList<>();
         groundKNList.add(500);
         groundKNList.add(500);
         groundKNList.add(375);
@@ -136,8 +177,7 @@ public class SoleBoardAreaFragment extends Fragment {
         groundKNList.add(250);
         groundKNList.add(125);
         groundKNList.add(80);
-
-
+        
         ArrayAdapter<String> scaffoldSystemAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, groundList);
         scaffoldSystemAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         groundSpinner.setAdapter(scaffoldSystemAdapter);
@@ -148,6 +188,7 @@ public class SoleBoardAreaFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 String text = String.valueOf(groundKNList.get(groundSpinner.getSelectedItemPosition()));
                 groundKiloNewtonEditText.setText(text);
+                groundSpinnerPosition = position;
             }
 
             @Override
@@ -224,6 +265,7 @@ public class SoleBoardAreaFragment extends Fragment {
                 String text = String.valueOf(progress + 1);
                 loadClassLabelTextView.setText("Klasse " + text);
                 load = getLoadClassLoad(progress + 1);
+                loadSeekbarPosition = progress;
                 updateSoleBoardCalculation();
             }
 
@@ -241,6 +283,7 @@ public class SoleBoardAreaFragment extends Fragment {
             }
         });
 
+        // preventing screen from being dragged when adjusting seeker
         loadClassSeekBar.setOnTouchListener(new SeekBar.OnTouchListener()
         {
             @Override
@@ -419,15 +462,27 @@ public class SoleBoardAreaFragment extends Fragment {
     }
 
     private void setPresetInputsFromScaffoldingSystem(ScaffoldingSystem ss){
-        load = getLoadClassLoad(ss.getScaffoldLoadClass());
-        bayLength = ss.getBayLength();
-        bayWidth = ss.getBayWidth();
-        weight = ss.getWeight();
-
-        loadClassSeekBar.setProgress(ss.getScaffoldLoadClass() - 1);
-        bayLengthEditText.setText(String.valueOf(bayLength));
-        bayWidthEditText.setText(String.valueOf(bayWidth));
-        weightEditText.setText(String.valueOf(weight));
+        if(ss.getScaffoldLoadClass() > 0) {
+            load = getLoadClassLoad(ss.getScaffoldLoadClass());
+            loadClassSeekBar.setProgress(ss.getScaffoldLoadClass() - 1);
+        }
+        if(ss.getBayLength() > 0){
+            bayLength = ss.getBayLength();
+            bayLengthEditText.setText(String.valueOf(bayLength));
+        }
+        if(thisWall.getBayLength() > 0) {
+            bayLength = thisWall.getBayLength();
+            bayLengthEditText.setText(String.valueOf(bayLength));
+        }
+        if(ss.getBayWidth() > 0) {
+            bayWidth = ss.getBayWidth();
+            bayWidthEditText.setText(String.valueOf(bayWidth));
+        }
+        nrOfFloors = 1;
+        if(ss.getWeight() > 0){
+            weight = ss.getWeight();
+            weightEditText.setText(String.valueOf(weight));
+        }
     }
 
     private boolean inputsAreFilled(){
@@ -476,7 +531,17 @@ public class SoleBoardAreaFragment extends Fragment {
     }
 
     private void updateWallWithSoleBoardArea(int soleBoardArea) {
+
         thisWall.setSoleBoardArea(soleBoardArea);
+        thisWall.setGroundKiloNewton(groundKiloNewton);
+        thisWall.setGroundSpinnerPosition(groundSpinnerPosition);
+        thisWall.setLoad(load);
+        thisWall.setBayWidth(bayWidth);
+        thisWall.setBayLength(bayLength);
+        thisWall.setNrOfFloors(nrOfFloors);
+        thisWall.setWeight(weight);
+        thisWall.setLoadSeekerPosition(loadSeekbarPosition);
+
         DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("walls");
         DatabaseReference wallRef = fDatabase.child(thisWall.getWallId());
         wallRef.setValue(thisWall);
