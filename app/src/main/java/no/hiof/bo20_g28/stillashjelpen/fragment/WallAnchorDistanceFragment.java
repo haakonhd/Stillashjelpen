@@ -1,6 +1,5 @@
 package no.hiof.bo20_g28.stillashjelpen.fragment;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -24,13 +23,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Locale;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-
-import java.util.Locale;
-
 import no.hiof.bo20_g28.stillashjelpen.R;
 import no.hiof.bo20_g28.stillashjelpen.WallActivity;
 import no.hiof.bo20_g28.stillashjelpen.model.ScaffoldingSystem;
@@ -192,18 +190,25 @@ public class WallAnchorDistanceFragment extends Fragment {
             selectedCover = Cover.UNCOVERED;
             coverNoneButton.setBackgroundColor(colorSelectedButton);
             setCoverButtonColors();
+            if(selectedForceFactor == ForceFactor.PARALLEL) {
+                BayLengthDescriptionTextView.setText(R.string.fagbredde);
+            } else{
+                BayLengthDescriptionTextView.setText(R.string.faglengde);
+            }
             updateAnchorDistanceCalculation(); });
 
         coverNetButton.setOnClickListener(v -> {
             selectedCover = Cover.NET;
             coverNetButton.setBackgroundColor(colorSelectedButton);
             setCoverButtonColors();
+            BayLengthDescriptionTextView.setText(R.string.faglengde);
             updateAnchorDistanceCalculation();});
 
         coverTarpButton.setOnClickListener(v -> {
             selectedCover = Cover.TARP;
             coverTarpButton.setBackgroundColor(colorSelectedButton);
             setCoverButtonColors();
+            BayLengthDescriptionTextView.setText(R.string.faglengde);
             updateAnchorDistanceCalculation();});
     }
 
@@ -220,7 +225,11 @@ public class WallAnchorDistanceFragment extends Fragment {
         forceFactorParallelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BayLengthDescriptionTextView.setText(R.string.fagbredde);
+                if(selectedCover == Cover.UNCOVERED) {
+                    BayLengthDescriptionTextView.setText(R.string.fagbredde);
+                } else{
+                    BayLengthDescriptionTextView.setText(R.string.faglengde);
+                }
                 selectedForceFactor = ForceFactor.PARALLEL;
                 setForceFactorButtonColors();
                 updateAnchorDistanceCalculation();}
