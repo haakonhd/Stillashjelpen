@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Type:"
-        android:textSize="30sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/csLengthLabelTextView"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Dimensjon"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/csLengthEditText"
         app:layout_constraintTop_toBottomOf="@+id/typeLabelTextView" />
@@ -83,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Lengde:"
-        android:textSize="30sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/csNumOfWallAnchorsLabelTextView"
         app:layout_constraintTop_toBottomOf="@+id/controlSchemeDimensionLabelTextView" />
 
@@ -93,49 +93,52 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="m"
-        android:textSize="30sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/csLengthEditText"
         app:layout_constraintStart_toEndOf="@+id/csLengthEditText"
         app:layout_constraintTop_toTopOf="@+id/csLengthEditText" />
 
     <EditText
         android:id="@+id/csLengthEditText"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
+        android:layout_width="80sp"
+        android:layout_height="45dp"
         android:layout_marginStart="16dp"
-        android:ems="10"
+        android:background="@drawable/et_style"
         android:inputType="numberDecimal"
-        android:textSize="24sp"
+        android:maxLength="4"
+        android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/csLengthLabelTextView"
         app:layout_constraintStart_toEndOf="@+id/csLengthLabelTextView"
-        app:layout_constraintTop_toTopOf="@+id/csLengthLabelTextView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/csLengthLabelTextView" />
 
     <EditText
         android:id="@+id/csWidthEditText"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
+        android:layout_width="80sp"
+        android:layout_height="45dp"
         android:layout_marginStart="16dp"
-        android:ems="10"
+        android:background="@drawable/et_style"
         android:inputType="numberDecimal"
-        android:textSize="24sp"
+        android:maxLength="4"
+        android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/csWidthLabelTextView"
         app:layout_constraintStart_toEndOf="@+id/csWidthLabelTextView"
-        app:layout_constraintTop_toTopOf="@+id/csWidthLabelTextView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/csWidthLabelTextView" />
 
     <EditText
         android:id="@+id/csHeightEditText"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
+        android:layout_width="80sp"
+        android:layout_height="45dp"
         android:layout_marginStart="16dp"
-        android:ems="10"
+        android:background="@drawable/et_style"
         android:inputType="numberDecimal"
-        android:textSize="24sp"
+        android:maxLength="4"
+        android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/csHeightLabelTextView"
         app:layout_constraintStart_toEndOf="@+id/csHeightLabelTextView"
-        app:layout_constraintTop_toTopOf="@+id/csHeightLabelTextView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/csHeightLabelTextView" />
 
     <TextView
         android:id="@+id/textView11"
@@ -143,7 +146,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="m"
-        android:textSize="30sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/csWidthEditText"
         app:layout_constraintStart_toEndOf="@+id/csWidthEditText"
         app:layout_constraintTop_toTopOf="@+id/csWidthEditText" />
@@ -154,7 +157,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="m"
-        android:textSize="30sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/csHeightEditText"
         app:layout_constraintStart_toEndOf="@+id/csHeightEditText"
         app:layout_constraintTop_toTopOf="@+id/csHeightEditText" />
@@ -163,19 +166,18 @@
         android:id="@+id/csWidthLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:text="Bredde:"
-        android:textSize="30sp"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/csNumOfWallAnchorTestsLabelTextView"
         app:layout_constraintTop_toTopOf="@+id/csLengthLabelTextView" />
 
     <TextView
         android:id="@+id/csHeightLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="26dp"
         android:text="Høyde:"
-        android:textSize="30sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/textView11"
         app:layout_constraintTop_toTopOf="@+id/csWidthLabelTextView" />
 
@@ -186,7 +188,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:text="Antall veggfester:"
-        android:textSize="30sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/csLengthLabelTextView" />
 
@@ -194,57 +196,63 @@
         android:id="@+id/csNumOfWallAnchorTestsLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:text="Antall trekkprøver:"
-        android:textSize="30sp"
-        app:layout_constraintStart_toEndOf="@+id/csNumOfWallAnchorsEditText"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/csWallAnchorTestResultLabelTextView"
         app:layout_constraintTop_toTopOf="@+id/csNumOfWallAnchorsLabelTextView" />
 
     <EditText
         android:id="@+id/csNumOfWallAnchorsEditText"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
+        android:layout_width="80sp"
+        android:layout_height="45dp"
         android:layout_marginStart="16dp"
-        android:ems="10"
+        android:background="@drawable/et_style"
         android:inputType="number"
-        android:textSize="24sp"
+        android:maxLength="4"
+        android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/csNumOfWallAnchorsLabelTextView"
         app:layout_constraintStart_toEndOf="@+id/csNumOfWallAnchorsLabelTextView"
-        app:layout_constraintTop_toTopOf="@+id/csNumOfWallAnchorsLabelTextView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/csNumOfWallAnchorsLabelTextView" />
 
     <EditText
         android:id="@+id/csNumOfWallAnchorTestsEditText"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
+        android:layout_width="80sp"
+        android:layout_height="45dp"
         android:layout_marginStart="16dp"
-        android:ems="10"
+        android:background="@drawable/et_style"
         android:inputType="number"
-        android:textSize="24sp"
+        android:maxLength="4"
+        android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/csNumOfWallAnchorTestsLabelTextView"
         app:layout_constraintStart_toEndOf="@+id/csNumOfWallAnchorTestsLabelTextView"
         app:layout_constraintTop_toTopOf="@+id/csNumOfWallAnchorTestsLabelTextView" />
 
     <EditText
         android:id="@+id/csWallAnchorHoldsEditText"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
+        android:layout_width="80sp"
+        android:layout_height="45dp"
         android:layout_marginStart="16dp"
-        android:ems="10"
+        android:background="@drawable/et_style"
         android:inputType="number"
-        android:textSize="24sp"
+        android:maxLength="4"
+        android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/csWallAnchorsHoldsLabelTextView"
         app:layout_constraintStart_toEndOf="@+id/csWallAnchorsHoldsLabelTextView"
         app:layout_constraintTop_toTopOf="@+id/csWallAnchorsHoldsLabelTextView" />
 
     <EditText
         android:id="@+id/csWallAnchorTestResultEditText"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
+        android:layout_width="80sp"
+        android:layout_height="45dp"
         android:layout_marginStart="16dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textSize="24sp"
+        android:background="@drawable/et_style"
+        android:inputType="numberDecimal"
+        android:maxLength="4"
+        android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/csWallAnchorTestResultLabelTextView"
         app:layout_constraintStart_toEndOf="@+id/csWallAnchorTestResultLabelTextView"
         app:layout_constraintTop_toTopOf="@+id/csWallAnchorTestResultLabelTextView" />
@@ -255,7 +263,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Festet tåler:"
-        android:textSize="30sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/csNumOfWallAnchorsLabelTextView"
         app:layout_constraintTop_toBottomOf="@+id/csNumOfWallAnchorsLabelTextView" />
 
@@ -265,7 +273,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="kg"
-        android:textSize="30sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/csWallAnchorHoldsEditText"
         app:layout_constraintStart_toEndOf="@+id/csWallAnchorHoldsEditText"
         app:layout_constraintTop_toTopOf="@+id/csWallAnchorHoldsEditText" />
@@ -276,7 +284,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="kg"
-        android:textSize="30sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/csWallAnchorTestResultEditText"
         app:layout_constraintStart_toEndOf="@+id/csWallAnchorTestResultEditText"
         app:layout_constraintTop_toTopOf="@+id/csWallAnchorTestResultEditText" />
@@ -287,7 +295,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="Trekkprøve, overlast 20%:"
-        android:textSize="30sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/textView18"
         app:layout_constraintTop_toTopOf="@+id/csWallAnchorsHoldsLabelTextView" />
 

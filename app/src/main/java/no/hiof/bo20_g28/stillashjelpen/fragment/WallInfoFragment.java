@@ -321,7 +321,7 @@ public class WallInfoFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        if(WallActivity.wallAnchorDistance > 0) wallAnchorDistanceTextView.setText("Maksimal forangkringsavstand: " + String.format("%.2f", WallActivity.wallAnchorDistance) + " m");
+        if(WallActivity.wallAnchorDistance > 0) wallAnchorDistanceTextView.setText("Maksimal forankringsavstand: " + String.format("%.2f", WallActivity.wallAnchorDistance) + " m");
         if(WallActivity.soleBoardArea > 0) {
             soleBoardAreaTextView.setText(Html.fromHtml("Underlagsplank-areal for innerspir: " + WallActivity.soleBoardArea + " <font>cm<sup><small>2</small></sup></font>"));
             soleBoardAreaOuterTextView.setText(Html.fromHtml("Underlagsplank-areal for ytterspir: " + WallActivity.soleBoardArea/2 + " <font>cm<sup><small>2</small></sup></font>"));
