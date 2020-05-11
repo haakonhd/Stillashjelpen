@@ -1,20 +1,9 @@
 package no.hiof.bo20_g28.stillashjelpen;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import no.hiof.bo20_g28.stillashjelpen.adapter.ProjectRecyclerViewAdapter;
-import no.hiof.bo20_g28.stillashjelpen.model.ControlScheme;
-import no.hiof.bo20_g28.stillashjelpen.fragment.NavigationDrawerFragment;
-import no.hiof.bo20_g28.stillashjelpen.model.Project;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -22,10 +11,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import no.hiof.bo20_g28.stillashjelpen.model.ScaffoldingSystem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +21,20 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import no.hiof.bo20_g28.stillashjelpen.adapter.ProjectRecyclerViewAdapter;
+import no.hiof.bo20_g28.stillashjelpen.fragment.NavigationDrawerFragment;
+import no.hiof.bo20_g28.stillashjelpen.model.ControlScheme;
+import no.hiof.bo20_g28.stillashjelpen.model.Project;
+import no.hiof.bo20_g28.stillashjelpen.model.ScaffoldingSystem;
 
 public class MainActivity extends AppCompatActivity implements ProjectRecyclerViewAdapter.ItemClickListener {
 
@@ -170,6 +169,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         Project clickedItem = projectRecyclerViewAdapter.getItem(position);
         Intent i = new Intent(this, ProjectActivity.class);
         i.putExtra("passedProject", clickedItem);
+        i.putExtra("from", "main");
         startActivity(i);
     }
 

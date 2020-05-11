@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Typeface;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
@@ -49,8 +50,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import no.hiof.bo20_g28.stillashjelpen.GlideApp;
+import no.hiof.bo20_g28.stillashjelpen.ProjectActivity;
 import no.hiof.bo20_g28.stillashjelpen.R;
 import no.hiof.bo20_g28.stillashjelpen.WallActivity;
+import no.hiof.bo20_g28.stillashjelpen.model.Project;
 import no.hiof.bo20_g28.stillashjelpen.model.Wall;
 
 import static android.app.Activity.RESULT_OK;
@@ -62,6 +65,7 @@ public class WallInfoFragment extends Fragment{
     private Bitmap imageBitmap;
     private ImageView wallImageView;
     private Wall thisWall;
+    private Project thisProject;
     private TextView wallNameTextView;
     private TextView soleBoardAreaTextView;
     private TextView soleBoardAreaOuterTextView;
@@ -73,6 +77,7 @@ public class WallInfoFragment extends Fragment{
     private ImageButton cameraImageButton;
     private ImageButton editWallNameImageButton;
     private ImageButton editWallDescriptionImageButton;
+    private ImageButton deleteWallImageButton;
     private View view;
 
     @Nullable
@@ -83,6 +88,7 @@ public class WallInfoFragment extends Fragment{
 
         Intent i = getActivity().getIntent();
         thisWall = (Wall) i.getSerializableExtra("passedWall");
+        thisProject = (Project) i.getSerializableExtra("passedProject");
 
         wallImageView = view.findViewById(R.id.wallImageView);
         wallNameTextView = view.findViewById(R.id.wallNameTextView);
@@ -95,8 +101,10 @@ public class WallInfoFragment extends Fragment{
         soleBoardAreaTextView.setText("Underplankareal: " + thisWall.getSoleBoardArea());
         String stringResult = String.format("%.2f", thisWall.getWallAnchorDistance());
         wallAnchorDistanceTextView.setText(Html.fromHtml("Forankringsavstand: " +  stringResult));
-        wallDescriptionTextView.setText(thisWall.getWallDescription());
-
+        if(thisWall.getWallDescription() != null) {
+            wallDescriptionTextView.setTypeface(Typeface.DEFAULT);
+            wallDescriptionTextView.setText(thisWall.getWallDescription());
+        }
         progressDialog = new ProgressDialog(getContext());
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images");
@@ -131,6 +139,13 @@ public class WallInfoFragment extends Fragment{
         editWallDescriptionImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 editWallDescriptionImageButtonClicked();
+            }
+        });
+
+        deleteWallImageButton = (ImageButton) view.findViewById(R.id.deleteWallmageButton);
+        deleteWallImageButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                deleteWallImageButtonClicked();
             }
         });
 
@@ -173,7 +188,7 @@ public class WallInfoFragment extends Fragment{
         StorageReference image = storageRef.child("images").child(fileName);
         Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
 
-        final Bitmap formattedBitmap = imageFormating(bitmap);
+        final Bitmap formattedBitmap = imageFormatting(bitmap);
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         formattedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
@@ -203,7 +218,7 @@ public class WallInfoFragment extends Fragment{
         });
     }
 
-    private Bitmap imageFormating(Bitmap bitmap){
+    private Bitmap imageFormatting(Bitmap bitmap){
         Bitmap imageBitmap = null;
         try {
             imageBitmap = rotateImageIfRequired(getContext(), bitmap, imageUri);
@@ -317,7 +332,6 @@ public class WallInfoFragment extends Fragment{
         }
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -331,7 +345,6 @@ public class WallInfoFragment extends Fragment{
 
     //------------------------Button Click Handling-------------------------------------------------
 
-
     public void cameraImageButtonClicked() {
         takePictureIntent();
     }
@@ -340,29 +353,16 @@ public class WallInfoFragment extends Fragment{
         editWallNameDialogbox();
     }
 
-    public void editWallSoleBoardAreaImageButtonClicked() {
-        /*Intent i = new Intent(this, CalculationActivity.class);
-        i.putExtra("passedWall", thisWall);
-        i.putExtra("from", "wallSoleBoardArea");
-        startActivity(i);*/
-        Toast.makeText(getContext(),"editWallSoleBoardAreaImageButton clicked", Toast.LENGTH_SHORT).show();
-    }
-
-    public void editWallAnchorDistanceImageButtonClicked() {
-        /*Intent i = new Intent(this, CalculationActivity.class);
-        i.putExtra("passedWall", thisWall);
-        i.putExtra("from", "anchorDistance");
-        startActivity(i);*/
-        Toast.makeText(getContext(),"editWallAnchorDistanceImageButton clicked", Toast.LENGTH_SHORT).show();
-    }
-
     public void editWallDescriptionImageButtonClicked() {
         editWallDescriptionDialogbox();
     }
 
+    public void deleteWallImageButtonClicked() {
+        deleteWallDialogbox(thisWall.getWallId());
+    }
+
 
     //------------------------Dialog boxes----------------------------------------------------------
-
 
     private void editWallNameDialogbox() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -410,7 +410,33 @@ public class WallInfoFragment extends Fragment{
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 updateWallWithDescription(input.getText().toString());
+                wallDescriptionTextView.setTypeface(Typeface.DEFAULT);
                 wallDescriptionTextView.setText(input.getText().toString());
+            }
+        });
+        builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void deleteWallDialogbox(final String wallId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Slette veggen \"" + thisWall.getWallName() + "\"?");
+
+        // Set up the buttons
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(getContext(), ProjectActivity.class);
+                i.putExtra("passedProject", thisProject);
+                i.putExtra("from", "deleteWall");
+                i.putExtra("deleteWallId", thisWall.getWallId());
+                startActivity(i);
             }
         });
         builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
@@ -425,7 +451,6 @@ public class WallInfoFragment extends Fragment{
 
 
     //------------------------Update Firebase-------------------------------------------------------
-
 
     private void updateWallWithImage(String name) {
         thisWall.setPictureId(name);
@@ -456,11 +481,13 @@ public class WallInfoFragment extends Fragment{
         ValueEventListener soleListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String area = dataSnapshot.getValue().toString();
-                int areaInt = Integer.parseInt(area);
+                if (dataSnapshot.getValue() != null) {
+                    String area = dataSnapshot.getValue().toString();
+                    int areaInt = Integer.parseInt(area);
 
-                soleBoardAreaTextView.setText(Html.fromHtml("Underlagsplank-areal for innerspir: " + areaInt + " <font>cm<sup><small>2</small></sup></font>"));
-                soleBoardAreaOuterTextView.setText(Html.fromHtml("Underlagsplank-areal for ytterspir: " + areaInt/2 + " <font>cm<sup><small>2</small></sup></font>"));
+                    soleBoardAreaTextView.setText(Html.fromHtml("Underlagsplank-areal for innerspir: " + areaInt + " <font>cm<sup><small>2</small></sup></font>"));
+                    soleBoardAreaOuterTextView.setText(Html.fromHtml("Underlagsplank-areal for ytterspir: " + areaInt / 2 + " <font>cm<sup><small>2</small></sup></font>"));
+                }
             }
 
             @Override
@@ -472,9 +499,11 @@ public class WallInfoFragment extends Fragment{
         ValueEventListener anchorListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String maxDistanceString = dataSnapshot.getValue().toString();
-                double maxDistance = Double.parseDouble(maxDistanceString);
-                wallAnchorDistanceTextView.setText("Maksimal forangkringsavstand: " + String.format("%.2f", maxDistance) + " m");
+                if (dataSnapshot.getValue() != null) {
+                    String maxDistanceString = dataSnapshot.getValue().toString();
+                    double maxDistance = Double.parseDouble(maxDistanceString);
+                    wallAnchorDistanceTextView.setText("Maksimal forankringsavstand: " + String.format("%.2f", maxDistance) + " m");
+                }
             }
 
             @Override

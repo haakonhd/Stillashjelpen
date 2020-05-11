@@ -42,6 +42,8 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
     private WallRecyclerViewAdapter wallRecyclerViewAdapter;
 
     private Project thisProject;
+    private String wallToDeleteId;
+    private String from = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,12 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
 
         Intent i = getIntent();
         thisProject = (Project) i.getSerializableExtra("passedProject");
+        wallToDeleteId = i.getStringExtra("deleteWallId");
+        from = i.getStringExtra("from");
+
+        if(from.equals("deleteWall")){
+            deleteWallFromDatabase(wallToDeleteId);
+        }
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseWalls = FirebaseDatabase.getInstance().getReference("walls");
@@ -142,6 +150,13 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
         messageRef.child(messageId).removeValue();
     }
 
+    private void deleteWallFromDatabase(String wallId){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference wallRef = databaseReference.child("walls");
+
+        wallRef.child(wallId).removeValue();
+    }
+
     private void fillWallRecyclerList() {
         RecyclerView recyclerView = findViewById(R.id.wallRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -171,6 +186,7 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
         Intent i = new Intent(this, WallActivity.class);
         i.putExtra("from", "project");
         i.putExtra("passedWall", clickedItem);
+        i.putExtra("passedProject", thisProject);
         i.putExtra("isQuickCalculation", false);
         startActivity(i);
     }
