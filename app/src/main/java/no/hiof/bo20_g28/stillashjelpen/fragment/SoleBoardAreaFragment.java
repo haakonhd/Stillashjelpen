@@ -1,5 +1,6 @@
 package no.hiof.bo20_g28.stillashjelpen.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -30,6 +31,7 @@ import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import no.hiof.bo20_g28.stillashjelpen.R;
 import no.hiof.bo20_g28.stillashjelpen.WallActivity;
@@ -75,7 +77,7 @@ public class SoleBoardAreaFragment extends Fragment {
         showCalculationButton = view.findViewById(R.id.showCalculationButton);
         showCalculationButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //openCalculationDialog();
+                openCalculationDialog();
             }
         });
 
@@ -502,25 +504,36 @@ public class SoleBoardAreaFragment extends Fragment {
             soleBoardArea = 0;
             return;
         }
-        float maxPayload = (float) (load * bayWidth * bayLength);
-        float totalPayload = maxPayload * nrOfFloors;
-        float totalLoad = totalPayload + weight;
+        maxPayload = (float) (load * bayWidth * bayLength);
+        totalPayload = maxPayload * nrOfFloors;
+        totalLoad = totalPayload + weight;
 
-        float resultOuterSpear = totalLoad / 4;
-        float resultInnerSpear = totalLoad / 2;
+        resultOuterSpear = totalLoad / 4;
+        resultInnerSpear = totalLoad / 2;
 
-        float groundKiloPrCm2 = (float) (groundKiloNewton / 100);
+        groundKiloPrCm2 = (float) (groundKiloNewton / 100);
 
-        float resultOuterSpearFinished = resultOuterSpear / groundKiloPrCm2;
-        float resultInnerSpearFinished = resultInnerSpear / groundKiloPrCm2;
+        resultOuterSpearFinished = resultOuterSpear / groundKiloPrCm2;
+        resultInnerSpearFinished = resultInnerSpear / groundKiloPrCm2;
 
-        int resultOuterSpearFinishedCeil = (int)Math.ceil(resultOuterSpearFinished);
-        int resultInnerSpearFinishedCeil = (int)Math.ceil(resultInnerSpearFinished);
+        resultOuterSpearFinishedCeil = (int)Math.ceil(resultOuterSpearFinished);
+        resultInnerSpearFinishedCeil = (int)Math.ceil(resultInnerSpearFinished);
 
         updateResultTextView(resultOuterSpearFinishedCeil, resultInnerSpearFinishedCeil);
         soleBoardArea = resultInnerSpearFinishedCeil;
         WallActivity.soleBoardArea = soleBoardArea;
     }
+
+    private float maxPayload;
+    private float totalPayload;
+    private float totalLoad;
+    private float resultOuterSpear;
+    private float resultInnerSpear;
+    private float groundKiloPrCm2;
+    private float resultOuterSpearFinished;
+    private float resultInnerSpearFinished;
+    private int resultOuterSpearFinishedCeil;
+    private int resultInnerSpearFinishedCeil;
 
     private void updateResultTextView(int outerResult, int innerResult){
         resultTextView.setText(Html.fromHtml("Resultat:<br><br>Ytterspir underlagsplank-areal:<br><font color=blue>" + outerResult +
@@ -548,20 +561,28 @@ public class SoleBoardAreaFragment extends Fragment {
         wallRef.setValue(thisWall);
     }
 
-    /*private void openCalculationDialog() {
+    private void openCalculationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Kalkulasjon");
         final TextView textView = new TextView(getActivity());
         textView.setPadding(40,20,40,20);
         if(inputsAreFilled()) {
-            textView.setText(Html.fromHtml("Formel: <br><div style='text-align:center;'> " +
-                    "<u>c</u><sub>s</sub> <u>x c</u><sub>f</sub><u> x faglengde x tetthetsfaktor x q</u><sub>1</sub><u> x 0,7</u>" +
-                    "<br>" +
-                    "F<sub>w</sub>" +
-                    "</div>" +
-                    "Utregning: <br><div style='text-align:center;'><u>"+
-                    constructionFactor + " x " + powerFactor + " x " + bayLength + " x " + densityFactor + " x " + velocityPressure + " x 0.7 </u><br>" +
-                    "(" + anchorForce + " x 1.2)</div>"
+            textView.setText(Html.fromHtml(
+                    /*"Formel: <br><div style='text-align:center;'> " +
+                    "Tillatt nyttelast =<br>Faglengde x Fagbredde x Nyttelast for belastningsklasse " + load + "<br><br>" +
+                    "Total last pr. spir =<br><u>Egenvekt + (Tillatt nyttelast x antall platformer)</u><br>" +
+                    "4<br><br>" +
+                    "Underlangsplank areal =<br><u>Total last</u><br>" +
+                    "Underlagets bærekraft" +
+                    "</div>" +*/
+
+                    "Utregning: <br><div style='text-align:center;'>"+
+                    maxPayload + "kg = " + bayLength + "m x " + bayWidth + "m x " + load + "kg<br><br>" +
+                    resultOuterSpear + "kg =  " + "<u>" + weight + "kg + (" + maxPayload + "kg x " + nrOfFloors + ")" + "</u><br>" +
+                    "4<br><br>" +
+                            resultOuterSpearFinishedCeil + "cm<sup><small>2</small></sup> =  <u>" + resultOuterSpear + "kg</u><br>" +
+                            groundKiloPrCm2 + "kg/cm<sup><small>2</small></sup>" +
+                    "</div>"
             ));
 //            return (constructionFactor * powerFactor * bayLength * densityFactor * velocityPressure * 0.7) / (anchorForce / 1.2);
         }
@@ -579,5 +600,5 @@ public class SoleBoardAreaFragment extends Fragment {
         });
 
         builder.show();
-    }*/
+    }
 }

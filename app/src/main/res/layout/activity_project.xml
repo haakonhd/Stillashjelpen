@@ -16,7 +16,8 @@
         app:layout_constraintEnd_toStartOf="@+id/messageRecyclerView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messageRecyclerView"
@@ -61,16 +62,17 @@
 
     <ImageButton
         android:id="@+id/controlSchemeImageButton"
-        android:layout_width="72dp"
-        android:layout_height="73dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/border_filled"
         android:onClick="controlSchemeButtonClicked"
+        android:padding="8dp"
+        android:src="@drawable/ic_content_paste_white_72dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/messageRecyclerView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="?attr/actionModePasteDrawable" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
@@ -78,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Vegger"
-        android:textSize="18sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/wallRecyclerView"
         app:layout_constraintStart_toStartOf="@+id/wallRecyclerView" />
 
@@ -88,7 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Beskjeder"
-        android:textSize="18sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/messageRecyclerView"
         app:layout_constraintStart_toStartOf="@+id/messageRecyclerView" />
 
@@ -98,7 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Kontrollskjema"
-        android:textSize="18sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/controlSchemeImageButton"
         app:layout_constraintEnd_toEndOf="@+id/controlSchemeImageButton"
         app:layout_constraintStart_toStartOf="@+id/controlSchemeImageButton" />

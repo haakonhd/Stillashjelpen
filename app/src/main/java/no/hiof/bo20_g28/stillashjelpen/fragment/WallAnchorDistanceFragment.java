@@ -151,35 +151,53 @@ public class WallAnchorDistanceFragment extends Fragment {
     }
 
     private void setCoverButtonColors(){
-        coverNoneButton.setBackgroundColor(colorUnselectedButton);
+        /*coverNoneButton.setBackgroundColor(colorUnselectedButton);
         coverNetButton.setBackgroundColor(colorUnselectedButton);
-        coverTarpButton.setBackgroundColor(colorUnselectedButton);
+        coverTarpButton.setBackgroundColor(colorUnselectedButton);*/
+
+        coverNoneButton.setBackgroundResource(R.drawable.border);
+        coverNetButton.setBackgroundResource(R.drawable.border);
+        coverTarpButton.setBackgroundResource(R.drawable.border);
+
+        coverNoneButton.setTextColor(getResources().getColor(R.color.colorAccent));
+        coverNetButton.setTextColor(getResources().getColor(R.color.colorAccent));
+        coverTarpButton.setTextColor(getResources().getColor(R.color.colorAccent));
 
         if(selectedCover == null) return;
 
         switch (selectedCover) {
             case UNCOVERED:
-                coverNoneButton.setBackgroundColor(colorSelectedButton);
+                coverNoneButton.setBackgroundResource(R.drawable.border_filled);
+                coverNoneButton.setTextColor(getResources().getColor(R.color.white));
                 break;
             case NET:
-                coverNetButton.setBackgroundColor(colorSelectedButton);
+                coverNetButton.setBackgroundResource(R.drawable.border_filled);
+                coverNetButton.setTextColor(getResources().getColor(R.color.white));
                 break;
             case TARP:
-                coverTarpButton.setBackgroundColor(colorSelectedButton);
+                coverTarpButton.setBackgroundResource(R.drawable.border_filled);
+                coverTarpButton.setTextColor(getResources().getColor(R.color.white));
                 break;
         }
     }
 
     private void setForceFactorButtonColors(){
-        forceFactorNormalButton.setBackgroundColor(colorUnselectedButton);
-        forceFactorParallelButton.setBackgroundColor(colorUnselectedButton);
+        forceFactorNormalButton.setBackgroundResource(R.drawable.border);
+        forceFactorParallelButton.setBackgroundResource(R.drawable.border);
+
+        forceFactorNormalButton.setTextColor(getResources().getColor(R.color.colorAccent));
+        forceFactorParallelButton.setTextColor(getResources().getColor(R.color.colorAccent));
+
         if(selectedForceFactor == null) return;
+
         switch (selectedForceFactor) {
             case NORMAL:
-                forceFactorNormalButton.setBackgroundColor(colorSelectedButton);
+                forceFactorNormalButton.setBackgroundResource(R.drawable.border_filled);
+                forceFactorNormalButton.setTextColor(getResources().getColor(R.color.white));
                 break;
             case PARALLEL:
-                forceFactorParallelButton.setBackgroundColor(colorSelectedButton);
+                forceFactorParallelButton.setBackgroundResource(R.drawable.border_filled);
+                forceFactorParallelButton.setTextColor(getResources().getColor(R.color.white));
                 break;
         }
     }
@@ -188,7 +206,7 @@ public class WallAnchorDistanceFragment extends Fragment {
         //Setting onclick functions
         coverNoneButton.setOnClickListener(v -> {
             selectedCover = Cover.UNCOVERED;
-            coverNoneButton.setBackgroundColor(colorSelectedButton);
+            //coverNoneButton.setBackgroundColor(colorSelectedButton);
             setCoverButtonColors();
             if(selectedForceFactor == ForceFactor.PARALLEL) {
                 BayLengthDescriptionTextView.setText(R.string.fagbredde);
@@ -199,14 +217,14 @@ public class WallAnchorDistanceFragment extends Fragment {
 
         coverNetButton.setOnClickListener(v -> {
             selectedCover = Cover.NET;
-            coverNetButton.setBackgroundColor(colorSelectedButton);
+            //coverNetButton.setBackgroundColor(colorSelectedButton);
             setCoverButtonColors();
             BayLengthDescriptionTextView.setText(R.string.faglengde);
             updateAnchorDistanceCalculation();});
 
         coverTarpButton.setOnClickListener(v -> {
             selectedCover = Cover.TARP;
-            coverTarpButton.setBackgroundColor(colorSelectedButton);
+            //coverTarpButton.setBackgroundColor(colorSelectedButton);
             setCoverButtonColors();
             BayLengthDescriptionTextView.setText(R.string.faglengde);
             updateAnchorDistanceCalculation();});

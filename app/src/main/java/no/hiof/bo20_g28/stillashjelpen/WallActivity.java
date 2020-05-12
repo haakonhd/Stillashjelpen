@@ -37,6 +37,8 @@ public class WallActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wall);
 
+        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
+
         viewPager = findViewById(R.id.pager);
         tabLayout = findViewById(R.id.tab_layout);
 

@@ -9,12 +9,12 @@
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#2196F3"
-        app:tabIndicatorColor="#E91E63"
+        android:background="@color/colorPrimary"
+        app:tabIndicatorColor="@color/colorAccent"
         app:tabTextColor="#C5E8FF"
-        app:tabSelectedTextColor="#FFFFFF"
+        app:tabSelectedTextColor="@color/white"
         app:tabIndicatorHeight="4dp"
-        app:tabRippleColor="#447797"
+        app:tabRippleColor="@color/colorPrimaryDark"
         app:tabTextAppearance="@style/TabLayoutTextStyle"
         />
 

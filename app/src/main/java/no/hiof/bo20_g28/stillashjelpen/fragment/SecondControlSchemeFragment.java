@@ -95,30 +95,47 @@ public class SecondControlSchemeFragment extends Fragment {
         if(view.getId() == typeFacadeButton.getId()) {
             scaffoldType = "Facade";
             resetCoverButtonColors();
-            typeFacadeButton.setBackgroundColor(selectedColor);
+            typeFacadeButton.setBackgroundResource(R.drawable.border_filled);
+            typeFacadeButton.setTextColor(getResources().getColor(R.color.white));
+            //typeFacadeButton.setBackgroundColor(selectedColor);
         }
         if(view.getId() == typeTowerButton.getId()) {
             scaffoldType = "Tower";
             resetCoverButtonColors();
-            typeTowerButton.setBackgroundColor(selectedColor);
+            typeTowerButton.setBackgroundResource(R.drawable.border_filled);
+            typeTowerButton.setTextColor(getResources().getColor(R.color.white));
+            //typeTowerButton.setBackgroundColor(selectedColor);
         }
         if(view.getId() == typeRollerButton.getId()) {
             scaffoldType = "Roller";
             resetCoverButtonColors();
-            typeRollerButton.setBackgroundColor(selectedColor);
+            typeRollerButton.setBackgroundResource(R.drawable.border_filled);
+            typeRollerButton.setTextColor(getResources().getColor(R.color.white));
+            //typeRollerButton.setBackgroundColor(selectedColor);
         }
         if(view.getId() == typeOtherButton.getId()) {
             scaffoldType = "Other";
             resetCoverButtonColors();
-            typeOtherButton.setBackgroundColor(selectedColor);
+            typeOtherButton.setBackgroundResource(R.drawable.border_filled);
+            typeOtherButton.setTextColor(getResources().getColor(R.color.white));
+            //typeOtherButton.setBackgroundColor(selectedColor);
         }
     }
 
     private void resetCoverButtonColors(){
-        typeFacadeButton.setBackgroundColor(unselectedColor);
+        /*typeFacadeButton.setBackgroundColor(unselectedColor);
         typeTowerButton.setBackgroundColor(unselectedColor);
         typeRollerButton.setBackgroundColor(unselectedColor);
-        typeOtherButton.setBackgroundColor(unselectedColor);
+        typeOtherButton.setBackgroundColor(unselectedColor);*/
+        typeFacadeButton.setBackgroundResource(R.drawable.border);
+        typeTowerButton.setBackgroundResource(R.drawable.border);
+        typeRollerButton.setBackgroundResource(R.drawable.border);
+        typeOtherButton.setBackgroundResource(R.drawable.border);
+
+        typeFacadeButton.setTextColor(getResources().getColor(R.color.colorAccent));
+        typeTowerButton.setTextColor(getResources().getColor(R.color.colorAccent));
+        typeRollerButton.setTextColor(getResources().getColor(R.color.colorAccent));
+        typeOtherButton.setTextColor(getResources().getColor(R.color.colorAccent));
     }
 
     public void updateThisProjectsControlScheme(){

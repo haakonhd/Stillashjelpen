@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -33,6 +35,8 @@ public class ControlSchemeActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_control_scheme);
+
+        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
 
         viewPager = findViewById(R.id.cs_pager);
         tabLayout = findViewById(R.id.tab_cs_layout);
