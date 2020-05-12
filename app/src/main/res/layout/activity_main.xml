@@ -47,7 +47,6 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="24dp"
-                android:background="#E8E5E5"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/mainButtonContainer"
                 app:layout_constraintHorizontal_bias="0.5"
