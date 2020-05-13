@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".WallActivity">
 
-
     <TextView
         android:id="@+id/groundDescriptionTextView"
         android:layout_width="wrap_content"
@@ -300,6 +299,5 @@
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

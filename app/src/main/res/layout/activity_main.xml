@@ -31,7 +31,7 @@
                 android:id="@+id/testText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginLeft="24dp"
                 android:layout_marginTop="8dp"
                 android:text="Hello World!"
                 android:textAlignment="center"
@@ -46,8 +46,8 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/showProjectsButton"
                 app:layout_constraintEnd_toStartOf="@+id/mainButtonContainer"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -83,16 +83,16 @@
                     tools:layout_editor_absoluteY="71dp" />
 
                 <Button
-                    android:id="@+id/allProjectsButton"
+                    android:id="@+id/newScaffoldSystemButton"
                     style="@style/TextAppearance.MaterialComponents.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/border_filled"
-                    android:onClick="allProjectsButtonClicked"
+                    android:onClick="newScaffoldSystemButtonClicked"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
-                    android:text="Alle Prosjekter"
+                    android:text="Nytt stillassystem"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp"
@@ -113,9 +113,42 @@
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="@+id/allProjectsButton"
-                    app:layout_constraintTop_toBottomOf="@+id/allProjectsButton" />
+                    app:layout_constraintEnd_toEndOf="@+id/newScaffoldSystemButton"
+                    app:layout_constraintTop_toBottomOf="@+id/newScaffoldSystemButton" />
             </LinearLayout>
+
+            <Button
+                android:id="@+id/showProjectsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_filled"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="Vis prosjekter"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:onClick="showProjectsButtonClicked"
+                app:layout_constraintBottom_toBottomOf="@+id/showScaffoldSystemsButton"
+                app:layout_constraintStart_toStartOf="@+id/mainRecyclerView"
+                app:layout_constraintTop_toTopOf="@+id/showScaffoldSystemsButton" />
+
+            <Button
+                android:id="@+id/showScaffoldSystemsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/border"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="Vis stillassystemer"
+                android:textAllCaps="false"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp"
+                android:onClick="showScaffoldSystemsButtonClicked"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/showProjectsButton" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

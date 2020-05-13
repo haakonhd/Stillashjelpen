@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".WallActivity">
 
-
     <TextView
         android:id="@+id/groundDescriptionTextView"
         android:layout_width="wrap_content"
@@ -284,6 +283,5 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/resultTextView"
         app:layout_constraintTop_toBottomOf="@+id/showCalculationButton" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
