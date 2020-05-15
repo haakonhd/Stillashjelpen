@@ -3,39 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/registerButton"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/border_filled"
-        android:onClick="registerButtonClicked"
-        android:text="Registrer"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
+        android:layout_marginTop="32dp"
+        android:text="Er ikke bedriften registrert?"
+        android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/passwordTextView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/passwordTextView"
-        app:layout_constraintTop_toBottomOf="@+id/passwordTextView" />
+        app:layout_constraintEnd_toStartOf="@+id/registerClickableTextView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
     <EditText
         android:id="@+id/emailTextView"
-        android:layout_width="0dp"
+        android:layout_width="400dp"
         android:layout_height="45dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
         android:background="@drawable/et_style"
         android:ems="10"
         android:inputType="textEmailAddress"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/passwordTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
@@ -49,14 +43,46 @@
         android:ems="10"
         android:inputType="textPassword"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/registerButton"
+        app:layout_constraintBottom_toTopOf="@+id/loginButton"
         app:layout_constraintEnd_toEndOf="@+id/emailTextView"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/emailTextView"
         app:layout_constraintTop_toBottomOf="@+id/emailTextView" />
 
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/border_filled"
+        android:shadowColor="#FFFFFF"
+        android:text="Logg inn"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="@+id/passwordTextView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/passwordTextView"
+        app:layout_constraintTop_toBottomOf="@+id/passwordTextView" />
+
     <TextView
-        android:id="@+id/textView22"
+        android:id="@+id/registerClickableTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Registrer her"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -69,7 +95,7 @@
         app:layout_constraintStart_toStartOf="@+id/emailTextView" />
 
     <TextView
-        android:id="@+id/textView23"
+        android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

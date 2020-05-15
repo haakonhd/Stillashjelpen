@@ -13,7 +13,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewScaffoldingSystemActivity"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -26,14 +25,21 @@
         </provider>
 
         <activity
+            android:name=".NewScaffoldingSystemActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".WallActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ControlSchemeActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ProjectActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".RegisterActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".LoginActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private final List<String> scaffoldingSystemList = new ArrayList<String>();
-
     private Button showProjectsButton, showScaffoldSystemsButton;
 
     static boolean calledAlready = false;
@@ -91,8 +90,8 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
 
         //check if user is signed in
         if (firebaseAuth.getCurrentUser() == null) {
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
         }
         else{
             testText.setText(Html.fromHtml("Logget inn på email: <font color='#01C6DB'>" + firebaseAuth.getCurrentUser().getEmail() + "</font>"));
@@ -201,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
             }
         }
 
-        fillRecyclerListProjects();
+        showProjects();
     }
 
     public void getScaffoldingSystemNamesFromFirebase(){
@@ -326,18 +325,26 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     }
 
     public void showProjectsButtonClicked(View view) {
-        fillRecyclerListProjects();
-        showProjectsButton.setBackgroundResource(R.drawable.border_filled);
-        showProjectsButton.setTextColor(getResources().getColor(R.color.white));
-        showScaffoldSystemsButton.setBackgroundResource(R.drawable.border);
-        showScaffoldSystemsButton.setTextColor(getResources().getColor(R.color.colorAccent));
+        showProjects();
     }
 
     public void showScaffoldSystemsButtonClicked(View view) {
+        showScaffoldSystems();
+    }
+
+    private void showScaffoldSystems(){
         getScaffoldSystemObjectsFromFirebase();
         showScaffoldSystemsButton.setBackgroundResource(R.drawable.border_filled);
         showScaffoldSystemsButton.setTextColor(getResources().getColor(R.color.white));
         showProjectsButton.setBackgroundResource(R.drawable.border);
         showProjectsButton.setTextColor(getResources().getColor(R.color.colorAccent));
+    }
+
+    private void showProjects(){
+        fillRecyclerListProjects();
+        showProjectsButton.setBackgroundResource(R.drawable.border_filled);
+        showProjectsButton.setTextColor(getResources().getColor(R.color.white));
+        showScaffoldSystemsButton.setBackgroundResource(R.drawable.border);
+        showScaffoldSystemsButton.setTextColor(getResources().getColor(R.color.colorAccent));
     }
 }

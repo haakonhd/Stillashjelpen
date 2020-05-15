@@ -25,17 +25,14 @@
 
     <EditText
         android:id="@+id/emailTextView"
-        android:layout_width="0dp"
+        android:layout_width="400dp"
         android:layout_height="45dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
         android:background="@drawable/et_style"
         android:ems="10"
         android:inputType="textEmailAddress"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/passwordTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />

@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:layout_marginEnd="180dp"
+                android:layout_marginEnd="220dp"
                 android:text="Bygger av stillaset"
                 android:textAlignment="viewStart"
                 android:textSize="20sp"
@@ -245,21 +245,23 @@
                 android:id="@+id/userControlDateLabelTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="16dp"
                 android:text="Dato:"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/userControlLabelTextView"
-                app:layout_constraintTop_toBottomOf="@+id/userControlLabelTextView" />
+                app:layout_constraintBottom_toBottomOf="@+id/userNameControlEditText"
+                app:layout_constraintStart_toEndOf="@+id/userNameControlEditText"
+                app:layout_constraintTop_toTopOf="@+id/userNameControlEditText" />
 
             <TextView
                 android:id="@+id/builderControlDateLabelTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="16dp"
                 android:text="Dato:"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/builderControlLabelTextView"
-                app:layout_constraintTop_toBottomOf="@+id/builderControlLabelTextView" />
+                app:layout_constraintBottom_toBottomOf="@+id/builderNameControlEditText"
+                app:layout_constraintStart_toEndOf="@+id/builderNameControlEditText"
+                app:layout_constraintTop_toTopOf="@+id/builderNameControlEditText" />
 
             <TextView
                 android:id="@+id/userControlTitleLabelTextView"
@@ -270,7 +272,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/builderControlTitleLabelTextView"
-                app:layout_constraintTop_toBottomOf="@+id/builderControlDateLabelTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/builderControlLabelTextView" />
 
             <EditText
                 android:id="@+id/userNameControlEditText"
@@ -300,6 +302,7 @@
                 android:id="@+id/builderControlDateEditText"
                 android:layout_width="150dp"
                 android:layout_height="45dp"
+                android:layout_marginStart="16dp"
                 android:background="@drawable/et_style"
                 android:clickable="false"
                 android:cursorVisible="false"
@@ -308,13 +311,14 @@
                 android:textAlignment="center"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/builderControlDateLabelTextView"
-                app:layout_constraintStart_toStartOf="@+id/builderNameControlEditText"
+                app:layout_constraintStart_toEndOf="@+id/builderControlDateLabelTextView"
                 app:layout_constraintTop_toTopOf="@+id/builderControlDateLabelTextView" />
 
             <EditText
                 android:id="@+id/userControlDateEditText"
                 android:layout_width="150dp"
                 android:layout_height="45dp"
+                android:layout_marginStart="16dp"
                 android:background="@drawable/et_style"
                 android:clickable="false"
                 android:cursorVisible="false"
@@ -323,7 +327,7 @@
                 android:textAlignment="center"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/userControlDateLabelTextView"
-                app:layout_constraintStart_toStartOf="@+id/userNameControlEditText"
+                app:layout_constraintStart_toEndOf="@+id/userControlDateLabelTextView"
                 app:layout_constraintTop_toTopOf="@+id/userControlDateLabelTextView" />
 
             <Button
@@ -342,7 +346,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/userControlDateLabelTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/userControlLabelTextView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

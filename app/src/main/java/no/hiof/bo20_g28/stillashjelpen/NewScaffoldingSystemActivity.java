@@ -106,6 +106,7 @@ public class NewScaffoldingSystemActivity extends AppCompatActivity {
                     saveScaffoldingSystem(name, bayLength, bayWidth, loadClass, maxHeight);
 
                     Intent i = new Intent(this, MainActivity.class);
+                    i.putExtra(from, "scaffoldSystem");
                     startActivity(i);
                 } else {
                     Toast.makeText(getApplicationContext(), "Navnet er allerede i bruk", Toast.LENGTH_SHORT).show();
@@ -113,7 +114,9 @@ public class NewScaffoldingSystemActivity extends AppCompatActivity {
             }else{
                 if(from.equals("old")){
                     updateScaffoldingSystem(name, bayLength, bayWidth, loadClass, maxHeight);
+
                     Intent i = new Intent(this, MainActivity.class);
+                    i.putExtra(from, "scaffoldSystem");
                     startActivity(i);
                 }
             }
@@ -264,7 +267,7 @@ public class NewScaffoldingSystemActivity extends AppCompatActivity {
                 deleteScaffoldSystemFromFireBase(scaffoldSystemId);
 
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                i.putExtra("from", "deleteScaffoldSystem");
+                i.putExtra("from", "scaffoldSystem");
                 startActivity(i);
                 Toast.makeText(getApplicationContext(), "Stillassystemet er slettet", Toast.LENGTH_SHORT).show();
             }

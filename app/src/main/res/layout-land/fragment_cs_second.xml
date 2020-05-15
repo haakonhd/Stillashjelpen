@@ -12,23 +12,20 @@
         android:layout_height="wrap_content"
         android:text="Type:"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/csLengthLabelTextView"
-        app:layout_constraintEnd_toStartOf="@+id/typeFacadeButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/controlSchemeDimensionLabelTextView"
+        app:layout_constraintEnd_toEndOf="@+id/csLengthLabelTextView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/typeFacadeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:background="@drawable/border"
         android:paddingHorizontal="10dp"
         android:text="Fasade"
         android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/typeLabelTextView"
-        app:layout_constraintEnd_toStartOf="@+id/typeTowerButton"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/typeLabelTextView"
         app:layout_constraintTop_toTopOf="@+id/typeLabelTextView" />
 
@@ -36,12 +33,11 @@
         android:id="@+id/typeTowerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:background="@drawable/border"
         android:paddingHorizontal="10dp"
         android:text="Tårn"
         android:textColor="@color/colorAccent"
-        app:layout_constraintEnd_toStartOf="@+id/typeRollerButton"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/typeFacadeButton"
         app:layout_constraintTop_toTopOf="@+id/typeFacadeButton" />
 
@@ -49,12 +45,11 @@
         android:id="@+id/typeRollerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:background="@drawable/border"
         android:paddingHorizontal="10dp"
         android:text="Rulle"
         android:textColor="@color/colorAccent"
-        app:layout_constraintEnd_toStartOf="@+id/typeOtherButton"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/typeTowerButton"
         app:layout_constraintTop_toTopOf="@+id/typeTowerButton" />
 
@@ -62,12 +57,11 @@
         android:id="@+id/typeOtherButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:background="@drawable/border"
         android:paddingHorizontal="10dp"
         android:text="Andre"
         android:textColor="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/typeRollerButton"
         app:layout_constraintTop_toTopOf="@+id/typeRollerButton" />
 
@@ -75,12 +69,12 @@
         android:id="@+id/controlSchemeDimensionLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:text="Dimensjon"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/csLengthEditText"
-        app:layout_constraintStart_toStartOf="@+id/csLengthEditText" />
+        app:layout_constraintBottom_toTopOf="@+id/csLengthLabelTextView"
+        app:layout_constraintStart_toStartOf="@+id/csLengthEditText"
+        app:layout_constraintTop_toBottomOf="@+id/typeLabelTextView" />
 
     <TextView
         android:id="@+id/csLengthLabelTextView"
@@ -88,9 +82,9 @@
         android:layout_height="wrap_content"
         android:text="Lengde:"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/csWidthLabelTextView"
-        app:layout_constraintEnd_toEndOf="@+id/csWidthLabelTextView"
-        app:layout_constraintTop_toBottomOf="@+id/typeLabelTextView" />
+        app:layout_constraintBottom_toTopOf="@+id/csNumOfWallAnchorsLabelTextView"
+        app:layout_constraintEnd_toEndOf="@+id/csNumOfWallAnchorsLabelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/controlSchemeDimensionLabelTextView" />
 
     <TextView
         android:id="@+id/textView8"
@@ -107,39 +101,42 @@
         android:id="@+id/csLengthEditText"
         android:layout_width="80sp"
         android:layout_height="45dp"
+        android:layout_marginStart="16dp"
         android:background="@drawable/et_style"
         android:inputType="numberDecimal"
         android:maxLength="4"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/csLengthLabelTextView"
-        app:layout_constraintStart_toStartOf="@+id/csWidthEditText"
+        app:layout_constraintStart_toEndOf="@+id/csLengthLabelTextView"
         app:layout_constraintTop_toTopOf="@+id/csLengthLabelTextView" />
 
     <EditText
         android:id="@+id/csWidthEditText"
         android:layout_width="80sp"
         android:layout_height="45dp"
+        android:layout_marginStart="16dp"
         android:background="@drawable/et_style"
         android:inputType="numberDecimal"
         android:maxLength="4"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/csWidthLabelTextView"
-        app:layout_constraintStart_toStartOf="@+id/csHeightEditText"
+        app:layout_constraintStart_toEndOf="@+id/csWidthLabelTextView"
         app:layout_constraintTop_toTopOf="@+id/csWidthLabelTextView" />
 
     <EditText
         android:id="@+id/csHeightEditText"
         android:layout_width="80sp"
         android:layout_height="45dp"
+        android:layout_marginStart="16dp"
         android:background="@drawable/et_style"
         android:inputType="numberDecimal"
         android:maxLength="4"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/csHeightLabelTextView"
-        app:layout_constraintStart_toStartOf="@+id/csNumOfWallAnchorsEditText"
+        app:layout_constraintStart_toEndOf="@+id/csHeightLabelTextView"
         app:layout_constraintTop_toTopOf="@+id/csHeightLabelTextView" />
 
     <TextView
@@ -170,59 +167,29 @@
         android:layout_height="wrap_content"
         android:text="Bredde:"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/csHeightLabelTextView"
-        app:layout_constraintEnd_toEndOf="@+id/csHeightLabelTextView"
-        app:layout_constraintTop_toBottomOf="@+id/csLengthLabelTextView" />
-
-    <Button
-        android:id="@+id/saveTechnicalDataButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border_filled"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:text="Lagre"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/csWallAnchorTestResultLabelTextView"
-        app:layout_constraintVertical_bias="0.497" />
-
-    <TextView
-        android:id="@+id/csWallAnchorsHoldsLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Festet tåler:"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/csWallAnchorTestResultLabelTextView"
-        app:layout_constraintEnd_toEndOf="@+id/csWallAnchorTestResultLabelTextView"
-        app:layout_constraintTop_toBottomOf="@+id/csNumOfWallAnchorsLabelTextView" />
-
-    <TextView
-        android:id="@+id/csNumOfWallAnchorsLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Antall veggfester:"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/csWallAnchorsHoldsLabelTextView"
-        app:layout_constraintEnd_toStartOf="@+id/csNumOfWallAnchorsEditText"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/csHeightLabelTextView" />
+        app:layout_constraintStart_toStartOf="@+id/csNumOfWallAnchorTestsLabelTextView"
+        app:layout_constraintTop_toTopOf="@+id/csLengthLabelTextView" />
 
     <TextView
         android:id="@+id/csHeightLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
         android:text="Høyde:"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/csNumOfWallAnchorsLabelTextView"
-        app:layout_constraintEnd_toEndOf="@+id/csNumOfWallAnchorsLabelTextView"
-        app:layout_constraintTop_toBottomOf="@+id/csWidthLabelTextView" />
+        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintTop_toTopOf="@+id/csWidthLabelTextView" />
+
+    <TextView
+        android:id="@+id/csNumOfWallAnchorsLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Antall veggfester:"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/csWallAnchorsHoldsLabelTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/csLengthLabelTextView" />
 
     <TextView
         android:id="@+id/csNumOfWallAnchorTestsLabelTextView"
@@ -230,23 +197,20 @@
         android:layout_height="wrap_content"
         android:text="Antall trekkprøver:"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/csNumOfWallAnchorTestsEditText"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/csNumOfWallAnchorsEditText"
+        app:layout_constraintStart_toStartOf="@+id/csWallAnchorTestResultLabelTextView"
         app:layout_constraintTop_toTopOf="@+id/csNumOfWallAnchorsLabelTextView" />
 
     <EditText
         android:id="@+id/csNumOfWallAnchorsEditText"
         android:layout_width="80sp"
         android:layout_height="45dp"
+        android:layout_marginStart="16dp"
         android:background="@drawable/et_style"
         android:inputType="number"
         android:maxLength="4"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/csNumOfWallAnchorsLabelTextView"
-        app:layout_constraintEnd_toStartOf="@+id/csNumOfWallAnchorTestsLabelTextView"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/csNumOfWallAnchorsLabelTextView"
         app:layout_constraintTop_toTopOf="@+id/csNumOfWallAnchorsLabelTextView" />
 
@@ -254,14 +218,13 @@
         android:id="@+id/csNumOfWallAnchorTestsEditText"
         android:layout_width="80sp"
         android:layout_height="45dp"
+        android:layout_marginStart="16dp"
         android:background="@drawable/et_style"
         android:inputType="number"
         android:maxLength="4"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/csNumOfWallAnchorTestsLabelTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/csNumOfWallAnchorTestsLabelTextView"
         app:layout_constraintTop_toTopOf="@+id/csNumOfWallAnchorTestsLabelTextView" />
 
@@ -294,6 +257,16 @@
         app:layout_constraintTop_toTopOf="@+id/csWallAnchorTestResultLabelTextView" />
 
     <TextView
+        android:id="@+id/csWallAnchorsHoldsLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Festet tåler:"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/saveTechnicalDataButton"
+        app:layout_constraintEnd_toEndOf="@+id/csNumOfWallAnchorsLabelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/csNumOfWallAnchorsLabelTextView" />
+
+    <TextView
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -319,11 +292,30 @@
         android:id="@+id/csWallAnchorTestResultLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:text="Trekkprøve, overlast 20%:"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/saveTechnicalDataButton"
+        app:layout_constraintStart_toEndOf="@+id/textView18"
+        app:layout_constraintTop_toTopOf="@+id/csWallAnchorsHoldsLabelTextView" />
+
+    <Button
+        android:id="@+id/saveTechnicalDataButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_filled"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:text="Lagre"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/csWallAnchorsHoldsLabelTextView" />
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </androidx.constraintlayout.widget.ConstraintLayout>
