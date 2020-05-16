@@ -14,7 +14,11 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
+
+import java.util.ArrayList;
+
 import no.hiof.bo20_g28.stillashjelpen.adapter.TabControlSchemeAdapter;
+import no.hiof.bo20_g28.stillashjelpen.model.ChecklistItem;
 import no.hiof.bo20_g28.stillashjelpen.model.Project;
 
 public class ControlSchemeActivity extends AppCompatActivity {
@@ -22,6 +26,7 @@ public class ControlSchemeActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
     private Project thisProject;
+    private static ArrayList<ChecklistItem> checklistItems = new ArrayList<>();
 
     private TabControlSchemeAdapter tabControlSchemeAdapter() {
         TabControlSchemeAdapter cSadapter = new TabControlSchemeAdapter(this);
@@ -74,5 +79,15 @@ public class ControlSchemeActivity extends AppCompatActivity {
 
             tab_label.setText(tabLabels[i]);
         }
+    }
+
+    public static ArrayList<ChecklistItem> getChecklistItems(){
+        int id = 0;
+        checklistItems.add(new ChecklistItem(true, id++, "Skilt?", 2));
+        checklistItems.add(new ChecklistItem(id++, "Rødt skilt?", 0));
+        checklistItems.add(new ChecklistItem(id++, "Blått skilt?", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Gulv?", 1));
+        checklistItems.add(new ChecklistItem(id++, "Brunt gulv?", 3));
+        return checklistItems;
     }
 }
