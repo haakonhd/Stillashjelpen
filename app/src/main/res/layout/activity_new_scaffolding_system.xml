@@ -72,6 +72,7 @@
         android:inputType="textPersonName"
         android:textAlignment="viewStart"
         android:textSize="20sp"
+        android:paddingStart="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/textView5" />

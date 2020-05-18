@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     private DrawerLayout drawer;
     private final List<String> scaffoldingSystemList = new ArrayList<String>();
     private Button showProjectsButton, showScaffoldSystemsButton;
-
+    private DatabaseReference mDatabase;
     static boolean calledAlready = false;
 
     @Override
@@ -63,7 +64,9 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         setContentView(R.layout.activity_main);
 
         toolbar = findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Hjem");
 
         drawer = findViewById(R.id.drawer_layout);
         setUpNavigationDrawer();
@@ -79,10 +82,12 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         showScaffoldSystemsButton.setTextColor(getResources().getColor(R.color.colorAccent));
 
         // if statement fixes a crash that occurs when app opens MainActivity the second time from new Intent
-        if (!calledAlready) {
+        // used variable calledAlready before changing it to database reference
+        if (mDatabase == null) {
             // offline/online sync
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-            calledAlready = true;
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            database.setPersistenceEnabled(true);
+            mDatabase = database.getReference();
         }
 
         firebaseAuth = FirebaseAuth.getInstance();
