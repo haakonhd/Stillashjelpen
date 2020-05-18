@@ -56,6 +56,12 @@ public class ChecklistRecyclerViewAdapter  extends RecyclerView.Adapter<Checklis
                 holder.cl_checkbox.performClick();
             }
         });
+        holder.cl_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.cl_checkbox.performClick();
+            }
+        });
 
         holder.cl_checkbox.setOnClickListener(new View.OnClickListener() {
             @Override

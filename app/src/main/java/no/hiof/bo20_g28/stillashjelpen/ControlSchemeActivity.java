@@ -83,6 +83,7 @@ public class ControlSchemeActivity extends AppCompatActivity {
 
     public static ArrayList<ChecklistItem> getChecklistItems(){
         int id = 0;
+        checklistItems.clear();
         checklistItems.add(new ChecklistItem(true, id++, "Skilt?", 2));
         checklistItems.add(new ChecklistItem(id++, "Rødt skilt?", 0));
         checklistItems.add(new ChecklistItem(id++, "Blått skilt?", 0));
