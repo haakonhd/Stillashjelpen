@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     private DrawerLayout drawer;
     private final List<String> scaffoldingSystemList = new ArrayList<String>();
     private Button showProjectsButton, showScaffoldSystemsButton;
-    private DatabaseReference mDatabase;
     static boolean calledAlready = false;
 
     @Override
@@ -82,12 +81,10 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         showScaffoldSystemsButton.setTextColor(getResources().getColor(R.color.colorAccent));
 
         // if statement fixes a crash that occurs when app opens MainActivity the second time from new Intent
-        // used variable calledAlready before changing it to database reference
-        if (mDatabase == null) {
+        if (!calledAlready) {
             // offline/online sync
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            database.setPersistenceEnabled(true);
-            mDatabase = database.getReference();
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            calledAlready = true;
         }
 
         firebaseAuth = FirebaseAuth.getInstance();
