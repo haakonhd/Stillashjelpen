@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.util.Date;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import no.hiof.bo20_g28.stillashjelpen.adapter.TabControlSchemeAdapter;
 import no.hiof.bo20_g28.stillashjelpen.fragment.NavigationDrawerFragment;
 import no.hiof.bo20_g28.stillashjelpen.model.ChecklistItem;
+import no.hiof.bo20_g28.stillashjelpen.model.ControlSchemeDefectFixed;
 import no.hiof.bo20_g28.stillashjelpen.model.Project;
 
 public class ControlSchemeActivity extends AppCompatActivity {
@@ -31,6 +33,7 @@ public class ControlSchemeActivity extends AppCompatActivity {
     private Project thisProject;
     Toolbar toolbar;
     private static ArrayList<ChecklistItem> checklistItems = new ArrayList<>();
+    private static ArrayList<ControlSchemeDefectFixed> controlSchemeDefectFixedItems = new ArrayList<>();
 
     private TabControlSchemeAdapter tabControlSchemeAdapter() {
         TabControlSchemeAdapter cSadapter = new TabControlSchemeAdapter(this);
@@ -103,6 +106,16 @@ public class ControlSchemeActivity extends AppCompatActivity {
         checklistItems.add(new ChecklistItem(id++, "Brunt gulv?", 3));
         return checklistItems;
     }
+
+    public static ArrayList<ControlSchemeDefectFixed> getControlSchemeDefectFixed() {
+        controlSchemeDefectFixedItems.clear();
+        controlSchemeDefectFixedItems.add(new ControlSchemeDefectFixed(new Date(), new Date(), "Bjarne"));
+        controlSchemeDefectFixedItems.add(new ControlSchemeDefectFixed(new Date(), new Date(), "Leif"));
+        controlSchemeDefectFixedItems.add(new ControlSchemeDefectFixed(new Date(), new Date(), "Knut"));
+        controlSchemeDefectFixedItems.add(new ControlSchemeDefectFixed(new Date(), new Date(), "Brynjar"));
+        return controlSchemeDefectFixedItems;
+    }
+
 
     private void setUpNavigationDrawer() {
         DrawerLayout drawerlayout = findViewById(R.id.drawer_layout);

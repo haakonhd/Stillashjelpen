@@ -5,21 +5,21 @@ import java.util.Date;
 public class ControlSchemeDefectFixed {
 
     private Date controlDate;
-    private Date defectFoundDate;
+    private Date defectFixedDate;
     private String signature;
 
     public ControlSchemeDefectFixed(Date controlDate, Date defectFoundDate, String signature) {
         this.controlDate = controlDate;
-        this.defectFoundDate = defectFoundDate;
+        this.defectFixedDate = defectFoundDate;
         this.signature = signature;
     }
 
-    public Date getDefectFoundDate() {
-        return defectFoundDate;
+    public Date getDefectFixedDate() {
+        return defectFixedDate;
     }
 
-    public void setDefectFoundDate(Date defectFoundDate) {
-        this.defectFoundDate = defectFoundDate;
+    public void setDefectFixedDate(Date defectFoundDate) {
+        this.defectFixedDate = defectFoundDate;
     }
 
     public Date getControlDate() {
@@ -37,4 +37,5 @@ public class ControlSchemeDefectFixed {
     public void setSignature(String signature) {
         this.signature = signature;
     }
+
 }
