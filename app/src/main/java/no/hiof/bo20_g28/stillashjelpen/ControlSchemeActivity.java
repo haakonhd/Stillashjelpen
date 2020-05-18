@@ -48,6 +48,11 @@ public class ControlSchemeActivity extends AppCompatActivity {
         //Objects.requireNonNull(getSupportActionBar()).setElevation(0);
 
         toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Kontrollskjema for prosjekt: " + thisProject.getProjectName());
+
+
         setUpNavigationDrawer();
 
         viewPager = findViewById(R.id.cs_pager);
