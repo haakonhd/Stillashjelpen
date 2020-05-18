@@ -16,14 +16,18 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import no.hiof.bo20_g28.stillashjelpen.adapter.MessageRecyclerViewAdapter;
 import no.hiof.bo20_g28.stillashjelpen.adapter.WallRecyclerViewAdapter;
+import no.hiof.bo20_g28.stillashjelpen.fragment.NavigationDrawerFragment;
 import no.hiof.bo20_g28.stillashjelpen.model.Message;
 import no.hiof.bo20_g28.stillashjelpen.model.Project;
 import no.hiof.bo20_g28.stillashjelpen.model.Wall;
@@ -40,7 +44,7 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
 
     private MessageRecyclerViewAdapter messageRecyclerViewAdapter;
     private WallRecyclerViewAdapter wallRecyclerViewAdapter;
-
+    private Toolbar toolbar;
     private Project thisProject;
     private String wallToDeleteId;
     private String from = "";
@@ -55,6 +59,12 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
         wallToDeleteId = i.getStringExtra("deleteWallId");
         from = i.getStringExtra("from");
 
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Prosjekt - " + thisProject.getProjectName());
+
+        setUpNavigationDrawer();
         if(from.equals("deleteWall")){
             deleteWallFromDatabase(wallToDeleteId);
         }
@@ -284,4 +294,13 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
 
         builder.show();
     }
+
+    private void setUpNavigationDrawer() {
+        DrawerLayout drawerlayout = findViewById(R.id.drawer_layout);
+        NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentNavigationDrawer);
+        if(navigationDrawerFragment != null) {
+            navigationDrawerFragment.setupDrawer(drawerlayout, toolbar);
+        }
+    }
 }
+

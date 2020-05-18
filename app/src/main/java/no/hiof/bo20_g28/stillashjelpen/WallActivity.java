@@ -13,12 +13,20 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager2.widget.ViewPager2;
 import no.hiof.bo20_g28.stillashjelpen.adapter.TabCalculationAdapter;
+import no.hiof.bo20_g28.stillashjelpen.fragment.NavigationDrawerFragment;
+import no.hiof.bo20_g28.stillashjelpen.model.Project;
+import no.hiof.bo20_g28.stillashjelpen.model.Wall;
 
 public class WallActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
+    private Toolbar toolbar;
+    private Project thisProject;
+    private Wall thisWall;
     public static boolean isQuickCalculation;
     public static double wallAnchorDistance;
     public static int soleBoardArea;
@@ -37,10 +45,24 @@ public class WallActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wall);
 
-        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
-
+        //Objects.requireNonNull(getSupportActionBar()).setElevation(0);
+        Intent i = getIntent();
+        thisProject = (Project) i.getSerializableExtra("passedProject");
+        thisWall = (Wall) i.getSerializableExtra("passedWall");
         viewPager = findViewById(R.id.pager);
         tabLayout = findViewById(R.id.tab_layout);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        try {
+            Objects.requireNonNull(getSupportActionBar()).setTitle(thisProject.getProjectName() + " > " + thisWall.getWallName());
+        }
+        catch(Exception e) {
+            Objects.requireNonNull(getSupportActionBar()).setTitle("Vegg-side");
+        }
+
+        setUpNavigationDrawer();
 
         viewPager.setAdapter(tabCalculationAdapter());
         new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
@@ -77,6 +99,14 @@ public class WallActivity extends AppCompatActivity {
             if(isQuickCalculation) tab_icon.setImageResource(tabIcons[i+1]);
             else tab_icon.setImageResource(tabIcons[i]);
             tabLayout.getTabAt(i).setCustomView(tab);
+        }
+    }
+
+    private void setUpNavigationDrawer() {
+        DrawerLayout drawerlayout = findViewById(R.id.drawer_layout);
+        NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentNavigationDrawer);
+        if(navigationDrawerFragment != null) {
+            navigationDrawerFragment.setupDrawer(drawerlayout, toolbar);
         }
     }
 

@@ -29,11 +29,15 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".WallActivity"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".ControlSchemeActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".ProjectActivity" />
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ProjectActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".RegisterActivity"
             android:windowSoftInputMode="stateHidden" />
