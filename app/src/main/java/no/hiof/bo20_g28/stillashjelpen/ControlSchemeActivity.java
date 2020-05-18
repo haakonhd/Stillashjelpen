@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import no.hiof.bo20_g28.stillashjelpen.adapter.TabControlSchemeAdapter;
 import no.hiof.bo20_g28.stillashjelpen.fragment.NavigationDrawerFragment;
 import no.hiof.bo20_g28.stillashjelpen.model.ChecklistItem;
+import no.hiof.bo20_g28.stillashjelpen.model.ControlSchemeDefect;
 import no.hiof.bo20_g28.stillashjelpen.model.Project;
 
 public class ControlSchemeActivity extends AppCompatActivity {
@@ -31,6 +32,19 @@ public class ControlSchemeActivity extends AppCompatActivity {
     private Project thisProject;
     Toolbar toolbar;
     private static ArrayList<ChecklistItem> checklistItems = new ArrayList<>();
+    private static ArrayList<ControlSchemeDefect> controlSchemeDefects = new ArrayList<>();
+
+    public static ArrayList<ControlSchemeDefect> getControlSchemeDefects() {
+        return controlSchemeDefects;
+    }
+
+    public static void setControlSchemeDefects(ArrayList<ControlSchemeDefect> controlSchemeDefects) {
+        ControlSchemeActivity.controlSchemeDefects = controlSchemeDefects;
+    }
+
+    public static void addControlSchemeDefect(ControlSchemeDefect controlSchemeDefect){
+        controlSchemeDefects.add(controlSchemeDefect);
+    }
 
     private TabControlSchemeAdapter tabControlSchemeAdapter() {
         TabControlSchemeAdapter cSadapter = new TabControlSchemeAdapter(this);
