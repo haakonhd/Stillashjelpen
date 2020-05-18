@@ -40,8 +40,8 @@ public class DefectFixedRecyclerViewAdapter  extends RecyclerView.Adapter<Defect
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ControlSchemeDefectFixed controlSchemeDefectFixed = defectFixedDataList.get(position);
 
-        holder.controlDate.setText((CharSequence) controlSchemeDefectFixed.getControlDate());
-        holder.fixedDate.setText((CharSequence) controlSchemeDefectFixed.getDefectFixedDate());
+        holder.controlDate.setText(controlSchemeDefectFixed.getControlDate().toString());
+        holder.fixedDate.setText(controlSchemeDefectFixed.getDefectFixedDate().toString());
         holder.signature.setText(controlSchemeDefectFixed.getSignature());
 
         Log.d("DefectFixed", (String) holder.controlDate.getText());
@@ -69,7 +69,7 @@ public class DefectFixedRecyclerViewAdapter  extends RecyclerView.Adapter<Defect
 
     @Override
     public int getItemCount() {
-        return 0;
+        return defectFixedDataList.size();
     }
 
 

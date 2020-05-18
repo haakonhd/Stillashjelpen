@@ -10,18 +10,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/defectFixedRecyclerView"
-        android:layout_width="416dp"
-        android:layout_height="808dp"
-        android:layout_marginStart="92dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="80dp"
+        android:layout_width="455dp"
+        android:layout_height="870dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/messageRecyclerView"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.083"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
+        app:layout_constraintVertical_bias="0.505" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

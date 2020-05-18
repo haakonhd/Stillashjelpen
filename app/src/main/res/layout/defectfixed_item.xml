@@ -10,6 +10,7 @@
 
 
     <TextView
+        android:id="@+id/textView24"
         android:layout_width="206dp"
         android:layout_height="28dp"
         android:layout_marginStart="8dp"
@@ -23,6 +24,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
+        android:id="@+id/textView25"
         android:layout_width="231dp"
         android:layout_height="27dp"
         android:layout_marginStart="8dp"
@@ -36,6 +38,7 @@
         app:layout_constraintVertical_bias="0.505" />
 
     <TextView
+        android:id="@+id/textView26"
         android:layout_width="231dp"
         android:layout_height="27dp"
         android:layout_marginStart="8dp"
@@ -61,41 +64,42 @@
         android:id="@+id/defectFixedControlDateTextView"
         android:layout_width="102dp"
         android:layout_height="24dp"
-        android:layout_marginStart="8dp"
         android:text="05.01.02 "
         android:textSize="20sp"
+
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/messageListImageView"
+        app:layout_constraintHorizontal_bias="0.901"
+        app:layout_constraintStart_toEndOf="@+id/textView24"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.01" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/defectFixedDateFixedTextView"
         android:layout_width="102dp"
         android:layout_height="24dp"
-        android:layout_marginStart="8dp"
         android:text="05.01.02 "
+        android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.994"
-        app:layout_constraintStart_toEndOf="@+id/messageListImageView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.884"
+        app:layout_constraintStart_toEndOf="@+id/textView26"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.989" />
 
     <TextView
         android:id="@+id/defectFixedSignatureTextView"
         android:layout_width="102dp"
         android:layout_height="24dp"
-        android:layout_marginStart="8dp"
         android:text="Kurt"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.994"
-        app:layout_constraintStart_toEndOf="@+id/messageListImageView"
+        app:layout_constraintHorizontal_bias="0.884"
+        app:layout_constraintStart_toEndOf="@+id/textView25"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        android:textAlignment="center"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
