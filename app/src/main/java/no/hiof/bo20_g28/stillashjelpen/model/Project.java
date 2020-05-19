@@ -16,7 +16,6 @@ public class Project implements Serializable {
     private Date dateCreated;
     private Date dateChanged;
 
-
     public Project() {
 
     }
@@ -93,4 +92,5 @@ public class Project implements Serializable {
     public void setDateChanged(Date dateChanged) {
         this.dateChanged = dateChanged;
     }
+
 }

@@ -1,6 +1,7 @@
 package no.hiof.bo20_g28.stillashjelpen.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ControlScheme implements Serializable {
@@ -30,6 +31,8 @@ public class ControlScheme implements Serializable {
     private String numOfWallAnchorTests;
     private String wallAnchorHolds;
     private String wallAnchorTestResult;
+
+    private ArrayList<ChecklistItem> checklistItems;
 
 
 
@@ -215,5 +218,13 @@ public class ControlScheme implements Serializable {
 
     public void setWallAnchorTestResult(String wallAnchorTestResult) {
         this.wallAnchorTestResult = wallAnchorTestResult;
+    }
+
+    public ArrayList<ChecklistItem> getChecklistItems() {
+        return checklistItems;
+    }
+
+    public void setChecklistItems(ArrayList<ChecklistItem> checklistItems) {
+        this.checklistItems = checklistItems;
     }
 }

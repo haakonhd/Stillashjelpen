@@ -1,8 +1,9 @@
 package no.hiof.bo20_g28.stillashjelpen.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ControlSchemeDefect {
+public class ControlSchemeDefect implements Serializable {
 
     private Date foundDate;
     private String defectDescription;

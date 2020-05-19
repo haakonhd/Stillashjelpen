@@ -43,7 +43,7 @@ import no.hiof.bo20_g28.stillashjelpen.model.ControlScheme;
 import no.hiof.bo20_g28.stillashjelpen.model.ControlSchemeDefect;
 import no.hiof.bo20_g28.stillashjelpen.model.Project;
 
-import static no.hiof.bo20_g28.stillashjelpen.ControlSchemeActivity.getChecklistItems;
+import static no.hiof.bo20_g28.stillashjelpen.ControlSchemeActivity.getChecklistItemsFromPreset;
 
 public class ThirdControlSchemeFragment extends Fragment implements ChecklistRecyclerViewAdapter.ItemClickListener, ChecklistRecyclerViewAdapter.ButtonClickListener {
 
@@ -79,7 +79,12 @@ public class ThirdControlSchemeFragment extends Fragment implements ChecklistRec
 
         reportCsDefectDialogView = inflater.inflate(R.layout.report_cs_defect_dialog, container, false);
 
-        itemData = getChecklistItems();
+        ArrayList<ChecklistItem> itemData1 = thisProject.getControlScheme().getChecklistItems();
+        itemData = getChecklistItemsFromPreset();
+//        if(thisProject.getControlScheme().getChecklistItems() == null)
+//        else{
+//        }
+
         fillCheckListRecyclerList();
 
         return view;
@@ -110,6 +115,7 @@ public class ThirdControlSchemeFragment extends Fragment implements ChecklistRec
         return true;
     }
     private void saveCheckListToDb(){
+        thisProject.getControlScheme().setChecklistItems(itemData);
         DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("projects");
         DatabaseReference projectRef = fDatabase.child(thisProject.getProjectId());
         projectRef.setValue(thisProject);
