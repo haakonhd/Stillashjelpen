@@ -11,6 +11,18 @@ public class ChecklistItem implements Serializable {
     private boolean isParent;
     private boolean isChecked;
 
+
+    public ChecklistItem(int id, String text, int parentId, int checkedChildrenCounter, int numberOfChildren, boolean isParent, boolean isChecked) {
+        this.id = id;
+        this.text = text;
+        this.parentId = parentId;
+        this.checkedChildrenCounter = checkedChildrenCounter;
+        this.numberOfChildren = numberOfChildren;
+        this.isParent = isParent;
+        this.isChecked = isChecked;
+    }
+
+
     public int getCheckedChildrenCounter() {
         return checkedChildrenCounter;
     }
@@ -25,16 +37,6 @@ public class ChecklistItem implements Serializable {
 
     public void setNumberOfChildren(int numberOfChildren) {
         this.numberOfChildren = numberOfChildren;
-    }
-
-    public ChecklistItem(int id, String text, int parentId, int checkedChildrenCounter, int numberOfChildren, boolean isParent, boolean isChecked) {
-        this.id = id;
-        this.text = text;
-        this.parentId = parentId;
-        this.checkedChildrenCounter = checkedChildrenCounter;
-        this.numberOfChildren = numberOfChildren;
-        this.isParent = isParent;
-        this.isChecked = isChecked;
     }
 
     public ChecklistItem(int id, String text, int parentId){
@@ -56,7 +58,7 @@ public class ChecklistItem implements Serializable {
     public ChecklistItem(){}
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
@@ -64,19 +66,19 @@ public class ChecklistItem implements Serializable {
     }
 
     public String getText() {
-        return text;
+        return this.text;
     }
 
     public void setText(String text) {
-        text = text;
+        this.text = text;
     }
 
     public int getParentId() {
-        return parentId;
+        return this.parentId;
     }
 
     public void setParentId(int parentId) {
-        parentId = parentId;
+        this.parentId = parentId;
     }
 
     public void incrementCheckedChildrenCounter() {
@@ -91,19 +93,19 @@ public class ChecklistItem implements Serializable {
         return this.checkedChildrenCounter == this.numberOfChildren;
     }
 
-    public boolean isParent() {
-        return isParent;
+    public boolean getIsParent() {
+        return this.isParent;
     }
 
-    public void setParent(boolean parent) {
-        isParent = parent;
+    public void setIsParent(boolean parent) {
+        this.isParent = parent;
     }
 
     public boolean isChecked() {
-        return isChecked;
+        return this.isChecked;
     }
 
     public void setChecked(boolean checked) {
-        isChecked = checked;
+        this.isChecked = checked;
     }
 }

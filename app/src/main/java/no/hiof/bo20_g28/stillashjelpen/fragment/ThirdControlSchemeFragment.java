@@ -79,20 +79,26 @@ public class ThirdControlSchemeFragment extends Fragment implements ChecklistRec
 
         reportCsDefectDialogView = inflater.inflate(R.layout.report_cs_defect_dialog, container, false);
 
-        ArrayList<ChecklistItem> itemData1 = thisProject.getControlScheme().getChecklistItems();
-        itemData = getChecklistItemsFromPreset();
-//        if(thisProject.getControlScheme().getChecklistItems() == null)
-//        else{
-//        }
+        if(thisProject.getControlScheme().getChecklistItems() == null)
+            itemData = getChecklistItemsFromPreset();
+        else{
+            itemData = thisProject.getControlScheme().getChecklistItems();
+        }
 
         fillCheckListRecyclerList();
-
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Bundle args = getArguments();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        fillCheckItemsFromDb();
     }
 
     private boolean preventHorizontalScrollOnListClick(View v, MotionEvent event){
@@ -131,13 +137,25 @@ public class ThirdControlSchemeFragment extends Fragment implements ChecklistRec
         checklistRecyclerView.setAdapter(checklistRecyclerViewAdapter);
     }
 
+    private void fillCheckItemsFromDb(){
+        for(ChecklistItem item : itemData){
+            if(item.getIsParent()) {
+                item.setChecked(false);
+                item.setCheckedChildrenCounter(0);
+            }
+            if(item.isChecked() && !item.getIsParent()){
+                RecyclerView.ViewHolder cb = checklistRecyclerView.findViewHolderForLayoutPosition(item.getId());
+                cb.itemView.performClick();
+            }
 
+        }
+    }
 
     @Override
     public void onChecklistItemClicked(View view, int position) {
         ChecklistItem clickedItem = checklistRecyclerViewAdapter.getItem(position);
 
-        if(clickedItem.isParent()){
+        if(clickedItem.getIsParent()){
             if(((CheckBox) view).isChecked()){
                 for(ChecklistItem item : itemData){
                     if(item.getParentId() == position){
