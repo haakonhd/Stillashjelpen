@@ -43,7 +43,7 @@ import no.hiof.bo20_g28.stillashjelpen.model.ControlScheme;
 import no.hiof.bo20_g28.stillashjelpen.model.ControlSchemeDefect;
 import no.hiof.bo20_g28.stillashjelpen.model.Project;
 
-import static no.hiof.bo20_g28.stillashjelpen.ControlSchemeActivity.getChecklistItems;
+import static no.hiof.bo20_g28.stillashjelpen.ControlSchemeActivity.getChecklistItemsFromPreset;
 
 public class ThirdControlSchemeFragment extends Fragment implements ChecklistRecyclerViewAdapter.ItemClickListener, ChecklistRecyclerViewAdapter.ButtonClickListener {
 
@@ -79,15 +79,26 @@ public class ThirdControlSchemeFragment extends Fragment implements ChecklistRec
 
         reportCsDefectDialogView = inflater.inflate(R.layout.report_cs_defect_dialog, container, false);
 
-        itemData = getChecklistItems();
-        fillCheckListRecyclerList();
+        if(thisProject.getControlScheme().getChecklistItems() == null)
+            itemData = getChecklistItemsFromPreset();
+        else{
+            itemData = thisProject.getControlScheme().getChecklistItems();
+        }
 
+        fillCheckListRecyclerList();
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Bundle args = getArguments();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        fillCheckItemsFromDb();
     }
 
     private boolean preventHorizontalScrollOnListClick(View v, MotionEvent event){
@@ -110,6 +121,7 @@ public class ThirdControlSchemeFragment extends Fragment implements ChecklistRec
         return true;
     }
     private void saveCheckListToDb(){
+        thisProject.getControlScheme().setChecklistItems(itemData);
         DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("projects");
         DatabaseReference projectRef = fDatabase.child(thisProject.getProjectId());
         projectRef.setValue(thisProject);
@@ -125,13 +137,25 @@ public class ThirdControlSchemeFragment extends Fragment implements ChecklistRec
         checklistRecyclerView.setAdapter(checklistRecyclerViewAdapter);
     }
 
+    private void fillCheckItemsFromDb(){
+        for(ChecklistItem item : itemData){
+            if(item.getIsParent()) {
+                item.setChecked(false);
+                item.setCheckedChildrenCounter(0);
+            }
+            if(item.isChecked() && !item.getIsParent()){
+                RecyclerView.ViewHolder cb = checklistRecyclerView.findViewHolderForLayoutPosition(item.getId());
+                cb.itemView.performClick();
+            }
 
+        }
+    }
 
     @Override
     public void onChecklistItemClicked(View view, int position) {
         ChecklistItem clickedItem = checklistRecyclerViewAdapter.getItem(position);
 
-        if(clickedItem.isParent()){
+        if(clickedItem.getIsParent()){
             if(((CheckBox) view).isChecked()){
                 for(ChecklistItem item : itemData){
                     if(item.getParentId() == position){

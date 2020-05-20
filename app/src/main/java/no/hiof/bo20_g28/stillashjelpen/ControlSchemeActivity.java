@@ -107,7 +107,7 @@ public class ControlSchemeActivity extends AppCompatActivity {
         }
     }
 
-    public static ArrayList<ChecklistItem> getChecklistItems(){
+    public static ArrayList<ChecklistItem> getChecklistItemsFromPreset(){
         int id = 0;
         checklistItems.clear();
         checklistItems.add(new ChecklistItem(true, id++, "Skilt?", 2));
