@@ -58,6 +58,7 @@ public class ThirdControlSchemeFragment extends Fragment implements ChecklistRec
     private Project thisProject;
     private View reportCsDefectDialogView;
     private Button saveCheckListButton;
+    private boolean isFirstTimeRunning = true;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_cs_third, container, false);
@@ -98,7 +99,9 @@ public class ThirdControlSchemeFragment extends Fragment implements ChecklistRec
     public void onResume()
     {
         super.onResume();
-        fillCheckItemsFromDb();
+        if(isFirstTimeRunning)
+            fillCheckItemsFromDb();
+        isFirstTimeRunning = false;
     }
 
     private boolean preventHorizontalScrollOnListClick(View v, MotionEvent event){

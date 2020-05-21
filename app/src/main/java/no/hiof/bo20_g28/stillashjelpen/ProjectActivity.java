@@ -133,6 +133,8 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
         });
     }
 
+
+
     private void addNewMessageToDatabase(String messageContent){
         databaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference messageRef = databaseReference.child("messages").push();
