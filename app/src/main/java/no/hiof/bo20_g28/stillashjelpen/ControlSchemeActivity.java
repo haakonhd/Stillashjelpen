@@ -88,13 +88,15 @@ public class ControlSchemeActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setText(getString(R.string.tab_cs_second));
         tabLayout.getTabAt(2).setText(getString(R.string.tab_cs_third));
         tabLayout.getTabAt(3).setText(getString(R.string.tab_cs_fourth));
+        tabLayout.getTabAt(4).setText(getString(R.string.pdf));
     }
 
     private int[] tabLabels = {
             R.string.tab_cs_first,
             R.string.tab_cs_second,
             R.string.tab_cs_third,
-            R.string.tab_cs_fourth
+            R.string.tab_cs_fourth,
+            R.string.pdf
     };
 
     private void setTabLayout(){
