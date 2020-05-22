@@ -13,6 +13,8 @@ public class ControlSchemeDefect implements Serializable {
         this.defectDescription = defectDescription;
     }
 
+    public ControlSchemeDefect(){}
+
     public Date getfoundDate() {
         return foundDate;
     }

@@ -2,8 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="2250px"
-    android:layout_height="1400px"
+    android:id="@+id/mainLayout"
+    android:layout_width="1370px"
+    android:layout_height="855px"
     android:padding="2mm">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,11 +31,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/inBuilderCompanyName"
+            android:id="@+id/tvBuilderCompanyName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="firmanavn"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView25"
@@ -80,10 +80,9 @@
             app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
         <TextView
-            android:id="@+id/inRefNum"
+            android:id="@+id/tvRefNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="rapportnum"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView27"
@@ -506,6 +505,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TableLayout
+            android:id="@+id/defectsTable"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/border_black"
@@ -529,9 +529,9 @@
         app:layout_constraintTop_toBottomOf="@+id/r2c1">
 
         <TextView
+            android:id="@+id/tvPlaceName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Eksempelgaten 164"
             android:ellipsize="none"
             android:singleLine="false"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -638,7 +638,6 @@
             android:id="@+id/tv_length"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="lengde"
             app:layout_constraintBottom_toTopOf="@+id/tv_bredth"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -648,7 +647,6 @@
             android:id="@+id/tv_bredth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="bredde"
             app:layout_constraintBottom_toTopOf="@+id/tv_height"
             app:layout_constraintStart_toStartOf="@+id/tv_length"
             app:layout_constraintTop_toBottomOf="@+id/tv_length" />
@@ -657,7 +655,6 @@
             android:id="@+id/tv_height"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="høyde"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/tv_bredth"
@@ -684,9 +681,9 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tv_builtByName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="tekst"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -737,7 +734,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2mm"
-            android:text="firma"
             app:layout_constraintBottom_toBottomOf="@+id/textView30"
             app:layout_constraintStart_toEndOf="@+id/textView30"
             app:layout_constraintTop_toTopOf="@+id/textView30" />
@@ -756,7 +752,6 @@
             android:id="@+id/tv_tlf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="telefon"
             android:layout_marginStart="2mm"
             app:layout_constraintBottom_toBottomOf="@+id/textView31"
             app:layout_constraintStart_toEndOf="@+id/textView31"
@@ -776,7 +771,6 @@
             android:id="@+id/tv_contact_person"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="kontaktperson"
             android:layout_marginStart="2mm"
             app:layout_constraintBottom_toBottomOf="@+id/textView47"
             app:layout_constraintStart_toEndOf="@+id/textView47"
@@ -816,7 +810,6 @@
             android:id="@+id/tv_builder_control"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="24/12/1970 / navn navnesen"
             app:layout_constraintBottom_toBottomOf="@+id/textView33"
             app:layout_constraintStart_toEndOf="@+id/textView33"
             app:layout_constraintTop_toTopOf="@+id/textView33" />
@@ -843,7 +836,6 @@
             android:id="@+id/tv_user_control"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="24/12/1970 / navn navnesen"
             app:layout_constraintBottom_toBottomOf="@+id/textView50"
             app:layout_constraintStart_toEndOf="@+id/textView50"
             app:layout_constraintTop_toTopOf="@+id/textView50" />
@@ -919,6 +911,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TableLayout
+            android:id="@+id/controlTable"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -955,7 +948,6 @@
             android:layout_height="26dp"
             android:layout_marginStart="30dp"
             android:background="@drawable/border_black"
-            android:text="5"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@+id/textView69"
             app:layout_constraintStart_toEndOf="@+id/textView69"
@@ -975,7 +967,6 @@
             android:layout_width="60dp"
             android:layout_height="26dp"
             android:background="@drawable/border_black"
-            android:text="5"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@+id/textView70"
             app:layout_constraintStart_toStartOf="@+id/tv_num_of_wall_anchors"
@@ -987,7 +978,6 @@
             android:layout_height="26dp"
             android:layout_marginEnd="40dp"
             android:background="@drawable/border_black"
-            android:text="5"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@+id/tv_num_of_wall_anchors"
             app:layout_constraintEnd_toEndOf="parent"
@@ -1004,11 +994,10 @@
             app:layout_constraintTop_toTopOf="@+id/tv_wall_anchor_holds" />
 
         <TextView
-            android:id="@+id/textView76"
+            android:id="@+id/tv_wallAnchorTestResult"
             android:layout_width="60dp"
             android:layout_height="26dp"
             android:background="@drawable/border_black"
-            android:text="5"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@+id/tv_num_of_wall_anchor_tests"
             app:layout_constraintEnd_toEndOf="@+id/tv_wall_anchor_holds"
