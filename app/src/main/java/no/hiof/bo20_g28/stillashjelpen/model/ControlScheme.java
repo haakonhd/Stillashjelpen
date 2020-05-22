@@ -46,7 +46,7 @@ public class ControlScheme implements Serializable {
     }
 
     public void addControlSchemeDefect(ControlSchemeDefect controlSchemeDefect){
-        controlSchemeDefects.add(controlSchemeDefect);
+        this.controlSchemeDefects.add(controlSchemeDefect);
     }
 
 
