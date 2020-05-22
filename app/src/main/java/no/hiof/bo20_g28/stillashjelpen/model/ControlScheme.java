@@ -1,7 +1,10 @@
 package no.hiof.bo20_g28.stillashjelpen.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+
+import no.hiof.bo20_g28.stillashjelpen.ControlSchemeActivity;
 
 public class ControlScheme implements Serializable {
 
@@ -30,6 +33,21 @@ public class ControlScheme implements Serializable {
     private String numOfWallAnchorTests;
     private String wallAnchorHolds;
     private String wallAnchorTestResult;
+
+    private ArrayList<ChecklistItem> checklistItems;
+    private ArrayList<ControlSchemeDefect> controlSchemeDefects = new ArrayList<>();
+
+    public ArrayList<ControlSchemeDefect> getControlSchemeDefects() {
+        return controlSchemeDefects;
+    }
+
+    public void setControlSchemeDefects(ArrayList<ControlSchemeDefect> controlSchemeDefects) {
+        this.controlSchemeDefects = controlSchemeDefects;
+    }
+
+    public void addControlSchemeDefect(ControlSchemeDefect controlSchemeDefect){
+        this.controlSchemeDefects.add(controlSchemeDefect);
+    }
 
 
 
@@ -215,5 +233,13 @@ public class ControlScheme implements Serializable {
 
     public void setWallAnchorTestResult(String wallAnchorTestResult) {
         this.wallAnchorTestResult = wallAnchorTestResult;
+    }
+
+    public ArrayList<ChecklistItem> getChecklistItems() {
+        return checklistItems;
+    }
+
+    public void setChecklistItems(ArrayList<ChecklistItem> checklistItems) {
+        this.checklistItems = checklistItems;
     }
 }

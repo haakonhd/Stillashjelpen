@@ -1,16 +1,21 @@
 package no.hiof.bo20_g28.stillashjelpen.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -25,6 +30,7 @@ public class ChecklistRecyclerViewAdapter  extends RecyclerView.Adapter<Checklis
     private Context context;
     private LayoutInflater layoutInflater;
     private ChecklistRecyclerViewAdapter.ItemClickListener itemClickListener;
+    private ChecklistRecyclerViewAdapter.ButtonClickListener buttonClickListener;
 
 
     public ChecklistRecyclerViewAdapter(Context context, List<ChecklistItem> data){
@@ -45,6 +51,7 @@ public class ChecklistRecyclerViewAdapter  extends RecyclerView.Adapter<Checklis
         return new ViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull ChecklistRecyclerViewAdapter.ViewHolder holder, int position) {
         ChecklistItem item = itemData.get(position);
@@ -53,13 +60,15 @@ public class ChecklistRecyclerViewAdapter  extends RecyclerView.Adapter<Checklis
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.cl_checkbox.performClick();
+                if(holder.cl_checkbox.isEnabled())
+                    holder.cl_checkbox.performClick();
             }
         });
         holder.cl_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.cl_checkbox.performClick();
+                if(holder.cl_checkbox.isEnabled())
+                    holder.cl_checkbox.performClick();
             }
         });
 
@@ -78,7 +87,19 @@ public class ChecklistRecyclerViewAdapter  extends RecyclerView.Adapter<Checklis
             }
         });
 
-        if(!item.isParent()) {
+        holder.cl_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String t = holder.cl_text.getText().toString();
+                try{
+                    buttonClickListener.onButtonClicked(t);
+                }catch (ClassCastException e){
+                    throw new ClassCastException(e.getMessage());
+                }
+            }
+        });
+
+        if(!item.getIsParent()) {
             //setting margin for child-elements
             ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) holder.cl_checkbox.getLayoutParams();
             p.setMargins(60, 0, 0, 0);
@@ -96,11 +117,17 @@ public class ChecklistRecyclerViewAdapter  extends RecyclerView.Adapter<Checklis
     public void setClickListener(ItemClickListener itemClickListener){
         this.itemClickListener = itemClickListener;
     }
+    public void setButtonClickListener(ButtonClickListener buttonClickListener){
+        this.buttonClickListener = buttonClickListener;
+    }
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
         void onChecklistItemClicked(View view, int position);
-        void onMethodCallback();
+    }
+
+    public interface ButtonClickListener{
+        void onButtonClicked(String checkItemText);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -118,7 +145,8 @@ public class ChecklistRecyclerViewAdapter  extends RecyclerView.Adapter<Checklis
 
         @Override
         public void onClick(View view) {
-            if (itemClickListener != null) itemClickListener.onChecklistItemClicked(view, getAdapterPosition());
+            if (itemClickListener != null)
+                itemClickListener.onChecklistItemClicked(view, getAdapterPosition());
         }
     }
 }

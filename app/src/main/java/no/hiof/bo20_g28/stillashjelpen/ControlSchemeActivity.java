@@ -77,13 +77,15 @@ public class ControlSchemeActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setText(getString(R.string.tab_cs_second));
         tabLayout.getTabAt(2).setText(getString(R.string.tab_cs_third));
         tabLayout.getTabAt(3).setText(getString(R.string.tab_cs_fourth));
+        tabLayout.getTabAt(4).setText(getString(R.string.pdf));
     }
 
     private int[] tabLabels = {
             R.string.tab_cs_first,
             R.string.tab_cs_second,
             R.string.tab_cs_third,
-            R.string.tab_cs_fourth
+            R.string.tab_cs_fourth,
+            R.string.pdf
     };
 
     private void setTabLayout(){
@@ -96,14 +98,22 @@ public class ControlSchemeActivity extends AppCompatActivity {
         }
     }
 
-    public static ArrayList<ChecklistItem> getChecklistItems(){
+    public static ArrayList<ChecklistItem> getChecklistItemsFromPreset(){
         int id = 0;
-        checklistItems.clear();
-        checklistItems.add(new ChecklistItem(true, id++, "Skilt?", 2));
-        checklistItems.add(new ChecklistItem(id++, "Rødt skilt?", 0));
-        checklistItems.add(new ChecklistItem(id++, "Blått skilt?", 0));
-        checklistItems.add(new ChecklistItem(true, id++, "Gulv?", 1));
-        checklistItems.add(new ChecklistItem(id++, "Brunt gulv?", 3));
+        checklistItems.add(new ChecklistItem(true, id++, "Skilting av stillas", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Bærende konstruksjon", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Atkomst", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Stillasgulv", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Rekkverk", 4));
+        checklistItems.add(new ChecklistItem(id++, "Håndlist", 5));
+        checklistItems.add(new ChecklistItem(id++, "Knelist", 5));
+        checklistItems.add(new ChecklistItem(id++, "Fotlist", 5));
+        checklistItems.add(new ChecklistItem(id++, "Skvett/skjerm", 5));
+        checklistItems.add(new ChecklistItem(true, id++, "Presenning/Nett", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Fundamentering", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Avstivning", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Forankring", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Feste for forankring", 0));
         return checklistItems;
     }
 

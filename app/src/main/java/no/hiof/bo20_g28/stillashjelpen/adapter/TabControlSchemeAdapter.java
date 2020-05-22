@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import no.hiof.bo20_g28.stillashjelpen.fragment.FifthControlSchemeFragment;
 import no.hiof.bo20_g28.stillashjelpen.fragment.FirstControlSchemeFragment;
 import no.hiof.bo20_g28.stillashjelpen.fragment.FourthControlSchemeFragment;
 import no.hiof.bo20_g28.stillashjelpen.fragment.SecondControlSchemeFragment;
@@ -23,17 +24,19 @@ public class TabControlSchemeAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
+        int what = 0;
         // Return a NEW fragment instance in createFragment(int)
 
         if(position == 0) return new FirstControlSchemeFragment();
         else if(position == 1) return new SecondControlSchemeFragment();
         else if(position == 2) return new ThirdControlSchemeFragment();
         else if(position == 3) return new FourthControlSchemeFragment();
+        else if(position == 4) return new FifthControlSchemeFragment();
         else return new FirstControlSchemeFragment();
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 5;
     }
 }
