@@ -1,18 +1,24 @@
 package no.hiof.bo20_g28.stillashjelpen.fragment;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
-import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,10 +28,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import no.hiof.bo20_g28.stillashjelpen.R;
@@ -47,6 +53,7 @@ public class FifthControlSchemeFragment extends Fragment {
     private PdfDocument document;
     private View pdfContent;
     private LayoutInflater layoutInflater;
+    private Bitmap bitmap;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,7 +67,7 @@ public class FifthControlSchemeFragment extends Fragment {
         pdfPreview.setOnTouchListener((v, event) -> preventHorizontalScrollOnListClick(v, event));
 
         saveButton = view.findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(v -> saveFile("test.pdf"));
+        saveButton.setOnClickListener(v -> saveFile(thisProject.getProjectName() + ".pdf"));
 
         pdfContent = layoutInflater.inflate(R.layout.pdf_page, null);
         return view;
@@ -78,6 +85,7 @@ public class FifthControlSchemeFragment extends Fragment {
     }
 
     private PdfDocument getPdfDocument(){
+
         // create a new document
         PdfDocument document = new PdfDocument();
 
@@ -87,12 +95,18 @@ public class FifthControlSchemeFragment extends Fragment {
         // start a page
         PdfDocument.Page page = document.startPage(pageInfo);
 
-        // draw something on the page
-//        View pdfContent = layoutInflater.inflate(R.layout.pdf_page, null);
+        int measureWidth = View.MeasureSpec.makeMeasureSpec(page.getCanvas().getWidth(), View.MeasureSpec.EXACTLY);
+        int measuredHeight = View.MeasureSpec.makeMeasureSpec(page.getCanvas().getHeight(), View.MeasureSpec.EXACTLY);
 
-        pdfContent.measure(2250, 1400);
-        pdfContent.layout(0, 0, 2250, 1400);
-        pdfContent.draw(page.getCanvas());
+        // draw something on the page
+        pdfContent.measure(measureWidth, measuredHeight);
+        pdfContent.layout(0, 0, page.getCanvas().getWidth(), page.getCanvas().getHeight());
+
+//        pdfContent.measure(measureWidth, View.MeasureSpec.UNSPECIFIED);
+//        pdfContent.layout(0, 0, pdfContent.getMeasuredWidth(), pdfContent.getMeasuredHeight());
+        Canvas canvas = page.getCanvas();
+//        canvas.scale(72f / hdpi, 72f / vdpi);
+        pdfContent.draw(canvas);
 
         // finish the page
         document.finishPage(page);
@@ -103,8 +117,8 @@ public class FifthControlSchemeFragment extends Fragment {
         requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE}, 1);
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Stillashjelpen");
 
-        document = getPdfDocument();
-
+//        document = getPdfDocument();
+        document = createPdf();
         if(!file.exists()){
             file.mkdir();
         }
@@ -121,6 +135,37 @@ public class FifthControlSchemeFragment extends Fragment {
 
         Toast toast = Toast.makeText(getActivity(), text, duration);
         toast.show();
+    }
+
+    public static Bitmap loadBitmapFromView(View v, int width, int height) {
+        Bitmap b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(b);
+        v.draw(c);
+        return b;
+    }
+
+    private PdfDocument createPdf() {
+        bitmap = loadBitmapFromView(pdfContent, pdfContent.getWidth(), pdfContent.getHeight());
+        WindowManager wm = (WindowManager)getActivity().getSystemService(Context.WINDOW_SERVICE);
+        //  Display display = wm.getDefaultDisplay();
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        float hight = displaymetrics.heightPixels;
+        float width = displaymetrics.widthPixels;
+        int convertHight = (int) hight, convertWidth = (int) width;
+        //        Resources mResources = getResources();
+        //        Bitmap bitmap = BitmapFactory.decodeResource(mResources, R.drawable.screenshot);
+        PdfDocument document = new PdfDocument();
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(convertWidth, convertHight, 1).create();
+        PdfDocument.Page page = document.startPage(pageInfo);
+        Canvas canvas = page.getCanvas();
+        Paint paint = new Paint();
+        canvas.drawPaint(paint);
+        bitmap = Bitmap.createScaledBitmap(bitmap, convertWidth, convertHight, true);
+        paint.setColor(Color.BLUE);
+        canvas.drawBitmap(bitmap, 0, 0, null);
+        document.finishPage(page);
+        return document;
     }
 
 
@@ -214,7 +259,7 @@ public class FifthControlSchemeFragment extends Fragment {
         if(anchorTestResult != null && userControlName != null) tv_wallAnchorTestResult.setText(anchorTestResult);
 
         fillCheckList();
-
+        fillDefectsFoundTable();
 
     }
 
@@ -257,9 +302,56 @@ public class FifthControlSchemeFragment extends Fragment {
 
     private void fillDefectsFoundTable(){
         ArrayList<ControlSchemeDefect> defects = thisProject.getControlScheme().getControlSchemeDefects();
+        TableLayout table = pdfContent.findViewById(R.id.defectsTable);
+        table.removeAllViews();
+
         for(ControlSchemeDefect defect : defects){
+            TableRow row = new TableRow(getActivity());
+
+            String dateText;
+            Format formatter;
+            formatter = new SimpleDateFormat("dd/mm/yyyy");
+            dateText = formatter.format(defect.getfoundDate());
+
+            TextView dateTextView = new TextView(getActivity());
+//            dateTextView.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
+            dateTextView.setText(dateText);
+            dateTextView.setPadding(8,2,5,8);
+            dateTextView.setBackgroundResource(R.drawable.border_black);
+
+            TextView defectDescriptionTextView = new TextView(getActivity());
+            defectDescriptionTextView.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
+            defectDescriptionTextView.setText(defect.getDefectDescription());
+            defectDescriptionTextView.setPadding(8,2,5,8);
+            defectDescriptionTextView.setBackgroundResource(R.drawable.border_black);
+
+            row.addView(dateTextView);
+            row.addView(defectDescriptionTextView);
+            table.addView(row);
+        }
+    }
+
+    private void fillDefectsFixedTable(){
+        ArrayList<ControlSchemeDefect> defects = thisProject.getControlScheme().getControlSchemeDefects();
+        TableLayout table = pdfContent.findViewById(R.id.defectsTable);
+        TableRow row1 = new TableRow(getActivity());
+        TableRow row2 = new TableRow(getActivity());
+
+        for(ControlSchemeDefect defect : defects){
+            TextView dateTextView = new TextView(getActivity());
+            dateTextView.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
+            dateTextView.setText(defect.getfoundDate().toString());
+
+            TextView defectDescriptionTextView = new TextView(getActivity());
+            defectDescriptionTextView.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
+            defectDescriptionTextView.setText(defect.getDefectDescription());
+
+            row1.addView(dateTextView);
+            row2.addView(defectDescriptionTextView);
 
         }
+        table.addView(row1);
+        table.addView(row2);
     }
 
     private boolean preventHorizontalScrollOnListClick(View v, MotionEvent event){
@@ -281,9 +373,6 @@ public class FifthControlSchemeFragment extends Fragment {
         v.onTouchEvent(event);
         return true;
     }
-
-
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
