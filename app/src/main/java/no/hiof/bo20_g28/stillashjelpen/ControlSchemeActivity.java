@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import no.hiof.bo20_g28.stillashjelpen.adapter.TabControlSchemeAdapter;
 import no.hiof.bo20_g28.stillashjelpen.fragment.NavigationDrawerFragment;
 import no.hiof.bo20_g28.stillashjelpen.model.ChecklistItem;
-import no.hiof.bo20_g28.stillashjelpen.model.ControlSchemeDefect;
 import no.hiof.bo20_g28.stillashjelpen.model.Project;
 
 public class ControlSchemeActivity extends AppCompatActivity {
@@ -32,19 +31,6 @@ public class ControlSchemeActivity extends AppCompatActivity {
     private Project thisProject;
     Toolbar toolbar;
     private static ArrayList<ChecklistItem> checklistItems = new ArrayList<>();
-    private static ArrayList<ControlSchemeDefect> controlSchemeDefects = new ArrayList<>();
-
-    public static ArrayList<ControlSchemeDefect> getControlSchemeDefects() {
-        return controlSchemeDefects;
-    }
-
-    public static void setControlSchemeDefects(ArrayList<ControlSchemeDefect> controlSchemeDefects) {
-        ControlSchemeActivity.controlSchemeDefects = controlSchemeDefects;
-    }
-
-    public static void addControlSchemeDefect(ControlSchemeDefect controlSchemeDefect){
-        controlSchemeDefects.add(controlSchemeDefect);
-    }
 
     private TabControlSchemeAdapter tabControlSchemeAdapter() {
         TabControlSchemeAdapter cSadapter = new TabControlSchemeAdapter(this);
@@ -111,12 +97,20 @@ public class ControlSchemeActivity extends AppCompatActivity {
 
     public static ArrayList<ChecklistItem> getChecklistItemsFromPreset(){
         int id = 0;
-        checklistItems.clear();
-        checklistItems.add(new ChecklistItem(true, id++, "Skilt?", 2));
-        checklistItems.add(new ChecklistItem(id++, "Rødt skilt?", 0));
-        checklistItems.add(new ChecklistItem(id++, "Blått skilt?", 0));
-        checklistItems.add(new ChecklistItem(true, id++, "Gulv?", 1));
-        checklistItems.add(new ChecklistItem(id++, "Brunt gulv?", 3));
+        checklistItems.add(new ChecklistItem(true, id++, "Skilting av stillas", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Bærende konstruksjon", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Atkomst", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Stillasgulv", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Rekkverk", 4));
+        checklistItems.add(new ChecklistItem(id++, "Håndlist", 5));
+        checklistItems.add(new ChecklistItem(id++, "Knelist", 5));
+        checklistItems.add(new ChecklistItem(id++, "Fotlist", 5));
+        checklistItems.add(new ChecklistItem(id++, "Skvett/skjerm", 5));
+        checklistItems.add(new ChecklistItem(true, id++, "Presenning/Nett", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Fundamentering", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Avstivning", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Forankring", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Feste for forankring", 0));
         return checklistItems;
     }
 

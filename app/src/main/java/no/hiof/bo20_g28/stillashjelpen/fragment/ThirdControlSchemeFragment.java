@@ -227,7 +227,7 @@ public class ThirdControlSchemeFragment extends Fragment implements ChecklistRec
                 Date date = Calendar.getInstance().getTime();
                 String text = editText.getText().toString();
                 if(!text.equals("")){
-                    ControlSchemeActivity.addControlSchemeDefect(new ControlSchemeDefect(date, text));
+                    thisProject.getControlScheme().addControlSchemeDefect(new ControlSchemeDefect(date, text));
 
                     DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("projects");
                     DatabaseReference projectRef = fDatabase.child(thisProject.getProjectId());

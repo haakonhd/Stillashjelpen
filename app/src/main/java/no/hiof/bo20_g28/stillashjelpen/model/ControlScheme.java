@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
+import no.hiof.bo20_g28.stillashjelpen.ControlSchemeActivity;
+
 public class ControlScheme implements Serializable {
 
     private String controlSchemeId;
@@ -33,6 +35,19 @@ public class ControlScheme implements Serializable {
     private String wallAnchorTestResult;
 
     private ArrayList<ChecklistItem> checklistItems;
+    private ArrayList<ControlSchemeDefect> controlSchemeDefects = new ArrayList<>();
+
+    public ArrayList<ControlSchemeDefect> getControlSchemeDefects() {
+        return controlSchemeDefects;
+    }
+
+    public void setControlSchemeDefects(ArrayList<ControlSchemeDefect> controlSchemeDefects) {
+        this.controlSchemeDefects = controlSchemeDefects;
+    }
+
+    public void addControlSchemeDefect(ControlSchemeDefect controlSchemeDefect){
+        controlSchemeDefects.add(controlSchemeDefect);
+    }
 
 
 
