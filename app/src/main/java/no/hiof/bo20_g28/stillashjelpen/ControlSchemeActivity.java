@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import no.hiof.bo20_g28.stillashjelpen.adapter.TabControlSchemeAdapter;
 import no.hiof.bo20_g28.stillashjelpen.fragment.NavigationDrawerFragment;
 import no.hiof.bo20_g28.stillashjelpen.model.ChecklistItem;
+import no.hiof.bo20_g28.stillashjelpen.model.ControlScheme;
 import no.hiof.bo20_g28.stillashjelpen.model.ControlSchemeDefect;
 import no.hiof.bo20_g28.stillashjelpen.model.ControlSchemeDefectFixed;
 import no.hiof.bo20_g28.stillashjelpen.model.Project;
@@ -125,6 +126,9 @@ public class ControlSchemeActivity extends AppCompatActivity {
         return checklistItems;
     }
 
+
+
+
     public static ArrayList<ControlSchemeDefectFixed> getControlSchemeDefectFixed() {
         controlSchemeDefectFixedItems.clear();
         controlSchemeDefectFixedItems.add(new ControlSchemeDefectFixed(new Date(), new Date(), "Bjarne"));
@@ -139,6 +143,7 @@ public class ControlSchemeActivity extends AppCompatActivity {
         controlSchemeDefectItems.add(new ControlSchemeDefect(new Date(), "Skilting av stillas"));
         controlSchemeDefectItems.add(new ControlSchemeDefect(new Date(), "Stillasgulv"));
         controlSchemeDefectItems.add(new ControlSchemeDefect(new Date(), "Forankring"));
+
         return controlSchemeDefectItems;
     }
 

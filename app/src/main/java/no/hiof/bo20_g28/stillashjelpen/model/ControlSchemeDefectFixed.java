@@ -15,6 +15,8 @@ public class ControlSchemeDefectFixed implements Serializable {
         this.signature = signature;
     }
 
+    public ControlSchemeDefectFixed() {}
+
     public Date getDefectFixedDate() {
         return defectFixedDate;
     }

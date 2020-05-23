@@ -21,8 +21,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -48,6 +51,19 @@ public class FourthControlSchemeFragment extends Fragment {
     private DefectFixedRecyclerViewAdapter defectFixedRecyclerViewAdapter;
     private DefectRecyclerViewAdapter defectRecyclerViewAdapter;
     private Project thisProject;
+    private ArrayList<ControlSchemeDefect> schemeDefectData = new ArrayList<>();
+    private ArrayList<ControlSchemeDefectFixed> schemeDefectFixedData = new ArrayList<>();
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        fillItemsFromDb();
+    }
+
+    private void fillItemsFromDb() {
+        schemeDefectData = thisProject.getControlScheme().getControlSchemeDefects();
+        schemeDefectFixedData = thisProject.getControlScheme().getControlSchemeDefectFixed();
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_cs_fourth, container, false);
@@ -55,56 +71,91 @@ public class FourthControlSchemeFragment extends Fragment {
         Intent i = getActivity().getIntent();
         thisProject = (Project) i.getSerializableExtra("passedProject");
 
+        assert thisProject != null;
+        fillItemsFromDb();
+
         controlSchemeDefectFixedRecyclerView = view.findViewById(R.id.defectFixedRecyclerView);
-        fillRecyclerList(getControlSchemeDefectFixed());
-        fillDefectRecyclerList(getControlSchemeItems());
+        fillRecyclerList();
+        fillDefectRecyclerList();
         Button newDefectButton = view.findViewById(R.id.newDefectButton);
+        Button newDefectFixedButton = view.findViewById(R.id.newDefectFixedButton);
 
         newDefectButton.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Registrer Ny Mangel");
+            View viewInflate = getLayoutInflater().inflate(R.layout.report_cs_defect_dialog, null);
+            builder.setTitle("Register ny Mangel");
 
-            final EditText input = new EditText(getActivity());
-            input.setInputType(InputType.TYPE_CLASS_TEXT);
-            builder.setView(input);
+            EditText editText = viewInflate.findViewById(R.id.defectDescriptionEditText);
+            builder.setView(viewInflate);
 
-            // Set up the buttons
             builder.setPositiveButton("Rapporter", (dialog, which) -> {
+               Date date = Calendar.getInstance().getTime();
+               String text = editText.getText().toString();
 
+               if(!text.equals("")) {
+                   thisProject.getControlScheme().addControlSchemeDefect(new ControlSchemeDefect(date, text));
+
+                   DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("projects");
+                   DatabaseReference projectRef = fDatabase.child(thisProject.getProjectId());
+                   projectRef.setValue(thisProject);
+               }
             });
+
             builder.setNegativeButton("Avbryt", (dialog, which) -> {
                 dialog.cancel();
             });
 
+
             builder.show();
         });
 
+        newDefectFixedButton.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            View viewInflate = getLayoutInflater().inflate(R.layout.report_cs_defect_dialog, null);
+            builder.setTitle("Register ny Mangel Utbedret");
+
+            EditText editText = viewInflate.findViewById(R.id.defectDescriptionEditText);
+            builder.setView(viewInflate);
+
+            builder.setPositiveButton("Rapporter", (dialog, which) -> {
+                Date dateFound = Calendar.getInstance().getTime();
+                Date dateFixed = Calendar.getInstance().getTime();
+
+                String text = editText.getText().toString();
+
+                if(!text.equals("")) {
+                    thisProject.getControlScheme().addControlSchemeDefectFixed(new ControlSchemeDefectFixed(dateFound, dateFixed, text));
+
+                    DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("projects");
+                    DatabaseReference projectRef = fDatabase.child(thisProject.getProjectId());
+                    projectRef.setValue(thisProject);
+                }
+            });
+
+            builder.setNegativeButton("Avbryt", (dialog, which) -> {
+                dialog.cancel();
+            });
 
 
+            builder.show();
+        });
 
         return view;
     }
 
 
-    private void fillRecyclerList(ArrayList<ControlSchemeDefectFixed> data) {
+    private void fillRecyclerList() {
         controlSchemeDefectFixedRecyclerView = view.findViewById(R.id.defectFixedRecyclerView);
         controlSchemeDefectFixedRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        defectFixedRecyclerViewAdapter = new DefectFixedRecyclerViewAdapter(getActivity(), data);
+        defectFixedRecyclerViewAdapter = new DefectFixedRecyclerViewAdapter(getActivity(), schemeDefectFixedData);
         controlSchemeDefectFixedRecyclerView.setAdapter(defectFixedRecyclerViewAdapter);
     }
 
-    private void fillDefectRecyclerList(ArrayList<ControlSchemeDefect> data) {
+    private void fillDefectRecyclerList() {
         controlSchemeDefectRecyclerView = view.findViewById(R.id.defectRecyclerView);
         controlSchemeDefectRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        defectRecyclerViewAdapter = new DefectRecyclerViewAdapter(getActivity(), data);
+        defectRecyclerViewAdapter = new DefectRecyclerViewAdapter(getActivity(), schemeDefectData);
         controlSchemeDefectRecyclerView.setAdapter(defectRecyclerViewAdapter);
     }
 
-    public void newDefectFixedButtonClicked(View view) {
-
-    }
-
-    public void newDefectButtonClicked(View view) {
-
-    }
 }

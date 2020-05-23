@@ -36,19 +36,30 @@ public class ControlScheme implements Serializable {
 
     private ArrayList<ChecklistItem> checklistItems;
     private ArrayList<ControlSchemeDefect> controlSchemeDefects = new ArrayList<>();
+    private ArrayList<ControlSchemeDefectFixed> controlSchemeDefectFixed = new ArrayList<>();
 
     public ArrayList<ControlSchemeDefect> getControlSchemeDefects() {
         return controlSchemeDefects;
+    }
+    public ArrayList<ControlSchemeDefectFixed> getControlSchemeDefectFixed() {
+        return controlSchemeDefectFixed;
     }
 
     public void setControlSchemeDefects(ArrayList<ControlSchemeDefect> controlSchemeDefects) {
         this.controlSchemeDefects = controlSchemeDefects;
     }
 
+    public void setControlSchemeDefectFixed(ArrayList<ControlSchemeDefectFixed> controlSchemeDefects) {
+        this.controlSchemeDefectFixed = controlSchemeDefects;
+    }
+
     public void addControlSchemeDefect(ControlSchemeDefect controlSchemeDefect){
         this.controlSchemeDefects.add(controlSchemeDefect);
     }
 
+    public void addControlSchemeDefectFixed(ControlSchemeDefectFixed controlSchemeDefectFixed) {
+        this.controlSchemeDefectFixed.add(controlSchemeDefectFixed);
+    }
 
 
     public ControlScheme(String controlSchemeId) {
@@ -66,6 +77,7 @@ public class ControlScheme implements Serializable {
     public void setControlSchemeId(String controlSchemeId) {
         this.controlSchemeId = controlSchemeId;
     }
+
 
     public Date getDateCreated() {
         return dateCreated;
