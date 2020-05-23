@@ -19,13 +19,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/defectFixedRecyclerView"
-        android:layout_width="250dp"
+        android:layout_width="350dp"
         android:layout_height="0dp"
         android:layout_marginTop="60dp"
         android:layout_marginBottom="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/defectRecyclerView"
-        app:layout_constraintHorizontal_bias="0.293"
+        app:layout_constraintHorizontal_bias="0.952"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
@@ -40,7 +40,6 @@
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:onClick="newDefectFixedButtonClicked"
         app:layout_constraintEnd_toEndOf="@+id/defectFixedRecyclerView"
         app:layout_constraintStart_toStartOf="@+id/defectFixedRecyclerView"
         app:layout_constraintTop_toBottomOf="@+id/defectFixedRecyclerView" />
@@ -65,7 +64,6 @@
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:onClick="newMessageButtonClicked"
         app:layout_constraintEnd_toEndOf="@+id/defectRecyclerView"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="@+id/defectRecyclerView"
@@ -73,10 +71,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/defectRecyclerView"
-        android:layout_width="250dp"
+        android:layout_width="350dp"
         android:layout_height="0dp"
         android:layout_marginTop="60dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="80dp"
         android:layout_marginBottom="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

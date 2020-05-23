@@ -1,14 +1,20 @@
 package no.hiof.bo20_g28.stillashjelpen;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.lang.reflect.Array;
 import java.util.Date;
 import java.util.Objects;
 
@@ -23,6 +29,7 @@ import java.util.ArrayList;
 import no.hiof.bo20_g28.stillashjelpen.adapter.TabControlSchemeAdapter;
 import no.hiof.bo20_g28.stillashjelpen.fragment.NavigationDrawerFragment;
 import no.hiof.bo20_g28.stillashjelpen.model.ChecklistItem;
+import no.hiof.bo20_g28.stillashjelpen.model.ControlSchemeDefect;
 import no.hiof.bo20_g28.stillashjelpen.model.ControlSchemeDefectFixed;
 import no.hiof.bo20_g28.stillashjelpen.model.Project;
 
@@ -34,6 +41,7 @@ public class ControlSchemeActivity extends AppCompatActivity {
     Toolbar toolbar;
     private static ArrayList<ChecklistItem> checklistItems = new ArrayList<>();
     private static ArrayList<ControlSchemeDefectFixed> controlSchemeDefectFixedItems = new ArrayList<>();
+    private static ArrayList<ControlSchemeDefect> controlSchemeDefectItems = new ArrayList<>();
 
     private TabControlSchemeAdapter tabControlSchemeAdapter() {
         TabControlSchemeAdapter cSadapter = new TabControlSchemeAdapter(this);
@@ -126,6 +134,13 @@ public class ControlSchemeActivity extends AppCompatActivity {
         return controlSchemeDefectFixedItems;
     }
 
+    public static ArrayList<ControlSchemeDefect> getControlSchemeItems() {
+        controlSchemeDefectItems.clear();
+        controlSchemeDefectItems.add(new ControlSchemeDefect(new Date(), "Skilting av stillas"));
+        controlSchemeDefectItems.add(new ControlSchemeDefect(new Date(), "Stillasgulv"));
+        controlSchemeDefectItems.add(new ControlSchemeDefect(new Date(), "Forankring"));
+        return controlSchemeDefectItems;
+    }
 
     private void setUpNavigationDrawer() {
         DrawerLayout drawerlayout = findViewById(R.id.drawer_layout);
@@ -133,5 +148,12 @@ public class ControlSchemeActivity extends AppCompatActivity {
         if(navigationDrawerFragment != null) {
             navigationDrawerFragment.setupDrawer(drawerlayout, toolbar);
         }
+    }
+
+    public void newDefectFixedButtonClicked(View view) {
+
+    }
+
+    public void newDefectButtonClicked(View view) {
     }
 }
