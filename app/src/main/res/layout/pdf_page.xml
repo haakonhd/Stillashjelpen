@@ -3,9 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainLayout"
-    android:layout_width="1370px"
-    android:layout_height="855px"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
     android:padding="2mm">
+
+<!--    android:layout_width="1370px"-->
+<!--    android:layout_height="855px"-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -223,7 +227,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="1mm"
             android:layout_marginTop="1dp"
-            android:text="1   Skilting av stillas..........................................."
+            android:text="1   Skilting av stillas....................................."
             app:layout_constraintBottom_toTopOf="@+id/textView54"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout20" />
@@ -241,7 +245,7 @@
             android:id="@+id/textView54"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2   Bærende konstruksjon................................."
+            android:text="2   Bærende konstruksjon..........................."
             app:layout_constraintBottom_toTopOf="@+id/textView55"
             app:layout_constraintStart_toStartOf="@+id/textView53"
             app:layout_constraintTop_toBottomOf="@+id/textView53" />
@@ -259,7 +263,7 @@
             android:id="@+id/textView55"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3   Atkomst........................................................."
+            android:text="3   Atkomst..................................................."
             app:layout_constraintBottom_toTopOf="@+id/textView56"
             app:layout_constraintStart_toStartOf="@+id/textView54"
             app:layout_constraintTop_toBottomOf="@+id/textView54" />
@@ -277,7 +281,7 @@
             android:id="@+id/textView56"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4   Stillasgulv......................................................"
+            android:text="4   Stillasgulv................................................"
             app:layout_constraintBottom_toTopOf="@+id/textView57"
             app:layout_constraintStart_toStartOf="@+id/textView55"
             app:layout_constraintTop_toBottomOf="@+id/textView55" />
@@ -295,7 +299,7 @@
             android:id="@+id/textView57"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5   Rekkverk........................................................"
+            android:text="5   Rekkverk.................................................."
             app:layout_constraintBottom_toTopOf="@+id/textView58"
             app:layout_constraintStart_toStartOf="@+id/textView56"
             app:layout_constraintTop_toBottomOf="@+id/textView56" />
@@ -313,7 +317,7 @@
             android:id="@+id/textView58"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="     a) Håndlist....................................................."
+            android:text="     a) Håndlist..............................................."
             app:layout_constraintBottom_toTopOf="@+id/textView59"
             app:layout_constraintStart_toStartOf="@+id/textView57"
             app:layout_constraintTop_toBottomOf="@+id/textView57" />
@@ -331,7 +335,7 @@
             android:id="@+id/textView59"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="     b) Knelist......................................................."
+            android:text="     b) Knelist................................................."
             app:layout_constraintBottom_toTopOf="@+id/textView60"
             app:layout_constraintStart_toStartOf="@+id/textView58"
             app:layout_constraintTop_toBottomOf="@+id/textView58" />
@@ -349,7 +353,7 @@
             android:id="@+id/textView60"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="     c) Fotlist........................................................."
+            android:text="     c) Fotlist..................................................."
             app:layout_constraintBottom_toTopOf="@+id/textView61"
             app:layout_constraintStart_toStartOf="@+id/textView59"
             app:layout_constraintTop_toBottomOf="@+id/textView59" />
@@ -367,7 +371,7 @@
             android:id="@+id/textView61"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="     d) Skvett/skjerm..........................................."
+            android:text="     d) Skvett/skjerm....................................."
             app:layout_constraintBottom_toTopOf="@+id/textView62"
             app:layout_constraintStart_toStartOf="@+id/textView60"
             app:layout_constraintTop_toBottomOf="@+id/textView60" />
@@ -385,7 +389,7 @@
             android:id="@+id/textView62"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="6   Presenning/Nett..........................................."
+            android:text="6   Presenning/Nett....................................."
             app:layout_constraintBottom_toTopOf="@+id/textView63"
             app:layout_constraintStart_toStartOf="@+id/textView61"
             app:layout_constraintTop_toBottomOf="@+id/textView61" />
@@ -403,7 +407,7 @@
             android:id="@+id/textView63"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="7   Fundamentering..........................................."
+            android:text="7   Fundamentering....................................."
             app:layout_constraintBottom_toTopOf="@+id/textView65"
             app:layout_constraintStart_toStartOf="@+id/textView62"
             app:layout_constraintTop_toBottomOf="@+id/textView62" />
@@ -421,7 +425,7 @@
             android:id="@+id/textView65"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="8   Avstivning......................................................"
+            android:text="8   Avstivning................................................"
             app:layout_constraintBottom_toTopOf="@+id/textView66"
             app:layout_constraintStart_toStartOf="@+id/textView63"
             app:layout_constraintTop_toBottomOf="@+id/textView63" />
@@ -439,7 +443,7 @@
             android:id="@+id/textView66"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="9   Forankring....................................................."
+            android:text="9   Forankring..............................................."
             app:layout_constraintBottom_toTopOf="@+id/textView68"
             app:layout_constraintStart_toStartOf="@+id/textView65"
             app:layout_constraintTop_toBottomOf="@+id/textView65" />
@@ -457,7 +461,7 @@
             android:id="@+id/textView68"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="10   Feste for forankring..................................."
+            android:text="10   Feste for forankring............................."
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView66"
             app:layout_constraintTop_toBottomOf="@+id/textView66" />
