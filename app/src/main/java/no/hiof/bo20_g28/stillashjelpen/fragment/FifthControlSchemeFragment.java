@@ -1,14 +1,19 @@
 package no.hiof.bo20_g28.stillashjelpen.fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
+import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -24,16 +30,26 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Method;
+import java.net.URI;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import no.hiof.bo20_g28.stillashjelpen.BuildConfig;
 import no.hiof.bo20_g28.stillashjelpen.R;
 import no.hiof.bo20_g28.stillashjelpen.model.ChecklistItem;
 import no.hiof.bo20_g28.stillashjelpen.model.ControlScheme;
@@ -47,6 +63,7 @@ public class FifthControlSchemeFragment extends Fragment {
     public static final String ARG_OBJECT = "object";
     private View view;
     Button saveButton;
+    Button sendEmailButton;
     ConstraintLayout pdfPreview;
 
     private Project thisProject;
@@ -69,10 +86,13 @@ public class FifthControlSchemeFragment extends Fragment {
         saveButton = view.findViewById(R.id.saveButton);
         saveButton.setOnClickListener(v -> saveFile(thisProject.getProjectName() + ".pdf"));
 
+        sendEmailButton = view.findViewById(R.id.sendMailButton);
+        sendEmailButton.setOnClickListener(v -> openSendEmailDialog());
+
         pdfContent = layoutInflater.inflate(R.layout.pdf_page, null);
+
         return view;
     }
-
 
     @Override
     public void onResume() {
@@ -84,36 +104,75 @@ public class FifthControlSchemeFragment extends Fragment {
         pdfPreview.addView(pdfContent);
     }
 
-    private PdfDocument getPdfDocument(){
+    private void openSendEmailDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        EditText mailEditText = new EditText(getActivity());
+        mailEditText.setHint("eksempel@email.no");
+        mailEditText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        builder.setTitle("Send pdf til mail");
 
-        // create a new document
-        PdfDocument document = new PdfDocument();
+        builder.setView(mailEditText);
 
-        // crate a page description
-        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(2250, 1400, 1).create();
+        builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String email = mailEditText.getText().toString();
+                if(email.length() > 5)
+                    sendEmail(email);
+            }
+        });
 
-        // start a page
-        PdfDocument.Page page = document.startPage(pageInfo);
+        builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
 
-        int measureWidth = View.MeasureSpec.makeMeasureSpec(page.getCanvas().getWidth(), View.MeasureSpec.EXACTLY);
-        int measuredHeight = View.MeasureSpec.makeMeasureSpec(page.getCanvas().getHeight(), View.MeasureSpec.EXACTLY);
-
-        // draw something on the page
-        pdfContent.measure(measureWidth, measuredHeight);
-        pdfContent.layout(0, 0, page.getCanvas().getWidth(), page.getCanvas().getHeight());
-
-//        pdfContent.measure(measureWidth, View.MeasureSpec.UNSPECIFIED);
-//        pdfContent.layout(0, 0, pdfContent.getMeasuredWidth(), pdfContent.getMeasuredHeight());
-        Canvas canvas = page.getCanvas();
-//        canvas.scale(72f / hdpi, 72f / vdpi);
-        pdfContent.draw(canvas);
-
-        // finish the page
-        document.finishPage(page);
-        return document;
+        builder.show();
     }
 
-    public void saveFile(String sFileName){
+    private void sendEmail(String email){
+        document = createPdf();
+
+        saveFileToTemp(thisProject.getProjectName() + ".pdf");
+        File folder = new File(getActivity().getExternalCacheDir(), "stillashjelpen_temp");
+        File file = new File(folder, thisProject.getProjectName() + ".pdf");
+
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        // set the type to 'email'
+        emailIntent .setType("message/rfc822");
+        String to[] = {email};
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
+        emailIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        // the mail subject
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Rapportskjema for " + thisProject.getProjectName());
+        if (!file.exists() || !file.canRead()) {
+            CharSequence text = "An unknown error has occured. Could not send email.";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(getActivity(), text, duration);
+            toast.show();
+            return;
+        }
+        Uri uri = Uri.fromFile(file);
+//        Uri uri = FileProvider.getUriForFile(getActivity(), BuildConfig.APPLICATION_ID + ".provider",file);
+        // the attachment
+        emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
+
+        if(Build.VERSION.SDK_INT>=24){
+            try{
+                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                m.invoke(null);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        startActivity(Intent.createChooser(emailIntent , "Send rapportskjema som mail"));
+    }
+
+    public void saveFile(String fileName){
         requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE}, 1);
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Stillashjelpen");
 
@@ -122,7 +181,7 @@ public class FifthControlSchemeFragment extends Fragment {
         if(!file.exists()){
             file.mkdir();
         }
-        File gpxfile = new File(file, sFileName);
+        File gpxfile = new File(file, fileName);
         try {
             document.writeTo(new FileOutputStream(gpxfile));
         } catch (IOException ex) {
@@ -135,6 +194,22 @@ public class FifthControlSchemeFragment extends Fragment {
 
         Toast toast = Toast.makeText(getActivity(), text, duration);
         toast.show();
+    }
+
+    private void saveFileToTemp(String fileName){
+        requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE}, 1);
+        File file = new File(getActivity().getExternalCacheDir(), "stillashjelpen_temp");
+        document = createPdf();
+        if(!file.exists()){
+            file.mkdir();
+        }
+        File gpxfile = new File(file, fileName);
+        try {
+            document.writeTo(new FileOutputStream(gpxfile));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        document.close();
     }
 
     public static Bitmap loadBitmapFromView(View v, int width, int height) {

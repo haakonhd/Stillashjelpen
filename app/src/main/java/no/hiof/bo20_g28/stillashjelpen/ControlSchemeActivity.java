@@ -108,6 +108,7 @@ public class ControlSchemeActivity extends AppCompatActivity {
 
     public static ArrayList<ChecklistItem> getChecklistItemsFromPreset(){
         int id = 0;
+        checklistItems.clear();
         checklistItems.add(new ChecklistItem(true, id++, "Skilting av stillas", 0));
         checklistItems.add(new ChecklistItem(true, id++, "Bærende konstruksjon", 0));
         checklistItems.add(new ChecklistItem(true, id++, "Atkomst", 0));
