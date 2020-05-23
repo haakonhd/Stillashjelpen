@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -36,12 +38,20 @@ public class DefectFixedRecyclerViewAdapter  extends RecyclerView.Adapter<Defect
         return new DefectFixedRecyclerViewAdapter.ViewHolder(view);
     }
 
+    private static String getSimpleDateFormat(Date date){
+        Format formatter;
+        formatter = new SimpleDateFormat("dd/mm/yyyy");
+        return formatter.format(date);
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ControlSchemeDefectFixed controlSchemeDefectFixed = defectFixedDataList.get(position);
 
-        holder.controlDate.setText(controlSchemeDefectFixed.getControlDate().toString());
-        holder.fixedDate.setText(controlSchemeDefectFixed.getDefectFixedDate().toString());
+//        holder.controlDate.setText(controlSchemeDefectFixed.getControlDate().toString());
+        holder.controlDate.setText(getSimpleDateFormat(controlSchemeDefectFixed.getControlDate()));
+//        holder.fixedDate.setText(controlSchemeDefectFixed.getDefectFixedDate().toString());
+        holder.fixedDate.setText(getSimpleDateFormat(controlSchemeDefectFixed.getDefectFixedDate()));
         holder.signature.setText(controlSchemeDefectFixed.getSignature());
 
         Log.d("DefectFixed", (String) holder.controlDate.getText());
