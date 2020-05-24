@@ -34,6 +34,8 @@ public class ControlScheme implements Serializable {
     private String wallAnchorHolds;
     private String wallAnchorTestResult;
 
+    private String lastEmailSentTo;
+
     private ArrayList<ChecklistItem> checklistItems;
     private ArrayList<ControlSchemeDefect> controlSchemeDefects = new ArrayList<>();
     private ArrayList<ControlSchemeDefectFixed> controlSchemeDefectFixed = new ArrayList<>();
@@ -253,5 +255,13 @@ public class ControlScheme implements Serializable {
 
     public void setChecklistItems(ArrayList<ChecklistItem> checklistItems) {
         this.checklistItems = checklistItems;
+    }
+
+    public String getLastEmailSentTo() {
+        return lastEmailSentTo;
+    }
+
+    public void setLastEmailSentTo(String lastEmailSentTo) {
+        this.lastEmailSentTo = lastEmailSentTo;
     }
 }

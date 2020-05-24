@@ -109,19 +109,41 @@ public class FifthControlSchemeFragment extends Fragment {
 
     private void openSendEmailDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        EditText mailEditText = new EditText(getActivity());
+        View v = getLayoutInflater().inflate(R.layout.report_cs_defect_dialog, null);
+
+        EditText mailEditText = v.findViewById(R.id.defectDescriptionEditText);
+
+        builder.setTitle("Send pdf til mail");
         mailEditText.setHint("eksempel@email.no");
         mailEditText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        builder.setTitle("Send pdf til mail");
 
-        builder.setView(mailEditText);
+        if(thisProject.getControlScheme().getLastEmailSentTo() != null)
+            mailEditText.setText(thisProject.getControlScheme().getLastEmailSentTo());
+
+        builder.setView(v);
+
+        Button clearButton = v.findViewById(R.id.clearDescriptionButton);
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mailEditText.setText("");
+            }
+        });
+
 
         builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String email = mailEditText.getText().toString();
-                if(email.length() > 5)
+                if(email.length() > 5){
+                    //saving the email to db so it will be autofilled the next time
+                    thisProject.getControlScheme().setLastEmailSentTo(email);
+                    DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("projects");
+                    DatabaseReference projectRef = fDatabase.child(thisProject.getProjectId());
+                    projectRef.setValue(thisProject);
+
                     sendEmail(email);
+                }
             }
         });
 
