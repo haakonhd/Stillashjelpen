@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/column"
+    android:orientation="vertical"
+    android:layout_width="12mm"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:id="@+id/row1"
+        android:layout_width="12mm"
+        android:paddingHorizontal="1mm"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_black"
+        android:textSize="12sp"
+        android:textAlignment="center"
+        android:paddingVertical="0.9mm"
+        />
+    <TextView
+        android:id="@+id/row2"
+        android:layout_width="12mm"
+        android:paddingHorizontal="1mm"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textAlignment="center"
+        android:background="@drawable/border_black"
+        android:paddingVertical="0.9mm"
+        />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="9.1mm"
+        android:background="@drawable/border_black">
+
+        <TextView
+            android:id="@+id/row3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="1mm"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

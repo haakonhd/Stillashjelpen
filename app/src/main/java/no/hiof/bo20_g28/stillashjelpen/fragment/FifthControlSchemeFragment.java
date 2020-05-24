@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Build;
@@ -23,6 +24,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -48,12 +50,13 @@ import java.net.URI;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-import no.hiof.bo20_g28.stillashjelpen.BuildConfig;
 import no.hiof.bo20_g28.stillashjelpen.R;
 import no.hiof.bo20_g28.stillashjelpen.model.ChecklistItem;
 import no.hiof.bo20_g28.stillashjelpen.model.ControlScheme;
 import no.hiof.bo20_g28.stillashjelpen.model.ControlSchemeDefect;
+import no.hiof.bo20_g28.stillashjelpen.model.ControlSchemeDefectFixed;
 import no.hiof.bo20_g28.stillashjelpen.model.Project;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -335,6 +338,7 @@ public class FifthControlSchemeFragment extends Fragment {
 
         fillCheckList();
         fillDefectsFoundTable();
+        fillDefectsFixedTable();
 
     }
 
@@ -375,58 +379,109 @@ public class FifthControlSchemeFragment extends Fragment {
         }
     }
 
+    private String getReadableDate(Date date){
+        String dateText;
+        Format formatter;
+        formatter = new SimpleDateFormat("dd/mm/yyyy");
+        return formatter.format(date);
+    }
+
     private void fillDefectsFoundTable(){
         ArrayList<ControlSchemeDefect> defects = thisProject.getControlScheme().getControlSchemeDefects();
         TableLayout table = pdfContent.findViewById(R.id.defectsTable);
         table.removeAllViews();
 
+        int remainingRows = 13;
+
+        // creating first row with descriptions
+        TableRow firstRow = new TableRow(getActivity());
+
+        TextView dateTextView1 = new TextView(getActivity());
+        dateTextView1.setText("Dato");
+        dateTextView1.setTypeface(dateTextView1.getTypeface(), Typeface.BOLD);
+        dateTextView1.setPadding(8,8,5,12);
+        dateTextView1.setBackgroundResource(R.drawable.border_black);
+
+        TextView defectDescriptionTextView1 = new TextView(getActivity());
+        defectDescriptionTextView1.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
+        defectDescriptionTextView1.setText("Tekst - mangler");
+        defectDescriptionTextView1.setTypeface(defectDescriptionTextView1.getTypeface(), Typeface.BOLD);
+        defectDescriptionTextView1.setPadding(8,8,5,12);
+        defectDescriptionTextView1.setBackgroundResource(R.drawable.border_black);
+
+        firstRow.addView(dateTextView1);
+        firstRow.addView(defectDescriptionTextView1);
+
+        remainingRows--;
+        table.addView(firstRow);
+
+        //Creating rows for the defects found
         for(ControlSchemeDefect defect : defects){
             TableRow row = new TableRow(getActivity());
 
-            String dateText;
-            Format formatter;
-            formatter = new SimpleDateFormat("dd/mm/yyyy");
-            dateText = formatter.format(defect.getfoundDate());
-
             TextView dateTextView = new TextView(getActivity());
 //            dateTextView.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
-            dateTextView.setText(dateText);
-            dateTextView.setPadding(8,2,5,8);
+            dateTextView.setText(getReadableDate(defect.getfoundDate()));
+            dateTextView.setPadding(8,8,5,8);
             dateTextView.setBackgroundResource(R.drawable.border_black);
 
             TextView defectDescriptionTextView = new TextView(getActivity());
             defectDescriptionTextView.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
             defectDescriptionTextView.setText(defect.getDefectDescription());
+            defectDescriptionTextView.setPadding(8,8,5,8);
+            defectDescriptionTextView.setBackgroundResource(R.drawable.border_black);
+
+            row.addView(dateTextView);
+            row.addView(defectDescriptionTextView);
+
+            remainingRows--;
+            table.addView(row);
+        }
+
+        //filling out the empty spaces
+        for(int i = 0; i < remainingRows; i++){
+            TableRow row = new TableRow(getActivity());
+
+            TextView dateTextView = new TextView(getActivity());
+            dateTextView.setPadding(8,2,5,8);
+            dateTextView.setBackgroundResource(R.drawable.border_black);
+
+            TextView defectDescriptionTextView = new TextView(getActivity());
+            defectDescriptionTextView.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
             defectDescriptionTextView.setPadding(8,2,5,8);
             defectDescriptionTextView.setBackgroundResource(R.drawable.border_black);
 
             row.addView(dateTextView);
             row.addView(defectDescriptionTextView);
+
             table.addView(row);
         }
     }
 
     private void fillDefectsFixedTable(){
-        ArrayList<ControlSchemeDefect> defects = thisProject.getControlScheme().getControlSchemeDefects();
-        TableLayout table = pdfContent.findViewById(R.id.defectsTable);
-        TableRow row1 = new TableRow(getActivity());
-        TableRow row2 = new TableRow(getActivity());
+        ArrayList<ControlSchemeDefectFixed> defects = thisProject.getControlScheme().getControlSchemeDefectFixed();
+        LinearLayout table = pdfContent.findViewById(R.id.defectFixedTable);
+        table.removeAllViews();
 
-        for(ControlSchemeDefect defect : defects){
-            TextView dateTextView = new TextView(getActivity());
-            dateTextView.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
-            dateTextView.setText(defect.getfoundDate().toString());
+        int remainingRows = 12;
 
-            TextView defectDescriptionTextView = new TextView(getActivity());
-            defectDescriptionTextView.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
-            defectDescriptionTextView.setText(defect.getDefectDescription());
+        for(ControlSchemeDefectFixed defect : defects){
+            View row = layoutInflater.inflate(R.layout.defect_fixed_row, null);
+            TextView row1 = row.findViewById(R.id.row1);
+            TextView row2 = row.findViewById(R.id.row2);
+            TextView row3 = row.findViewById(R.id.row3);
 
-            row1.addView(dateTextView);
-            row2.addView(defectDescriptionTextView);
+            row1.setText(getReadableDate(defect.getControlDate()));
+            row2.setText(getReadableDate(defect.getDefectFixedDate()));
+            row3.setText(defect.getSignature());
 
+            remainingRows--;
+            table.addView(row);
         }
-        table.addView(row1);
-        table.addView(row2);
+        for(int i = 0; i < remainingRows; i++){
+            View row = layoutInflater.inflate(R.layout.defect_fixed_row, null);
+            table.addView(row);
+        }
     }
 
     private boolean preventHorizontalScrollOnListClick(View v, MotionEvent event){
