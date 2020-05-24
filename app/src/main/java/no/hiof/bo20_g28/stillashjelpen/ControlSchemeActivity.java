@@ -114,11 +114,11 @@ public class ControlSchemeActivity extends AppCompatActivity {
         checklistItems.add(new ChecklistItem(true, id++, "Bærende konstruksjon", 0));
         checklistItems.add(new ChecklistItem(true, id++, "Atkomst", 0));
         checklistItems.add(new ChecklistItem(true, id++, "Stillasgulv", 0));
-        checklistItems.add(new ChecklistItem(true, id++, "Rekkverk", 4));
-        checklistItems.add(new ChecklistItem(id++, "Håndlist", 5));
-        checklistItems.add(new ChecklistItem(id++, "Knelist", 5));
-        checklistItems.add(new ChecklistItem(id++, "Fotlist", 5));
-        checklistItems.add(new ChecklistItem(id++, "Skvett/skjerm", 5));
+        checklistItems.add(new ChecklistItem(true, id++, "Rekkverk", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Håndlist", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Knelist", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Fotlist", 0));
+        checklistItems.add(new ChecklistItem(true, id++, "Skvett/skjerm", 0));
         checklistItems.add(new ChecklistItem(true, id++, "Presenning/Nett", 0));
         checklistItems.add(new ChecklistItem(true, id++, "Fundamentering", 0));
         checklistItems.add(new ChecklistItem(true, id++, "Avstivning", 0));

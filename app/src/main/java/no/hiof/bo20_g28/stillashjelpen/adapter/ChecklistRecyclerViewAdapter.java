@@ -57,6 +57,9 @@ public class ChecklistRecyclerViewAdapter  extends RecyclerView.Adapter<Checklis
         ChecklistItem item = itemData.get(position);
         holder.cl_text.setText(item.getText());
         holder.cl_text.setClickable(true);
+
+        if(item.isChecked()) holder.cl_checkbox.setChecked(true);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

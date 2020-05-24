@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -427,6 +428,11 @@ public class WallAnchorDistanceFragment extends Fragment {
         DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("walls");
         DatabaseReference wallRef = fDatabase.child(thisWall.getWallId());
         wallRef.setValue(thisWall);
+        CharSequence text = "Utregning lagret";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(getActivity(), text, duration);
+        toast.show();
     }
 
     private void openCalculationDialog() {
@@ -445,6 +451,7 @@ public class WallAnchorDistanceFragment extends Fragment {
                     "(" + anchorForce + " x 1.2)</div>"
             ));
 //            return (constructionFactor * powerFactor * bayLength * densityFactor * velocityPressure * 0.7) / (anchorForce / 1.2);
+//            return ((anchorForce / 1.2) / (constructionFactor * powerFactor * bayLength * densityFactor * velocityPressure * 0.7));
         }
         else{
             textView.setText("Vennligst fyll ut alle felter");

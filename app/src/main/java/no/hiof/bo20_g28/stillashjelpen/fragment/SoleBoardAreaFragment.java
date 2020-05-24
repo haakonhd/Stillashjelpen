@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -559,6 +560,12 @@ public class SoleBoardAreaFragment extends Fragment {
         DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("walls");
         DatabaseReference wallRef = fDatabase.child(thisWall.getWallId());
         wallRef.setValue(thisWall);
+
+        CharSequence text = "Utregning lagret";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(getActivity(), text, duration);
+        toast.show();
     }
 
     private void openCalculationDialog() {
