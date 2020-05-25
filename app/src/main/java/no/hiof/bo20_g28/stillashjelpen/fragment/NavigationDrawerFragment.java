@@ -14,19 +14,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.view.menu.MenuItemImpl;
-import androidx.appcompat.widget.Toolbar;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import no.hiof.bo20_g28.stillashjelpen.MainActivity;
-
 import no.hiof.bo20_g28.stillashjelpen.R;
 import no.hiof.bo20_g28.stillashjelpen.WallActivity;
 
@@ -50,7 +46,9 @@ public class NavigationDrawerFragment extends Fragment implements NavigationView
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         navn_header_company_name.setText("Stillashjelpen");
-        nav_header_company_email.setText(firebaseAuth.getCurrentUser().getEmail());
+        if (firebaseAuth.getCurrentUser() != null) {
+            nav_header_company_email.setText(firebaseAuth.getCurrentUser().getEmail());
+        }
 
         navigationView = view.findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
