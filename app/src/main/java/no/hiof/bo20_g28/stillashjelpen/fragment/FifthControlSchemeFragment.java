@@ -384,20 +384,20 @@ public class FifthControlSchemeFragment extends Fragment {
         if(checklistItems == null) return;
 
         for(ChecklistItem item : checklistItems){
-            if(item.isChecked() && item.getId() == 1) cb1.setChecked(true);
-            else if(item.isChecked() && item.getId() == 2) cb2.setChecked(true);
-            else if(item.isChecked() && item.getId() == 3) cb3.setChecked(true);
-            else if(item.isChecked() && item.getId() == 4) cb4.setChecked(true);
-            else if(item.isChecked() && item.getId() == 5) cb5.setChecked(true);
-            else if(item.isChecked() && item.getId() == 6) cb5a.setChecked(true);
-            else if(item.isChecked() && item.getId() == 7) cb5b.setChecked(true);
-            else if(item.isChecked() && item.getId() == 8) cb5c.setChecked(true);
-            else if(item.isChecked() && item.getId() == 9) cb5d.setChecked(true);
-            else if(item.isChecked() && item.getId() == 10) cb6.setChecked(true);
-            else if(item.isChecked() && item.getId() == 11) cb7.setChecked(true);
-            else if(item.isChecked() && item.getId() == 12) cb8.setChecked(true);
-            else if(item.isChecked() && item.getId() == 13) cb9.setChecked(true);
-            else if(item.isChecked() && item.getId() == 14) cb10.setChecked(true);
+            if(item.isChecked() && item.getId() == 0) cb1.setChecked(true);
+            else if(item.isChecked() && item.getId() == 1) cb2.setChecked(true);
+            else if(item.isChecked() && item.getId() == 2) cb3.setChecked(true);
+            else if(item.isChecked() && item.getId() == 3) cb4.setChecked(true);
+            else if(item.isChecked() && item.getId() == 4) cb5.setChecked(true);
+            else if(item.isChecked() && item.getId() == 5) cb5a.setChecked(true);
+            else if(item.isChecked() && item.getId() == 6) cb5b.setChecked(true);
+            else if(item.isChecked() && item.getId() == 7) cb5c.setChecked(true);
+            else if(item.isChecked() && item.getId() == 8) cb5d.setChecked(true);
+            else if(item.isChecked() && item.getId() == 9) cb6.setChecked(true);
+            else if(item.isChecked() && item.getId() == 10) cb7.setChecked(true);
+            else if(item.isChecked() && item.getId() == 11) cb8.setChecked(true);
+            else if(item.isChecked() && item.getId() == 12) cb9.setChecked(true);
+            else if(item.isChecked() && item.getId() == 13) cb10.setChecked(true);
         }
     }
 

@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.view.menu.MenuItemImpl;
@@ -27,18 +28,30 @@ import com.google.firebase.auth.FirebaseAuth;
 import no.hiof.bo20_g28.stillashjelpen.MainActivity;
 
 import no.hiof.bo20_g28.stillashjelpen.R;
+import no.hiof.bo20_g28.stillashjelpen.WallActivity;
 
 public class NavigationDrawerFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
 
     private NavigationView navigationView;
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
+    private TextView navn_header_company_name;
+    private TextView nav_header_company_email;
 
     public NavigationDrawerFragment() {}
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_navigation_drawer, container);
+        NavigationView view = (NavigationView) inflater.inflate(R.layout.fragment_navigation_drawer, container);
+        View header = view.getHeaderView(0);
+
+        navn_header_company_name = header.findViewById(R.id.navn_header_company_name);
+        nav_header_company_email = header.findViewById(R.id.nav_header_company_email);
+
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        navn_header_company_name.setText("Stillashjelpen");
+        nav_header_company_email.setText(firebaseAuth.getCurrentUser().getEmail());
+
         navigationView = view.findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -59,6 +72,11 @@ public class NavigationDrawerFragment extends Fragment implements NavigationView
             logOut();
         } else if (item.getItemId() == R.id.nav_home) {
             Intent i = new Intent(getActivity(), MainActivity.class);
+            startActivity(i);
+        }
+        else if (item.getItemId() == R.id.nav_calculator) {
+            Intent i = new Intent(getActivity(), WallActivity.class);
+            i.putExtra("isQuickCalculation", true);
             startActivity(i);
         }
         else

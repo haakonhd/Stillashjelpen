@@ -3,17 +3,20 @@ package no.hiof.bo20_g28.stillashjelpen.fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -87,8 +90,26 @@ public class ThirdControlSchemeFragment extends Fragment implements ChecklistRec
         }
 
         fillCheckListRecyclerList();
+
+        checklistRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false) {
+            @Override
+            public void onLayoutCompleted(final RecyclerView.State state) {
+                super.onLayoutCompleted(state);
+                final int firstVisibleItemPosition = findFirstVisibleItemPosition();
+                final int lastVisibleItemPosition = findLastVisibleItemPosition();
+                int itemsShown = lastVisibleItemPosition - firstVisibleItemPosition + 1;
+                if(isFirstTimeRunning){
+//                    fillCheckItemsFromDb();
+                }
+                isFirstTimeRunning = false;
+
+                //if all items are shown, hide the fast-scroller
+                //fastScroller.setVisibility(adapter.getItemCount() > itemsShown ? View.VISIBLE : View.GONE);
+            }
+        });
         return view;
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -99,9 +120,6 @@ public class ThirdControlSchemeFragment extends Fragment implements ChecklistRec
     public void onResume()
     {
         super.onResume();
-        if(isFirstTimeRunning)
-            fillCheckItemsFromDb();
-        isFirstTimeRunning = false;
     }
 
     private boolean preventHorizontalScrollOnListClick(View v, MotionEvent event){
@@ -128,6 +146,11 @@ public class ThirdControlSchemeFragment extends Fragment implements ChecklistRec
         DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("projects");
         DatabaseReference projectRef = fDatabase.child(thisProject.getProjectId());
         projectRef.setValue(thisProject);
+        CharSequence text = "Sjekkliste lagret";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(getActivity(), text, duration);
+        toast.show();
     }
 
     private void fillCheckListRecyclerList(){
@@ -142,15 +165,22 @@ public class ThirdControlSchemeFragment extends Fragment implements ChecklistRec
 
     private void fillCheckItemsFromDb(){
         for(ChecklistItem item : itemData){
+            if(item.isChecked()){
+//                RecyclerView.ViewHolder cb = checklistRecyclerView.findViewHolderForLayoutPosition(item.getId());
+                RecyclerView.ViewHolder cb = checklistRecyclerView.findViewHolderForAdapterPosition(item.getId());
+                cb.itemView.performClick();
+
+            }
+            /*
             if(item.getIsParent()) {
                 item.setChecked(false);
                 item.setCheckedChildrenCounter(0);
             }
-            if(item.isChecked() && !item.getIsParent()){
+            if((item.isChecked() && !item.getIsParent()){
                 RecyclerView.ViewHolder cb = checklistRecyclerView.findViewHolderForLayoutPosition(item.getId());
                 cb.itemView.performClick();
             }
-
+*/
         }
     }
 
