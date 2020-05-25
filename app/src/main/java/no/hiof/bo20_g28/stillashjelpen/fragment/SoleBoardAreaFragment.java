@@ -39,6 +39,8 @@ import no.hiof.bo20_g28.stillashjelpen.WallActivity;
 import no.hiof.bo20_g28.stillashjelpen.model.ScaffoldingSystem;
 import no.hiof.bo20_g28.stillashjelpen.model.Wall;
 
+import static no.hiof.bo20_g28.stillashjelpen.WallActivity.scaffoldingName;
+
 public class SoleBoardAreaFragment extends Fragment {
     public static final String ARG_OBJECT = "object";
 
@@ -107,8 +109,9 @@ public class SoleBoardAreaFragment extends Fragment {
 
         if(WallActivity.isQuickCalculation){
             thisWall = new Wall();
-            thisWall.setScaffoldType("none");
+            thisWall.setScaffoldType(scaffoldingName);
             saveSoleBoardAreaButton.setVisibility(View.INVISIBLE);
+            getPresetInputsFromScaffoldingSystem();
         }
         if(!WallActivity.isQuickCalculation){
             Intent i = getActivity().getIntent();
@@ -127,9 +130,13 @@ public class SoleBoardAreaFragment extends Fragment {
         weightEditTextListener();
 
         //setting preset values from scaffold system if it's the first time the wall is used
-        if(thisWall.isFirstTimeCreatingSoleBoardArea()) getPresetInputsFromScaffoldingSystem();
+        if(thisWall.isFirstTimeCreatingSoleBoardArea()){
+            getPresetInputsFromScaffoldingSystem();
+        }
         //setting values from the last time the wall was used
-        else setVariablesAndInputsFromWall(thisWall);
+        else {
+            setVariablesAndInputsFromWall(thisWall);
+        }
         thisWall.setFirstTimeCreatingSoleBoardArea(false);
         updateSoleBoardCalculation();
 

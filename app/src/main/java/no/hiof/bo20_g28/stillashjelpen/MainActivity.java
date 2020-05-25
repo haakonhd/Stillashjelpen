@@ -3,14 +3,11 @@ package no.hiof.bo20_g28.stillashjelpen;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -237,6 +234,35 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         });
     }
 
+    public void getFastCalcScaffoldingSystemNamesFromFirebase(){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference fDatabaseRoot = database.getReference().child("scaffoldingSystems");
+
+        scaffoldingSystemList.clear();
+
+        fDatabaseRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                scaffoldingSystemList.add("Velg en type stillassystem");
+
+                for (DataSnapshot addressSnapshot : dataSnapshot.getChildren()) {
+                    String project = addressSnapshot.child("scaffoldingSystemName").getValue(String.class);
+                    if (project != null) {
+                        scaffoldingSystemList.add(project);
+                    }
+                }
+                openFastClacDialogbox();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("FirebaseError", databaseError.toException());
+            }
+        });
+    }
+
     public void getScaffoldSystemObjectsFromFirebase(){
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -264,12 +290,9 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     //------------------------Alert Dialog Handling-------------------------------------------------
 
     private void openNewProjectCustomDialogbox() {
-    }
-
-    private void openFastClacDialogbox() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.new_project_dialog_box, null);
-        builder.setTitle("Velg stillassystem");
+        builder.setTitle("Nytt prosjekt");
 
         final Spinner spinner = (Spinner) view.findViewById(R.id.scaffoldingSystemsSpinner);
 
@@ -285,13 +308,52 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //TODO Better sanitation and handling of input
-                if(!spinner.getSelectedItem().toString().equalsIgnoreCase("Velg et stillassystem")) {
+                if(!spinner.getSelectedItem().toString().equalsIgnoreCase("Velg en type stillassystem")) {
                     if(input.getText().toString().length() > 0) {
                         addNewProjectToDatabase(input.getText().toString(), spinner.getSelectedItem().toString());
                     }
                     else{
                         Toast.makeText(getApplicationContext(), "Mislykket - Gi veggen et navn", Toast.LENGTH_SHORT).show();
                     }
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Mislykket - Velg en type stillas", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.setView(view);
+        AlertDialog ad = builder.create();
+        ad.show();
+    }
+
+    private void openFastClacDialogbox() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.choose_scaffoldingsystem_dialog_box, null);
+        builder.setTitle("Velg stillassystem");
+
+        final Spinner spinner = (Spinner) view.findViewById(R.id.fastCalcScaffoldingSystemsSpinner);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, scaffoldingSystemList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        // Set up the buttons
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //TODO Better sanitation and handling of input
+                if(!spinner.getSelectedItem().toString().equalsIgnoreCase("Velg en type stillassystem")) {
+                    Intent i = new Intent(getApplicationContext(), WallActivity.class);
+                    i.putExtra("isQuickCalculation", true);
+                    i.putExtra("scaffoldingSystem", spinner.getSelectedItem().toString());
+                    startActivity(i);
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Mislykket - Velg en type stillas", Toast.LENGTH_SHORT).show();
@@ -323,7 +385,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     }
 
     public void fastCalcButtonClicked(View v) {
-
+        getFastCalcScaffoldingSystemNamesFromFirebase();
     }
 
     public void showProjectsButtonClicked(View view) {

@@ -27,6 +27,7 @@ public class WallActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private Project thisProject;
     private Wall thisWall;
+    public static String scaffoldingName;
     public static boolean isQuickCalculation;
     public static double wallAnchorDistance;
     public static int soleBoardArea;
@@ -48,6 +49,9 @@ public class WallActivity extends AppCompatActivity {
         Intent i = getIntent();
         thisProject = (Project) i.getSerializableExtra("passedProject");
         thisWall = (Wall) i.getSerializableExtra("passedWall");
+        scaffoldingName = i.getStringExtra("scaffoldingSystem");
+
+
         viewPager = findViewById(R.id.pager);
         tabLayout = findViewById(R.id.tab_layout);
 

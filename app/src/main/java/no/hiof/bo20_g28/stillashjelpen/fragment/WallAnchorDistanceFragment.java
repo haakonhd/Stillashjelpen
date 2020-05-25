@@ -37,6 +37,8 @@ import no.hiof.bo20_g28.stillashjelpen.model.Wall;
 import no.hiof.bo20_g28.stillashjelpen.model.Wall.Cover;
 import no.hiof.bo20_g28.stillashjelpen.model.Wall.ForceFactor;
 
+import static no.hiof.bo20_g28.stillashjelpen.WallActivity.scaffoldingName;
+
 public class WallAnchorDistanceFragment extends Fragment {
     public static final String ARG_OBJECT = "object";
 
@@ -89,8 +91,9 @@ public class WallAnchorDistanceFragment extends Fragment {
 
         if(WallActivity.isQuickCalculation){
             thisWall = new Wall();
-            thisWall.setScaffoldType("none");
+            thisWall.setScaffoldType(scaffoldingName);
             saveAnchorDistanceButton.setVisibility(View.INVISIBLE);
+            getPresetInputsFromScaffoldingSystem();
         }
         if(!WallActivity.isQuickCalculation){
             Intent i = getActivity().getIntent();
