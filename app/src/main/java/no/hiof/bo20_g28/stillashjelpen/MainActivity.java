@@ -278,6 +278,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
                     ScaffoldingSystem ss = scaffoldSnapshot.getValue(ScaffoldingSystem.class);
                     scaffoldSystems.add(ss);
                 }
+                fillRecyclerListScaffoldSystems();
             }
 
             @Override

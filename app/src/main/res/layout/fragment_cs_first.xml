@@ -59,6 +59,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/builderCompanyTextView"
                 app:layout_constraintTop_toBottomOf="@+id/builderCompanyTextView" />
 
+
             <TextView
                 android:id="@+id/placeTextView"
                 android:layout_width="wrap_content"
