@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     private final List<String> scaffoldingSystemList = new ArrayList<String>();
     private Button showProjectsButton, showScaffoldSystemsButton;
     static boolean calledAlready = false;
+//    public static String getCompanyName(){ return this.}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,15 +92,15 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseProjects = FirebaseDatabase.getInstance().getReference("projects");
-
-        //check if user is signed in
+//
+//        check if user is signed in
         if (firebaseAuth.getCurrentUser() == null) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
-        else{
-            testText.setText(Html.fromHtml("Logget inn på email: <font color='#01C6DB'>" + firebaseAuth.getCurrentUser().getEmail() + "</font>"));
-        }
+//        else{
+//            testText.setText(Html.fromHtml("Logget inn på email: <font color='#01C6DB'>" + firebaseAuth.getCurrentUser().getEmail() + "</font>"));
+//        }
 
     }
 
@@ -224,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
                         scaffoldingSystemList.add(project);
                     }
                 }
-                openNewProjectCustomDialogbox();
+//                openNewProjectCustomDialogbox();
             }
 
             @Override
@@ -249,7 +252,6 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
                     ScaffoldingSystem ss = scaffoldSnapshot.getValue(ScaffoldingSystem.class);
                     scaffoldSystems.add(ss);
                 }
-                fillRecyclerListScaffoldSystems();
             }
 
             @Override
@@ -258,7 +260,6 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
             }
         });
     }
-
 
     //------------------------Alert Dialog Handling-------------------------------------------------
 
@@ -309,9 +310,10 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
 
     //------------------------Button Click Handling-------------------------------------------------
 
-
     public void newProjectButtonClicked(View view) {
         getScaffoldingSystemNamesFromFirebase();
+//        fillRecyclerListScaffoldSystems();
+        openNewProjectCustomDialogbox();
     }
 
     public void newScaffoldSystemButtonClicked(View view) {
@@ -320,10 +322,50 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         startActivity(i);
     }
 
-    public void fastCalcButtonClicked(View view) {
+    public void fastCalcButtonClicked(View v) {
         Intent i = new Intent(this, WallActivity.class);
-        i.putExtra("isQuickCalculation", true);
-        startActivity(i);
+        getScaffoldingSystemNamesFromFirebase();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        View view = getLayoutInflater().inflate(R.layout.new_project_dialog_box, null);
+        builder.setTitle("Start hurtigkalkulering");
+
+//        final Spinner spinner = (Spinner) view.findViewById(R.id.scaffoldingSystemsSpinner);
+        final Spinner spinner = new Spinner(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        params.topMargin = 10;
+        spinner.setLayoutParams(params);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, scaffoldingSystemList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        // Set up the buttons
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //TODO Better sanitation and handling of input
+//                if(!spinner.getSelectedItem().toString().equalsIgnoreCase("Velg et stillassystem")) {
+                if(spinner.getSelectedItemPosition() != 0) {
+                        i.putExtra("isQuickCalculation", true);
+                        i.putExtra("scaffoldSystem", spinner.getSelectedItem().toString());
+                        startActivity(i);
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Mislykket - Velg en type stillas", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.setView(spinner);
+        AlertDialog ad = builder.create();
+        ad.show();
     }
 
     public void showProjectsButtonClicked(View view) {

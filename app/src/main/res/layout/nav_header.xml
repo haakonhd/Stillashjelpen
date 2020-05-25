@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="250dp"
-    android:background="@color/colorAccent"
+    android:background="@color/colorPrimary"
     android:padding="16dp"
     android:gravity="bottom"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
@@ -11,9 +11,10 @@
     <ImageView
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:src="@drawable/ic_person_profile" />
+        android:src="@drawable/logo3" />
 
     <TextView
+        android:id="@+id/navn_header_company_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30dp"
@@ -22,6 +23,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
+        android:id="@+id/nav_header_company_email"
         android:layout_width="214dp"
         android:layout_height="wrap_content"
         android:text="stillas@arbeider.no"
