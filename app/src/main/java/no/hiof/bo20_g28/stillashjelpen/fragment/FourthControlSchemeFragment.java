@@ -3,6 +3,7 @@ package no.hiof.bo20_g28.stillashjelpen.fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -86,6 +87,7 @@ public class FourthControlSchemeFragment extends Fragment {
             builder.setTitle("Register ny Mangel");
 
             EditText editText = viewInflate.findViewById(R.id.defectDescriptionEditText);
+            editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(28)});
             builder.setView(viewInflate);
 
             builder.setPositiveButton("Rapporter", (dialog, which) -> {
@@ -115,6 +117,8 @@ public class FourthControlSchemeFragment extends Fragment {
             builder.setTitle("Register ny Mangel Utbedret");
 
             EditText editText = viewInflate.findViewById(R.id.defectDescriptionEditText);
+            editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(16)});
+
             builder.setView(viewInflate);
 
             builder.setPositiveButton("Rapporter", (dialog, which) -> {
@@ -122,6 +126,7 @@ public class FourthControlSchemeFragment extends Fragment {
                 Date dateFixed = Calendar.getInstance().getTime();
 
                 String text = editText.getText().toString();
+
 
                 if(!text.equals("")) {
                     thisProject.getControlScheme().addControlSchemeDefectFixed(new ControlSchemeDefectFixed(dateFound, dateFixed, text));
