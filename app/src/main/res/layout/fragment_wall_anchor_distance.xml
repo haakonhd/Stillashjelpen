@@ -4,240 +4,276 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F6F6F6"
     tools:context=".WallActivity">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.66" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.25" />
 
     <!--  DEKKE  -->
-    <TextView
-    android:id="@+id/groundDescriptionTextView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Trekk"
-    android:textAlignment="textEnd"
-    android:textSize="20sp"
-    app:layout_constraintBottom_toTopOf="@+id/loadClassDescriptionTextView"
-    app:layout_constraintEnd_toStartOf="@+id/guideline2"
-    app:layout_constraintTop_toTopOf="parent" />
 
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/groundDescriptionTextView"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/groundDescriptionTextView"
-        android:text="@string/presenning"
-        android:background="#3DA8D8"
-        android:textColor="@color/white"
-        android:paddingHorizontal="10dp"
-        />
 
     <TextView
-        android:id="@+id/loadClassDescriptionTextView"
+        android:id="@+id/coverDescriptionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Belastningsklasse"
+        android:text="@string/trekk"
         android:textAlignment="textEnd"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/bayWidthDescriptionTextView"
-        app:layout_constraintEnd_toEndOf="@+id/groundDescriptionTextView"
-        app:layout_constraintTop_toBottomOf="@+id/groundDescriptionTextView" />
+        app:layout_constraintBottom_toTopOf="@+id/forceFactorTextView"
+        app:layout_constraintEnd_toEndOf="@+id/forceFactorTextView"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/bayWidthDescriptionTextView"
+    <Button
+        android:id="@+id/coverTarpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fagbredde"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/border"
+        android:paddingHorizontal="10dp"
+        android:text="@string/presenning"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/coverNetButton"
+        app:layout_constraintStart_toEndOf="@+id/coverNetButton"
+        app:layout_constraintTop_toTopOf="@+id/coverNetButton" />
+
+    <Button
+        android:id="@+id/coverNetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/border"
+        android:paddingHorizontal="10dp"
+        android:text="@string/netting"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/coverNoneButton"
+        app:layout_constraintEnd_toStartOf="@+id/coverTarpButton"
+        app:layout_constraintStart_toEndOf="@+id/coverNoneButton"
+        app:layout_constraintTop_toTopOf="@+id/coverNoneButton" />
+
+    <Button
+        android:id="@+id/coverNoneButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/border"
+        android:paddingHorizontal="10dp"
+        android:text="@string/udekket"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/coverDescriptionTextView"
+        app:layout_constraintEnd_toStartOf="@+id/coverNetButton"
+        app:layout_constraintStart_toEndOf="@+id/coverDescriptionTextView"
+        app:layout_constraintTop_toTopOf="@+id/coverDescriptionTextView" />
+
+
+    <!-- Kraftfaktor -->
+
+    <TextView
+        android:id="@+id/forceFactorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/kraftfaktor_mot_fasade"
+        android:textAlignment="textEnd"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/anchorForceTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/coverDescriptionTextView" />
+
+    <Button
+        android:id="@+id/forceFactorNormalButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:paddingHorizontal="10dp"
+        android:text="@string/normalt"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/forceFactorTextView"
+        app:layout_constraintEnd_toEndOf="@+id/coverNoneButton"
+        app:layout_constraintStart_toStartOf="@+id/coverNoneButton"
+        app:layout_constraintTop_toTopOf="@+id/forceFactorTextView" />
+
+
+    <!-- Forankringskraft -->
+
+    <Button
+        android:id="@+id/forceFactorParallelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:paddingHorizontal="10dp"
+        android:text="@string/parallelt"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/forceFactorNormalButton"
+        app:layout_constraintEnd_toEndOf="@+id/coverNetButton"
+        app:layout_constraintStart_toStartOf="@+id/coverNetButton"
+        app:layout_constraintTop_toTopOf="@+id/forceFactorNormalButton" />
+
+    <TextView
+        android:id="@+id/anchorForceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/forankringskraft"
+        android:textAlignment="textEnd"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/scaffoldHeightTextView"
+        app:layout_constraintEnd_toEndOf="@+id/forceFactorTextView"
+        app:layout_constraintTop_toBottomOf="@+id/forceFactorTextView" />
+
+    <EditText
+        android:id="@+id/anchorForceEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/editTextHeight"
+        android:background="@drawable/et_style"
+        android:ems="4"
+        android:inputType="numberDecimal"
+        android:maxLength="4"
+        android:nextFocusDown="@+id/bayLengthEditText"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/anchorForceTextView"
+        app:layout_constraintStart_toStartOf="@+id/forceFactorNormalButton"
+        app:layout_constraintTop_toTopOf="@+id/anchorForceTextView"
+        app:layout_constraintVertical_bias="0.473" />
+
+    <TextView
+        android:id="@+id/anchorForceLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/kn"
+        app:layout_constraintBottom_toBottomOf="@+id/anchorForceEditText"
+        app:layout_constraintStart_toEndOf="@+id/anchorForceEditText"
+        app:layout_constraintTop_toTopOf="@+id/anchorForceEditText" />
+
+
+    <!--    StillasHøyde-->
+
+    <TextView
+        android:id="@+id/scaffoldHeightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stillash_yde"
         android:textAlignment="textEnd"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/bayLengthDescriptionTextView"
-        app:layout_constraintEnd_toEndOf="@+id/loadClassDescriptionTextView"
-        app:layout_constraintTop_toBottomOf="@+id/loadClassDescriptionTextView" />
+        app:layout_constraintEnd_toEndOf="@+id/anchorForceTextView"
+        app:layout_constraintTop_toBottomOf="@+id/anchorForceTextView" />
+
+    <TextView
+        android:id="@+id/scaffoldHeightLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:text="1 m"
+        app:layout_constraintBottom_toTopOf="@+id/scaffoldHeightSeekBar"
+        app:layout_constraintEnd_toEndOf="@+id/scaffoldHeightSeekBar"
+        app:layout_constraintStart_toStartOf="@+id/scaffoldHeightSeekBar" />
+
+    <SeekBar
+        android:id="@+id/scaffoldHeightSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:max="24"
+        android:thumb="@drawable/thumb_image"
+
+
+        app:layout_constraintBottom_toBottomOf="@+id/scaffoldHeightTextView"
+        app:layout_constraintEnd_toEndOf="@+id/coverTarpButton"
+        app:layout_constraintStart_toStartOf="@+id/anchorForceEditText"
+        app:layout_constraintTop_toTopOf="@+id/scaffoldHeightTextView" />
+
+    <!--    Faglengde -->
 
     <TextView
         android:id="@+id/bayLengthDescriptionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Faglengde"
+        android:labelFor="@+id/bayLengthEditText"
+        android:text="@string/faglengde"
         android:textAlignment="textEnd"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/nrOfFloorsDescriptionTextView"
-        app:layout_constraintEnd_toEndOf="@+id/bayWidthDescriptionTextView"
-        app:layout_constraintTop_toBottomOf="@+id/bayWidthDescriptionTextView" />
-
-    <TextView
-        android:id="@+id/nrOfFloorsDescriptionTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Antall etasjer"
-        android:textAlignment="textEnd"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/weightDescriptionTextView"
-        app:layout_constraintEnd_toEndOf="@+id/bayLengthDescriptionTextView"
-        app:layout_constraintTop_toBottomOf="@+id/bayLengthDescriptionTextView" />
-
-    <TextView
-        android:id="@+id/weightDescriptionTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Egenvekt"
-        android:textAlignment="textEnd"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/nrOfFloorsDescriptionTextView"
-        app:layout_constraintTop_toBottomOf="@+id/nrOfFloorsDescriptionTextView" />
-
-    <SeekBar
-        android:id="@+id/loadClassSeekBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:max="5"
-        app:layout_constraintBottom_toBottomOf="@+id/loadClassDescriptionTextView"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="@+id/groundSpinner"
-        app:layout_constraintTop_toTopOf="@+id/loadClassDescriptionTextView" />
-
-    <SeekBar
-        android:id="@+id/floorSeekBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:max="5"
-        app:layout_constraintBottom_toBottomOf="@+id/nrOfFloorsDescriptionTextView"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="@+id/bayLengthEditText"
-        app:layout_constraintTop_toTopOf="@+id/nrOfFloorsDescriptionTextView" />
-
-    <EditText
-        android:id="@+id/bayWidthEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="3"
-        android:inputType="numberDecimal"
-        android:maxLength="3"
-        app:layout_constraintBottom_toBottomOf="@+id/bayWidthDescriptionTextView"
-        app:layout_constraintStart_toStartOf="@+id/loadClassSeekBar"
-        app:layout_constraintTop_toTopOf="@+id/bayWidthDescriptionTextView" />
+        app:layout_constraintBottom_toTopOf="@+id/resultTextView"
+        app:layout_constraintEnd_toEndOf="@+id/scaffoldHeightTextView"
+        app:layout_constraintTop_toBottomOf="@+id/scaffoldHeightTextView" />
 
     <EditText
         android:id="@+id/bayLengthEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="3"
+        android:layout_width="80dp"
+        android:layout_height="@dimen/editTextHeight"
+        android:autofillHints="3"
+        android:background="@drawable/et_style"
+        android:ems="4"
         android:inputType="numberDecimal"
-        android:maxLength="3"
+        android:maxLength="4"
+        android:nextFocusUp="@+id/anchorForceEditText"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/bayLengthDescriptionTextView"
-        app:layout_constraintStart_toStartOf="@+id/bayWidthEditText"
+        app:layout_constraintStart_toStartOf="@+id/scaffoldHeightSeekBar"
         app:layout_constraintTop_toTopOf="@+id/bayLengthDescriptionTextView" />
 
-    <EditText
-        android:id="@+id/weightEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="5"
-        android:inputType="number"
-        android:maxLength="5"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/weightDescriptionTextView"
-        app:layout_constraintStart_toStartOf="@+id/floorSeekBar"
-        app:layout_constraintTop_toTopOf="@+id/weightDescriptionTextView" />
-
     <TextView
-        android:id="@+id/bayWidthMeterLabelTextView"
+        android:id="@+id/bayLengthLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="meter"
-        app:layout_constraintBottom_toBottomOf="@+id/bayWidthEditText"
-        app:layout_constraintStart_toEndOf="@+id/bayWidthEditText"
-        app:layout_constraintTop_toTopOf="@+id/bayWidthEditText" />
-
-    <TextView
-        android:id="@+id/kgLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="kg"
-        app:layout_constraintBottom_toBottomOf="@+id/weightEditText"
-        app:layout_constraintStart_toEndOf="@+id/weightEditText"
-        app:layout_constraintTop_toTopOf="@+id/weightEditText" />
-
-    <TextView
-        android:id="@+id/bayLengthMeterLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="meter"
+        android:text="@string/m"
         app:layout_constraintBottom_toBottomOf="@+id/bayLengthEditText"
         app:layout_constraintStart_toEndOf="@+id/bayLengthEditText"
         app:layout_constraintTop_toTopOf="@+id/bayLengthEditText" />
 
-    <TextView
-        android:id="@+id/loadClassLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Klasse 1"
-        app:layout_constraintBottom_toTopOf="@+id/loadClassSeekBar"
-        app:layout_constraintEnd_toEndOf="@+id/loadClassSeekBar"
-        app:layout_constraintStart_toStartOf="@+id/loadClassSeekBar" />
 
-    <TextView
-        android:id="@+id/nrOfFloorsLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1"
-        app:layout_constraintBottom_toTopOf="@+id/floorSeekBar"
-        app:layout_constraintEnd_toEndOf="@+id/floorSeekBar"
-        app:layout_constraintStart_toStartOf="@+id/floorSeekBar" />
+    <!--Resultat-->
 
     <TextView
         android:id="@+id/resultTextView"
-        android:layout_width="0dp"
+        android:layout_width="279dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:text="Resultater følger..."
+        android:background="@color/white"
+        android:paddingVertical="20dp"
+        android:text="Fyll ut alle felter for å regne ut maksimal avstand mellom forankringer"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/saveSoleBoardAreaButton"
+        app:layout_constraintBottom_toTopOf="@+id/rightButtons"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bayLengthDescriptionTextView" />
 
-    <Button
-        android:id="@+id/saveSoleBoardAreaButton"
+    <LinearLayout
+        android:id="@+id/rightButtons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/border_filled"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:text="Lagre"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/resultTextView"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/resultTextView"
-        app:layout_constraintTop_toBottomOf="@+id/resultTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/resultTextView">
+
+        <Button
+            android:id="@+id/showCalculationButton"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:background="@drawable/border_filled"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:text="Vis utregning"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/saveAnchorDistanceButton"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_filled"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:text="Lagre"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

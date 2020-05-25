@@ -10,19 +10,20 @@
         android:id="@+id/groundDescriptionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:text="Underlagets Bæreevne"
         android:textAlignment="textEnd"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/loadClassDescriptionTextView"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/groundSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="180dp"
+        android:layout_height="45dp"
         android:layout_marginStart="16dp"
-        android:textSize="22dp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/groundDescriptionTextView"
         app:layout_constraintStart_toEndOf="@+id/groundDescriptionTextView"
         app:layout_constraintTop_toTopOf="@+id/groundDescriptionTextView" />
@@ -30,10 +31,12 @@
     <EditText
         android:id="@+id/groundKiloNewtonEditText"
         android:layout_width="80sp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/editTextHeight"
         android:layout_marginStart="16dp"
+        android:background="@drawable/et_style"
         android:inputType="number"
         android:maxLength="4"
+        android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/groundSpinner"
         app:layout_constraintStart_toEndOf="@+id/groundSpinner"
@@ -46,24 +49,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="kN/m2"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/groundKiloNewtonEditText"
         app:layout_constraintStart_toEndOf="@+id/groundKiloNewtonEditText"
         app:layout_constraintTop_toTopOf="@+id/groundKiloNewtonEditText" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.66" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.25" />
 
     <TextView
         android:id="@+id/loadClassDescriptionTextView"
@@ -113,10 +102,11 @@
         android:id="@+id/weightDescriptionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:text="Egenvekt"
         android:textAlignment="textEnd"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/resultTextView"
         app:layout_constraintEnd_toEndOf="@+id/nrOfFloorsDescriptionTextView"
         app:layout_constraintTop_toBottomOf="@+id/nrOfFloorsDescriptionTextView" />
 
@@ -125,10 +115,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
         android:max="5"
+        android:thumb="@drawable/thumb_image"
         app:layout_constraintBottom_toBottomOf="@+id/loadClassDescriptionTextView"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="@+id/groundSpinner"
         app:layout_constraintTop_toTopOf="@+id/loadClassDescriptionTextView" />
 
@@ -137,22 +126,25 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:max="5"
+        android:max="12"
+        android:thumb="@drawable/thumb_image"
         app:layout_constraintBottom_toBottomOf="@+id/nrOfFloorsDescriptionTextView"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="@+id/groundSpinner"
         app:layout_constraintStart_toStartOf="@+id/bayLengthEditText"
         app:layout_constraintTop_toTopOf="@+id/nrOfFloorsDescriptionTextView" />
 
     <EditText
         android:id="@+id/bayWidthEditText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="3"
+        android:layout_height="@dimen/editTextHeight"
+        android:background="@drawable/et_style"
+        android:ems="4"
         android:inputType="numberDecimal"
-        android:maxLength="3"
+        android:maxLength="4"
         android:nextFocusUp="@+id/groundKiloNewtonEditText"
         android:nextFocusDown="@+id/bayWidthEditText"
+        android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/bayWidthDescriptionTextView"
         app:layout_constraintStart_toStartOf="@+id/loadClassSeekBar"
         app:layout_constraintTop_toTopOf="@+id/bayWidthDescriptionTextView" />
@@ -160,12 +152,15 @@
     <EditText
         android:id="@+id/bayLengthEditText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="3"
+        android:layout_height="@dimen/editTextHeight"
+        android:background="@drawable/et_style"
+        android:ems="4"
         android:inputType="numberDecimal"
-        android:maxLength="3"
+        android:maxLength="4"
         android:nextFocusUp="@+id/bayWidthEditText"
         android:nextFocusDown="@+id/weightEditText"
+        android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/bayLengthDescriptionTextView"
         app:layout_constraintStart_toStartOf="@+id/bayWidthEditText"
         app:layout_constraintTop_toTopOf="@+id/bayLengthDescriptionTextView" />
@@ -173,11 +168,14 @@
     <EditText
         android:id="@+id/weightEditText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/editTextHeight"
+        android:background="@drawable/et_style"
         android:ems="5"
         android:inputType="number"
         android:maxLength="5"
         android:nextFocusUp="@+id/bayLengthEditText"
+        android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/weightDescriptionTextView"
         app:layout_constraintStart_toStartOf="@+id/floorSeekBar"
         app:layout_constraintTop_toTopOf="@+id/weightDescriptionTextView" />
@@ -188,7 +186,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="meter"
+        android:text="@string/m"
         app:layout_constraintBottom_toBottomOf="@+id/bayWidthEditText"
         app:layout_constraintStart_toEndOf="@+id/bayWidthEditText"
         app:layout_constraintTop_toTopOf="@+id/bayWidthEditText" />
@@ -210,7 +208,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="meter"
+        android:text="@string/m"
         app:layout_constraintBottom_toBottomOf="@+id/bayLengthEditText"
         app:layout_constraintStart_toEndOf="@+id/bayLengthEditText"
         app:layout_constraintTop_toTopOf="@+id/bayLengthEditText" />
@@ -219,6 +217,7 @@
         android:id="@+id/loadClassLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
         android:text="Klasse 1"
         app:layout_constraintBottom_toTopOf="@+id/loadClassSeekBar"
         app:layout_constraintEnd_toEndOf="@+id/loadClassSeekBar"
@@ -228,6 +227,7 @@
         android:id="@+id/nrOfFloorsLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
         android:text="1"
         app:layout_constraintBottom_toTopOf="@+id/floorSeekBar"
         app:layout_constraintEnd_toEndOf="@+id/floorSeekBar"
@@ -239,49 +239,53 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
+        android:background="@color/white"
+        android:paddingVertical="20dp"
         android:text="Resultater følger..."
         android:textAlignment="center"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/showCalculationButton"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/rightButtons"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weightDescriptionTextView" />
 
-    <Button
-        android:id="@+id/showCalculationButton"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="20dp"
-        android:background="#3DA8D8"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:text="Vis utregning"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/saveSoleBoardAreaButton"
-        app:layout_constraintEnd_toEndOf="@+id/saveSoleBoardAreaButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/saveSoleBoardAreaButton"
-        app:layout_constraintTop_toBottomOf="@+id/resultTextView" />
-
-    <Button
-        android:id="@+id/saveSoleBoardAreaButton"
+    <LinearLayout
+        android:id="@+id/rightButtons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/border_filled"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:text="Lagre"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/resultTextView"
+        android:layout_marginEnd="24dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/resultTextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/resultTextView"
-        app:layout_constraintTop_toBottomOf="@+id/showCalculationButton" />
+        app:layout_constraintStart_toEndOf="@+id/resultTextView"
+        app:layout_constraintTop_toTopOf="@+id/resultTextView">
+
+        <Button
+            android:id="@+id/showCalculationButton"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/border_filled"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:text="Vis utregning"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/saveSoleBoardAreaButton"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_filled"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:text="Lagre"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

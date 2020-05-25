@@ -100,7 +100,7 @@
     <EditText
         android:id="@+id/csLengthEditText"
         android:layout_width="80sp"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/editTextHeight"
         android:layout_marginStart="16dp"
         android:maxLines="1"
         android:nextFocusDown="@+id/csWidthEditText"
@@ -116,7 +116,7 @@
     <EditText
         android:id="@+id/csWidthEditText"
         android:layout_width="80sp"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/editTextHeight"
         android:layout_marginStart="16dp"
         android:nextFocusUp="@+id/csLengthEditText"
         android:maxLines="1"
@@ -133,7 +133,7 @@
     <EditText
         android:id="@+id/csHeightEditText"
         android:layout_width="80sp"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/editTextHeight"
         android:layout_marginStart="16dp"
         android:nextFocusUp="@+id/csWidthEditText"
         android:maxLines="1"
@@ -211,7 +211,7 @@
     <EditText
         android:id="@+id/csNumOfWallAnchorsEditText"
         android:layout_width="80sp"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/editTextHeight"
         android:layout_marginStart="16dp"
         android:background="@drawable/et_style"
         android:maxLines="1"
@@ -228,7 +228,7 @@
     <EditText
         android:id="@+id/csNumOfWallAnchorTestsEditText"
         android:layout_width="80sp"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/editTextHeight"
         android:layout_marginStart="16dp"
         android:background="@drawable/et_style"
         android:inputType="number"
@@ -245,7 +245,7 @@
     <EditText
         android:id="@+id/csWallAnchorHoldsEditText"
         android:layout_width="80sp"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/editTextHeight"
         android:layout_marginStart="16dp"
         android:background="@drawable/et_style"
         android:inputType="number"
@@ -262,7 +262,7 @@
     <EditText
         android:id="@+id/csWallAnchorTestResultEditText"
         android:layout_width="80sp"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/editTextHeight"
         android:layout_marginStart="16dp"
         android:maxLines="1"
         android:background="@drawable/et_style"

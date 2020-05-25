@@ -30,7 +30,7 @@
     <EditText
         android:id="@+id/groundKiloNewtonEditText"
         android:layout_width="80sp"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/editTextHeight"
         android:layout_marginStart="16dp"
         android:background="@drawable/et_style"
         android:inputType="number"
@@ -151,7 +151,7 @@
     <EditText
         android:id="@+id/bayWidthEditText"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/editTextHeight"
         android:background="@drawable/et_style"
         android:ems="4"
         android:inputType="numberDecimal"
@@ -167,7 +167,7 @@
     <EditText
         android:id="@+id/bayLengthEditText"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/editTextHeight"
         android:background="@drawable/et_style"
         android:ems="4"
         android:inputType="numberDecimal"
@@ -183,7 +183,7 @@
     <EditText
         android:id="@+id/weightEditText"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/editTextHeight"
         android:background="@drawable/et_style"
         android:ems="5"
         android:inputType="number"

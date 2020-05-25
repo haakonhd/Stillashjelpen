@@ -26,7 +26,7 @@
     <EditText
         android:id="@+id/emailTextView"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/editTextHeight"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/et_style"
@@ -44,7 +44,7 @@
     <EditText
         android:id="@+id/passwordTextView"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/editTextHeight"
         android:layout_marginTop="40dp"
         android:background="@drawable/et_style"
         android:ems="10"
