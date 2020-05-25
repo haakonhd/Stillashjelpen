@@ -1,20 +1,16 @@
 package no.hiof.bo20_g28.stillashjelpen;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
@@ -23,13 +19,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager2.widget.ViewPager2;
-
-import java.util.ArrayList;
-
 import no.hiof.bo20_g28.stillashjelpen.adapter.TabControlSchemeAdapter;
 import no.hiof.bo20_g28.stillashjelpen.fragment.NavigationDrawerFragment;
 import no.hiof.bo20_g28.stillashjelpen.model.ChecklistItem;
-import no.hiof.bo20_g28.stillashjelpen.model.ControlScheme;
 import no.hiof.bo20_g28.stillashjelpen.model.ControlSchemeDefect;
 import no.hiof.bo20_g28.stillashjelpen.model.ControlSchemeDefectFixed;
 import no.hiof.bo20_g28.stillashjelpen.model.Project;
@@ -62,6 +54,7 @@ public class ControlSchemeActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Kontrollskjema for prosjekt: " + thisProject.getProjectName());
 
 

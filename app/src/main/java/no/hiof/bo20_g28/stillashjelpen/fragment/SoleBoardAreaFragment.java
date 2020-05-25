@@ -63,6 +63,17 @@ public class SoleBoardAreaFragment extends Fragment {
     private Wall thisWall;
     private int soleBoardArea;
 
+    private float maxPayload;
+    private float totalPayload;
+    private float totalLoad;
+    private float resultOuterSpear;
+    private float resultInnerSpear;
+    private float groundKiloPrCm2;
+    private float resultOuterSpearFinished;
+    private float resultInnerSpearFinished;
+    private int resultOuterSpearFinishedCeil;
+    private int resultInnerSpearFinishedCeil;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -524,17 +535,6 @@ public class SoleBoardAreaFragment extends Fragment {
         soleBoardArea = resultInnerSpearFinishedCeil;
         WallActivity.soleBoardArea = soleBoardArea;
     }
-
-    private float maxPayload;
-    private float totalPayload;
-    private float totalLoad;
-    private float resultOuterSpear;
-    private float resultInnerSpear;
-    private float groundKiloPrCm2;
-    private float resultOuterSpearFinished;
-    private float resultInnerSpearFinished;
-    private int resultOuterSpearFinishedCeil;
-    private int resultInnerSpearFinishedCeil;
 
     private void updateResultTextView(int outerResult, int innerResult){
         resultTextView.setText(Html.fromHtml("Resultat:<br><br>Ytterspir underlagsplank-areal:<br><font color=blue>" + outerResult +

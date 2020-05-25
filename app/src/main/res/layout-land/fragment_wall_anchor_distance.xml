@@ -264,7 +264,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
-            android:background="#3DA8D8"
+            android:background="@drawable/border_filled"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
             android:text="Vis utregning"

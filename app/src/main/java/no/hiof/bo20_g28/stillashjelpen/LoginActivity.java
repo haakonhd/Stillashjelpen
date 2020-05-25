@@ -1,7 +1,4 @@
 package no.hiof.bo20_g28.stillashjelpen;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,14 +6,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import org.w3c.dom.Text;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -65,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = passwordTextView.getText().toString().trim();
 
         if(email.equals("") || password.equals("")) {
-            Toast.makeText(this, "Du må fylle ut både epost og passord.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Du må fylle ut både epost og passord", Toast.LENGTH_SHORT).show();
             return false;
         }
 

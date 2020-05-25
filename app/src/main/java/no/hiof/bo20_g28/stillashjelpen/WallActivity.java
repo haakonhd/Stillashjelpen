@@ -45,7 +45,6 @@ public class WallActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wall);
 
-        //Objects.requireNonNull(getSupportActionBar()).setElevation(0);
         Intent i = getIntent();
         thisProject = (Project) i.getSerializableExtra("passedProject");
         thisWall = (Wall) i.getSerializableExtra("passedWall");
@@ -56,6 +55,7 @@ public class WallActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         try {
+            Objects.requireNonNull(getSupportActionBar()).setElevation(0);
             Objects.requireNonNull(getSupportActionBar()).setTitle(thisProject.getProjectName() + " > " + thisWall.getWallName());
         }
         catch(Exception e) {
