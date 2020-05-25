@@ -105,10 +105,11 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        /*else {
             super.onBackPressed();
         }
-        super.onBackPressed();
+        super.onBackPressed();*/
     }
 
     private void addNewProjectToDatabase(String name, String scaffoldingSystem) {
@@ -188,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         i.putExtra("from", "old");
         startActivity(i);
     }
+
 
 
     //------------------------Firebase Download Handling--------------------------------------------
