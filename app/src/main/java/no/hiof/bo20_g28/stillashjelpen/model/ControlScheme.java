@@ -34,21 +34,34 @@ public class ControlScheme implements Serializable {
     private String wallAnchorHolds;
     private String wallAnchorTestResult;
 
+    private String lastEmailSentTo;
+
     private ArrayList<ChecklistItem> checklistItems;
     private ArrayList<ControlSchemeDefect> controlSchemeDefects = new ArrayList<>();
+    private ArrayList<ControlSchemeDefectFixed> controlSchemeDefectFixed = new ArrayList<>();
 
     public ArrayList<ControlSchemeDefect> getControlSchemeDefects() {
         return controlSchemeDefects;
+    }
+    public ArrayList<ControlSchemeDefectFixed> getControlSchemeDefectFixed() {
+        return controlSchemeDefectFixed;
     }
 
     public void setControlSchemeDefects(ArrayList<ControlSchemeDefect> controlSchemeDefects) {
         this.controlSchemeDefects = controlSchemeDefects;
     }
 
+    public void setControlSchemeDefectFixed(ArrayList<ControlSchemeDefectFixed> controlSchemeDefects) {
+        this.controlSchemeDefectFixed = controlSchemeDefects;
+    }
+
     public void addControlSchemeDefect(ControlSchemeDefect controlSchemeDefect){
         this.controlSchemeDefects.add(controlSchemeDefect);
     }
 
+    public void addControlSchemeDefectFixed(ControlSchemeDefectFixed controlSchemeDefectFixed) {
+        this.controlSchemeDefectFixed.add(controlSchemeDefectFixed);
+    }
 
 
     public ControlScheme(String controlSchemeId) {
@@ -66,6 +79,7 @@ public class ControlScheme implements Serializable {
     public void setControlSchemeId(String controlSchemeId) {
         this.controlSchemeId = controlSchemeId;
     }
+
 
     public Date getDateCreated() {
         return dateCreated;
@@ -241,5 +255,13 @@ public class ControlScheme implements Serializable {
 
     public void setChecklistItems(ArrayList<ChecklistItem> checklistItems) {
         this.checklistItems = checklistItems;
+    }
+
+    public String getLastEmailSentTo() {
+        return lastEmailSentTo;
+    }
+
+    public void setLastEmailSentTo(String lastEmailSentTo) {
+        this.lastEmailSentTo = lastEmailSentTo;
     }
 }

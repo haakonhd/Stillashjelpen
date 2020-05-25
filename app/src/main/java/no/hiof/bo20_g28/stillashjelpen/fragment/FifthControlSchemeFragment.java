@@ -1,37 +1,62 @@
 package no.hiof.bo20_g28.stillashjelpen.fragment;
 
-import android.app.ActionBar;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
-import android.media.MediaScannerConnection;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
+import android.text.InputType;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Method;
+import java.net.URI;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import no.hiof.bo20_g28.stillashjelpen.R;
 import no.hiof.bo20_g28.stillashjelpen.model.ChecklistItem;
 import no.hiof.bo20_g28.stillashjelpen.model.ControlScheme;
 import no.hiof.bo20_g28.stillashjelpen.model.ControlSchemeDefect;
+import no.hiof.bo20_g28.stillashjelpen.model.ControlSchemeDefectFixed;
 import no.hiof.bo20_g28.stillashjelpen.model.Project;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -41,12 +66,14 @@ public class FifthControlSchemeFragment extends Fragment {
     public static final String ARG_OBJECT = "object";
     private View view;
     Button saveButton;
+    Button sendEmailButton;
     ConstraintLayout pdfPreview;
 
     private Project thisProject;
     private PdfDocument document;
     private View pdfContent;
     private LayoutInflater layoutInflater;
+    private Bitmap bitmap;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,12 +87,15 @@ public class FifthControlSchemeFragment extends Fragment {
         pdfPreview.setOnTouchListener((v, event) -> preventHorizontalScrollOnListClick(v, event));
 
         saveButton = view.findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(v -> saveFile("test.pdf"));
+        saveButton.setOnClickListener(v -> saveFile(thisProject.getProjectName() + ".pdf"));
+
+        sendEmailButton = view.findViewById(R.id.sendMailButton);
+        sendEmailButton.setOnClickListener(v -> openSendEmailDialog());
 
         pdfContent = layoutInflater.inflate(R.layout.pdf_page, null);
+
         return view;
     }
-
 
     @Override
     public void onResume() {
@@ -77,38 +107,106 @@ public class FifthControlSchemeFragment extends Fragment {
         pdfPreview.addView(pdfContent);
     }
 
-    private PdfDocument getPdfDocument(){
-        // create a new document
-        PdfDocument document = new PdfDocument();
+    private void openSendEmailDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View v = getLayoutInflater().inflate(R.layout.report_cs_defect_dialog, null);
 
-        // crate a page description
-        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(2250, 1400, 1).create();
+        EditText mailEditText = v.findViewById(R.id.defectDescriptionEditText);
 
-        // start a page
-        PdfDocument.Page page = document.startPage(pageInfo);
+        builder.setTitle("Send pdf til mail");
+        mailEditText.setHint("eksempel@email.no");
+        mailEditText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 
-        // draw something on the page
-//        View pdfContent = layoutInflater.inflate(R.layout.pdf_page, null);
+        if(thisProject.getControlScheme().getLastEmailSentTo() != null)
+            mailEditText.setText(thisProject.getControlScheme().getLastEmailSentTo());
 
-        pdfContent.measure(2250, 1400);
-        pdfContent.layout(0, 0, 2250, 1400);
-        pdfContent.draw(page.getCanvas());
+        builder.setView(v);
 
-        // finish the page
-        document.finishPage(page);
-        return document;
+        Button clearButton = v.findViewById(R.id.clearDescriptionButton);
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mailEditText.setText("");
+            }
+        });
+
+
+        builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String email = mailEditText.getText().toString();
+                if(email.length() > 5){
+                    //saving the email to db so it will be autofilled the next time
+                    thisProject.getControlScheme().setLastEmailSentTo(email);
+                    DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("projects");
+                    DatabaseReference projectRef = fDatabase.child(thisProject.getProjectId());
+                    projectRef.setValue(thisProject);
+
+                    sendEmail(email);
+                }
+            }
+        });
+
+        builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
-    public void saveFile(String sFileName){
+    private void sendEmail(String email){
+        document = createPdf();
+
+        saveFileToTemp(thisProject.getProjectName() + ".pdf");
+        File folder = new File(getActivity().getExternalCacheDir(), "stillashjelpen_temp");
+        File file = new File(folder, thisProject.getProjectName() + ".pdf");
+
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        // set the type to 'email'
+        emailIntent .setType("message/rfc822");
+        String to[] = {email};
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
+        emailIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        // the mail subject
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Rapportskjema for " + thisProject.getProjectName());
+        if (!file.exists() || !file.canRead()) {
+            CharSequence text = "An unknown error has occured. Could not send email.";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(getActivity(), text, duration);
+            toast.show();
+            return;
+        }
+        Uri uri = Uri.fromFile(file);
+//        Uri uri = FileProvider.getUriForFile(getActivity(), BuildConfig.APPLICATION_ID + ".provider",file);
+        // the attachment
+        emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
+
+        if(Build.VERSION.SDK_INT>=24){
+            try{
+                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                m.invoke(null);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        startActivity(Intent.createChooser(emailIntent , "Send rapportskjema som mail"));
+    }
+
+    public void saveFile(String fileName){
         requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE}, 1);
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Stillashjelpen");
 
-        document = getPdfDocument();
-
+//        document = getPdfDocument();
+        document = createPdf();
         if(!file.exists()){
             file.mkdir();
         }
-        File gpxfile = new File(file, sFileName);
+        File gpxfile = new File(file, fileName);
         try {
             document.writeTo(new FileOutputStream(gpxfile));
         } catch (IOException ex) {
@@ -121,6 +219,53 @@ public class FifthControlSchemeFragment extends Fragment {
 
         Toast toast = Toast.makeText(getActivity(), text, duration);
         toast.show();
+    }
+
+    private void saveFileToTemp(String fileName){
+        requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE}, 1);
+        File file = new File(getActivity().getExternalCacheDir(), "stillashjelpen_temp");
+        document = createPdf();
+        if(!file.exists()){
+            file.mkdir();
+        }
+        File gpxfile = new File(file, fileName);
+        try {
+            document.writeTo(new FileOutputStream(gpxfile));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        document.close();
+    }
+
+    public static Bitmap loadBitmapFromView(View v, int width, int height) {
+        Bitmap b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(b);
+        v.draw(c);
+        return b;
+    }
+
+    private PdfDocument createPdf() {
+        bitmap = loadBitmapFromView(pdfContent, pdfContent.getWidth(), pdfContent.getHeight());
+        WindowManager wm = (WindowManager)getActivity().getSystemService(Context.WINDOW_SERVICE);
+        //  Display display = wm.getDefaultDisplay();
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        float hight = displaymetrics.heightPixels;
+        float width = displaymetrics.widthPixels;
+        int convertHight = (int) hight, convertWidth = (int) width;
+        //        Resources mResources = getResources();
+        //        Bitmap bitmap = BitmapFactory.decodeResource(mResources, R.drawable.screenshot);
+        PdfDocument document = new PdfDocument();
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(convertWidth, convertHight, 1).create();
+        PdfDocument.Page page = document.startPage(pageInfo);
+        Canvas canvas = page.getCanvas();
+        Paint paint = new Paint();
+        canvas.drawPaint(paint);
+        bitmap = Bitmap.createScaledBitmap(bitmap, convertWidth, convertHight, true);
+        paint.setColor(Color.BLUE);
+        canvas.drawBitmap(bitmap, 0, 0, null);
+        document.finishPage(page);
+        return document;
     }
 
 
@@ -214,7 +359,8 @@ public class FifthControlSchemeFragment extends Fragment {
         if(anchorTestResult != null && userControlName != null) tv_wallAnchorTestResult.setText(anchorTestResult);
 
         fillCheckList();
-
+        fillDefectsFoundTable();
+        fillDefectsFixedTable();
 
     }
 
@@ -255,10 +401,108 @@ public class FifthControlSchemeFragment extends Fragment {
         }
     }
 
+    private String getReadableDate(Date date){
+        String dateText;
+        Format formatter;
+        formatter = new SimpleDateFormat("dd/mm/yyyy");
+        return formatter.format(date);
+    }
+
     private void fillDefectsFoundTable(){
         ArrayList<ControlSchemeDefect> defects = thisProject.getControlScheme().getControlSchemeDefects();
-        for(ControlSchemeDefect defect : defects){
+        TableLayout table = pdfContent.findViewById(R.id.defectsTable);
+        table.removeAllViews();
 
+        int remainingRows = 13;
+
+        // creating first row with descriptions
+        TableRow firstRow = new TableRow(getActivity());
+
+        TextView dateTextView1 = new TextView(getActivity());
+        dateTextView1.setText("Dato");
+        dateTextView1.setTypeface(dateTextView1.getTypeface(), Typeface.BOLD);
+        dateTextView1.setPadding(8,8,5,12);
+        dateTextView1.setBackgroundResource(R.drawable.border_black);
+
+        TextView defectDescriptionTextView1 = new TextView(getActivity());
+        defectDescriptionTextView1.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
+        defectDescriptionTextView1.setText("Tekst - mangler");
+        defectDescriptionTextView1.setTypeface(defectDescriptionTextView1.getTypeface(), Typeface.BOLD);
+        defectDescriptionTextView1.setPadding(8,8,5,12);
+        defectDescriptionTextView1.setBackgroundResource(R.drawable.border_black);
+
+        firstRow.addView(dateTextView1);
+        firstRow.addView(defectDescriptionTextView1);
+
+        remainingRows--;
+        table.addView(firstRow);
+
+        //Creating rows for the defects found
+        for(ControlSchemeDefect defect : defects){
+            TableRow row = new TableRow(getActivity());
+
+            TextView dateTextView = new TextView(getActivity());
+//            dateTextView.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
+            dateTextView.setText(getReadableDate(defect.getfoundDate()));
+            dateTextView.setPadding(8,8,5,8);
+            dateTextView.setBackgroundResource(R.drawable.border_black);
+
+            TextView defectDescriptionTextView = new TextView(getActivity());
+            defectDescriptionTextView.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
+            defectDescriptionTextView.setText(defect.getDefectDescription());
+            defectDescriptionTextView.setPadding(8,8,5,8);
+            defectDescriptionTextView.setBackgroundResource(R.drawable.border_black);
+
+            row.addView(dateTextView);
+            row.addView(defectDescriptionTextView);
+
+            remainingRows--;
+            table.addView(row);
+        }
+
+        //filling out the empty spaces
+        for(int i = 0; i < remainingRows; i++){
+            TableRow row = new TableRow(getActivity());
+
+            TextView dateTextView = new TextView(getActivity());
+            dateTextView.setPadding(8,2,5,8);
+            dateTextView.setBackgroundResource(R.drawable.border_black);
+
+            TextView defectDescriptionTextView = new TextView(getActivity());
+            defectDescriptionTextView.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
+            defectDescriptionTextView.setPadding(8,2,5,8);
+            defectDescriptionTextView.setBackgroundResource(R.drawable.border_black);
+
+            row.addView(dateTextView);
+            row.addView(defectDescriptionTextView);
+
+            table.addView(row);
+        }
+    }
+
+    private void fillDefectsFixedTable(){
+        ArrayList<ControlSchemeDefectFixed> defects = thisProject.getControlScheme().getControlSchemeDefectFixed();
+        LinearLayout table = pdfContent.findViewById(R.id.defectFixedTable);
+        table.removeAllViews();
+
+        int remainingRows = 12;
+
+        for(ControlSchemeDefectFixed defect : defects){
+            View row = layoutInflater.inflate(R.layout.defect_fixed_row, null);
+            TextView row1 = row.findViewById(R.id.row1);
+            TextView row2 = row.findViewById(R.id.row2);
+            TextView row3 = row.findViewById(R.id.row3);
+
+            row1.setText(getReadableDate(defect.getControlDate()));
+            row2.setText(getReadableDate(defect.getDefectFixedDate()));
+            row3.setText(defect.getSignature());
+
+            remainingRows--;
+            table.addView(row);
+        }
+        for(int i = 0; i < remainingRows; i++){
+            View row = layoutInflater.inflate(R.layout.defect_fixed_row, null);
+            table.addView(row);
         }
     }
 
@@ -281,9 +525,6 @@ public class FifthControlSchemeFragment extends Fragment {
         v.onTouchEvent(event);
         return true;
     }
-
-
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
