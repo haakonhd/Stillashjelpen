@@ -102,7 +102,8 @@ public class ChecklistRecyclerViewAdapter  extends RecyclerView.Adapter<Checklis
             }
         });
 
-        if(!item.getIsParent()) {
+//        if(!item.getIsParent()) {
+        if(item.getId() == 5 || item.getId() == 6 || item.getId() == 7 || item.getId() == 8) {
             //setting margin for child-elements
             ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) holder.cl_checkbox.getLayoutParams();
             p.setMargins(60, 0, 0, 0);
