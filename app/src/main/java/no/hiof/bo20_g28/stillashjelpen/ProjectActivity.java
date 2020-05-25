@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -77,9 +78,11 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
         messages.clear();
 
         for(DataSnapshot messageSnapshot: dataSnapshot.getChildren()){
-            Message message = messageSnapshot.getValue(Message.class);
-            if(message.getProjectId().equals(thisProject.getProjectId())) {
-                messages.add(message);
+            if (dataSnapshot.getValue() != null) {
+                Message message = messageSnapshot.getValue(Message.class);
+                if (message.getProjectId().equals(thisProject.getProjectId())) {
+                    messages.add(message);
+                }
             }
         }
 
@@ -90,9 +93,11 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
         walls.clear();
 
         for(DataSnapshot wallSnapshot: dataSnapshot.getChildren()){
-            Wall wall = wallSnapshot.getValue(Wall.class);
-            if(wall.getProjectId().equals(thisProject.getProjectId())) {
-                walls.add(wall);
+            if (dataSnapshot.getValue() != null) {
+                Wall wall = wallSnapshot.getValue(Wall.class);
+                if (wall.getProjectId().equals(thisProject.getProjectId())) {
+                    walls.add(wall);
+                }
             }
         }
 
@@ -168,6 +173,13 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
         wallRef.child(wallId).removeValue();
     }
 
+    private void deleteProjectFromDatabase(String projectId){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference projectRef = databaseReference.child("projects");
+
+        projectRef.child(projectId).removeValue();
+    }
+
     private void fillWallRecyclerList() {
         RecyclerView recyclerView = findViewById(R.id.wallRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -218,8 +230,36 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
         i.putExtra("passedProject", thisProject);
         startActivity(i);    }
 
+    public void deleteProjectImageButtonClicked(View view) {
+        deleteProjectDialogbox(thisProject.getProjectId());
+    }
+
 
     //------------------------Dialog boxes----------------------------------------------------------
+
+    private void deleteProjectDialogbox(final String projectId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Slette prosjektet \"" + thisProject.getProjectName() + "\"?");
+
+        // Set up the buttons
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
+                deleteProjectFromDatabase(projectId);
+                Toast.makeText(getApplicationContext(),"Prosjekt \"" + thisProject.getProjectName() + "\" slettet", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
 
     private void openNewMessageDialogbox() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

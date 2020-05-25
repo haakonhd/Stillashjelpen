@@ -266,7 +266,49 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     private void openNewProjectCustomDialogbox() {
     }
 
+    private void openFastClacDialogbox() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.new_project_dialog_box, null);
+        builder.setTitle("Velg stillassystem");
 
+        final Spinner spinner = (Spinner) view.findViewById(R.id.scaffoldingSystemsSpinner);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, scaffoldingSystemList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        // Set up the input
+        final EditText input = (EditText) view.findViewById(R.id.editText);
+
+        // Set up the buttons
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //TODO Better sanitation and handling of input
+                if(!spinner.getSelectedItem().toString().equalsIgnoreCase("Velg et stillassystem")) {
+                    if(input.getText().toString().length() > 0) {
+                        addNewProjectToDatabase(input.getText().toString(), spinner.getSelectedItem().toString());
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Mislykket - Gi veggen et navn", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Mislykket - Velg en type stillas", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.setView(view);
+        AlertDialog ad = builder.create();
+        ad.show();
+    }
     //------------------------Button Click Handling-------------------------------------------------
 
     public void newProjectButtonClicked(View view) {
