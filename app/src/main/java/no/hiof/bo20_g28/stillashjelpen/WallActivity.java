@@ -52,7 +52,6 @@ public class WallActivity extends AppCompatActivity {
         thisWall = (Wall) i.getSerializableExtra("passedWall");
         scaffoldingName = i.getStringExtra("scaffoldingSystem");
 
-
         viewPager = findViewById(R.id.pager);
         tabLayout = findViewById(R.id.tab_layout);
 

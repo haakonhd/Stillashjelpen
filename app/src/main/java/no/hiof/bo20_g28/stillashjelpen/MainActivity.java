@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         showScaffoldSystemsButton = findViewById(R.id.showScaffoldSystemsButton);
 
         showProjectsButton.setBackgroundResource(R.drawable.border_filled);
-        showProjectsButton.setTextColor(getResources().getColor(R.color.white));
+        showProjectsButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         showScaffoldSystemsButton.setBackgroundResource(R.drawable.border);
         showScaffoldSystemsButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
@@ -402,7 +402,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     private void showScaffoldSystems(){
         getScaffoldSystemObjectsFromFirebase();
         showScaffoldSystemsButton.setBackgroundResource(R.drawable.border_filled);
-        showScaffoldSystemsButton.setTextColor(getResources().getColor(R.color.white));
+        showScaffoldSystemsButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         showProjectsButton.setBackgroundResource(R.drawable.border);
         showProjectsButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
     }
@@ -410,7 +410,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     private void showProjects(){
         fillRecyclerListProjects();
         showProjectsButton.setBackgroundResource(R.drawable.border_filled);
-        showProjectsButton.setTextColor(getResources().getColor(R.color.white));
+        showProjectsButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         showScaffoldSystemsButton.setBackgroundResource(R.drawable.border);
         showScaffoldSystemsButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
     }

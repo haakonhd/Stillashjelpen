@@ -279,6 +279,7 @@
             android:id="@+id/saveSoleBoardAreaButton"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/border_filled"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"

@@ -163,24 +163,24 @@ public class WallAnchorDistanceFragment extends Fragment {
         coverNetButton.setBackgroundResource(R.drawable.border);
         coverTarpButton.setBackgroundResource(R.drawable.border);
 
-        coverNoneButton.setTextColor(getResources().getColor(R.color.colorAccent));
-        coverNetButton.setTextColor(getResources().getColor(R.color.colorAccent));
-        coverTarpButton.setTextColor(getResources().getColor(R.color.colorAccent));
+        coverNoneButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        coverNetButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        coverTarpButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
         if(selectedCover == null) return;
 
         switch (selectedCover) {
             case UNCOVERED:
                 coverNoneButton.setBackgroundResource(R.drawable.border_filled);
-                coverNoneButton.setTextColor(getResources().getColor(R.color.white));
+                coverNoneButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 break;
             case NET:
                 coverNetButton.setBackgroundResource(R.drawable.border_filled);
-                coverNetButton.setTextColor(getResources().getColor(R.color.white));
+                coverNetButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 break;
             case TARP:
                 coverTarpButton.setBackgroundResource(R.drawable.border_filled);
-                coverTarpButton.setTextColor(getResources().getColor(R.color.white));
+                coverTarpButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 break;
         }
     }
@@ -189,19 +189,19 @@ public class WallAnchorDistanceFragment extends Fragment {
         forceFactorNormalButton.setBackgroundResource(R.drawable.border);
         forceFactorParallelButton.setBackgroundResource(R.drawable.border);
 
-        forceFactorNormalButton.setTextColor(getResources().getColor(R.color.colorAccent));
-        forceFactorParallelButton.setTextColor(getResources().getColor(R.color.colorAccent));
+        forceFactorNormalButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        forceFactorParallelButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
         if(selectedForceFactor == null) return;
 
         switch (selectedForceFactor) {
             case NORMAL:
                 forceFactorNormalButton.setBackgroundResource(R.drawable.border_filled);
-                forceFactorNormalButton.setTextColor(getResources().getColor(R.color.white));
+                forceFactorNormalButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 break;
             case PARALLEL:
                 forceFactorParallelButton.setBackgroundResource(R.drawable.border_filled);
-                forceFactorParallelButton.setTextColor(getResources().getColor(R.color.white));
+                forceFactorParallelButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 break;
         }
     }

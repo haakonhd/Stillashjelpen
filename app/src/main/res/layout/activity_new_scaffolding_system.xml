@@ -80,10 +80,12 @@
         android:layout_height="@dimen/editTextHeight"
         android:layout_marginStart="16dp"
         android:background="@drawable/et_style"
-        android:inputType="textPersonName"
+        android:inputType="text"
         android:paddingStart="6dp"
         android:textAlignment="viewStart"
         android:textSize="20sp"
+        android:maxLines="1"
+        android:lines="1"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/textView5" />
