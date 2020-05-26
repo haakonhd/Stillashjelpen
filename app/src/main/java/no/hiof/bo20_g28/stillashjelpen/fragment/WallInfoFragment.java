@@ -16,6 +16,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Html;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ import no.hiof.bo20_g28.stillashjelpen.model.Project;
 import no.hiof.bo20_g28.stillashjelpen.model.Wall;
 
 import static android.app.Activity.RESULT_OK;
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class WallInfoFragment extends Fragment{
     public static final String ARG_OBJECT = "object";
@@ -79,6 +81,7 @@ public class WallInfoFragment extends Fragment{
     private ImageButton editWallDescriptionImageButton;
     private ImageButton deleteWallImageButton;
     private View view;
+    private boolean connectedToFirebase;
 
     @Nullable
     @Override
@@ -89,6 +92,8 @@ public class WallInfoFragment extends Fragment{
         Intent i = getActivity().getIntent();
         thisWall = (Wall) i.getSerializableExtra("passedWall");
         thisProject = (Project) i.getSerializableExtra("passedProject");
+
+        getConnectionState();
 
         wallImageView = view.findViewById(R.id.wallImageView);
         wallNameTextView = view.findViewById(R.id.wallNameTextView);
@@ -349,22 +354,47 @@ public class WallInfoFragment extends Fragment{
         }
     }
 
+    private void getConnectionState() {
+        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+        connectedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+                    connectedToFirebase = true;
+                } else {
+                    connectedToFirebase = false;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "Listener was cancelled");
+            }
+        });
+    }
+
 
     //------------------------Button Click Handling-------------------------------------------------
 
-    public void cameraImageButtonClicked() {
-        takePictureIntent();
+    private void cameraImageButtonClicked() {
+        getConnectionState();
+        if(connectedToFirebase) {
+            takePictureIntent();
+        }else{
+            Toast.makeText(getActivity(), "Applikasjonen er ikke koblet til databasen. Ikke mulig å ta bilder", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public void editWallNameImageButtonClicked() {
+    private void editWallNameImageButtonClicked() {
         editWallNameDialogbox();
     }
 
-    public void editWallDescriptionImageButtonClicked() {
+    private void editWallDescriptionImageButtonClicked() {
         editWallDescriptionDialogbox();
     }
 
-    public void deleteWallImageButtonClicked() {
+    private void deleteWallImageButtonClicked() {
         deleteWallDialogbox(thisWall.getWallId());
     }
 

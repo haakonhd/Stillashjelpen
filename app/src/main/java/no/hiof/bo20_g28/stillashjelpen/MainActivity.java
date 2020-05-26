@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         showProjectsButton.setBackgroundResource(R.drawable.border_filled);
         showProjectsButton.setTextColor(getResources().getColor(R.color.white));
         showScaffoldSystemsButton.setBackgroundResource(R.drawable.border);
-        showScaffoldSystemsButton.setTextColor(getResources().getColor(R.color.colorAccent));
+        showScaffoldSystemsButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
         // if statement fixes a crash that occurs when app opens MainActivity the second time from new Intent
         if (!calledAlready) {
@@ -404,7 +404,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         showScaffoldSystemsButton.setBackgroundResource(R.drawable.border_filled);
         showScaffoldSystemsButton.setTextColor(getResources().getColor(R.color.white));
         showProjectsButton.setBackgroundResource(R.drawable.border);
-        showProjectsButton.setTextColor(getResources().getColor(R.color.colorAccent));
+        showProjectsButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
     }
 
     private void showProjects(){
@@ -412,6 +412,6 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         showProjectsButton.setBackgroundResource(R.drawable.border_filled);
         showProjectsButton.setTextColor(getResources().getColor(R.color.white));
         showScaffoldSystemsButton.setBackgroundResource(R.drawable.border);
-        showScaffoldSystemsButton.setTextColor(getResources().getColor(R.color.colorAccent));
+        showScaffoldSystemsButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
     }
 }

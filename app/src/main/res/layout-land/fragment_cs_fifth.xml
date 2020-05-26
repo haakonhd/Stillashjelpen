@@ -39,7 +39,6 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             </HorizontalScrollView>
 
         </ScrollView>
@@ -88,7 +87,5 @@
             app:layout_constraintTop_toTopOf="@+id/saveButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
