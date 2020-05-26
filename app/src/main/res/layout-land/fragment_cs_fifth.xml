@@ -76,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
-            android:background="@color/colorAccent"
+            android:background="@drawable/border_filled"
             android:paddingHorizontal="20dp"
             android:text="Send PDF til mail"
             android:textAllCaps="false"

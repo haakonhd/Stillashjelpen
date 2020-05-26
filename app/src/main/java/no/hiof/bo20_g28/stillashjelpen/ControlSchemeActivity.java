@@ -2,6 +2,7 @@ package no.hiof.bo20_g28.stillashjelpen;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -9,6 +10,11 @@ import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,7 +37,7 @@ public class ControlSchemeActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
     private Project thisProject;
-    Toolbar toolbar;
+    private Toolbar toolbar;
     private static ArrayList<ChecklistItem> checklistItems = new ArrayList<>();
     private static ArrayList<ControlSchemeDefectFixed> controlSchemeDefectFixedItems = new ArrayList<>();
     private static ArrayList<ControlSchemeDefect> controlSchemeDefectItems = new ArrayList<>();
@@ -43,13 +49,11 @@ public class ControlSchemeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Intent intent = getIntent();
-        thisProject = (Project) intent.getSerializableExtra("passedProject");
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_control_scheme);
 
-        //Objects.requireNonNull(getSupportActionBar()).setElevation(0);
+        Intent intent = getIntent();
+        thisProject = (Project) intent.getSerializableExtra("passedProject");
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -154,5 +158,29 @@ public class ControlSchemeActivity extends AppCompatActivity {
     }
 
     public void newDefectButtonClicked(View view) {
+    }
+
+    public void updateProjectFromFirebase(){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference fDatabaseRoot = database.getReference().child("projects");
+
+        fDatabaseRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot addressSnapshot : dataSnapshot.getChildren()) {
+                    Project project = addressSnapshot.child(thisProject.getProjectId()).getValue(Project.class);
+                    if (project != null) {
+                        thisProject = project;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("FirebaseError", databaseError.toException());
+            }
+        });
     }
 }

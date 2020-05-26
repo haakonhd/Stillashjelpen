@@ -1,24 +1,37 @@
 package no.hiof.bo20_g28.stillashjelpen.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -33,6 +46,8 @@ public class NavigationDrawerFragment extends Fragment implements NavigationView
     private DrawerLayout drawerLayout;
     private TextView navn_header_company_name;
     private TextView nav_header_company_email;
+    private final List<String> scaffoldingSystemList = new ArrayList<String>();
+
 
     public NavigationDrawerFragment() {}
 
@@ -73,9 +88,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationView
             startActivity(i);
         }
         else if (item.getItemId() == R.id.nav_calculator) {
-            Intent i = new Intent(getActivity(), WallActivity.class);
-            i.putExtra("isQuickCalculation", true);
-            startActivity(i);
+            getFastCalcScaffoldingSystemNamesFromFirebase();
         }
         else
             Toast.makeText(getActivity(), "To be added.", Toast.LENGTH_SHORT).show();
@@ -107,5 +120,73 @@ public class NavigationDrawerFragment extends Fragment implements NavigationView
         // refresh
         Intent i = new Intent(getActivity(), MainActivity.class);
         startActivity(i);
+    }
+
+    public void getFastCalcScaffoldingSystemNamesFromFirebase(){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference fDatabaseRoot = database.getReference().child("scaffoldingSystems");
+
+        scaffoldingSystemList.clear();
+
+        fDatabaseRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                scaffoldingSystemList.add("Velg en type stillassystem");
+
+                for (DataSnapshot addressSnapshot : dataSnapshot.getChildren()) {
+                    String project = addressSnapshot.child("scaffoldingSystemName").getValue(String.class);
+                    if (project != null) {
+                        scaffoldingSystemList.add(project);
+                    }
+                }
+                openFastClacDialogbox();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("FirebaseError", databaseError.toException());
+            }
+        });
+    }
+
+    private void openFastClacDialogbox() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View view = getLayoutInflater().inflate(R.layout.choose_scaffoldingsystem_dialog_box, null);
+        builder.setTitle("Velg stillassystem");
+
+        final Spinner spinner = (Spinner) view.findViewById(R.id.fastCalcScaffoldingSystemsSpinner);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, scaffoldingSystemList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        // Set up the buttons
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //TODO Better sanitation and handling of input
+                if(!spinner.getSelectedItem().toString().equalsIgnoreCase("Velg en type stillassystem")) {
+                    Intent i = new Intent(getContext(), WallActivity.class);
+                    i.putExtra("isQuickCalculation", true);
+                    i.putExtra("scaffoldingSystem", spinner.getSelectedItem().toString());
+                    startActivity(i);
+                }
+                else{
+                    Toast.makeText(getContext(), "Mislykket - Velg en type stillas", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.setView(view);
+        AlertDialog ad = builder.create();
+        ad.show();
     }
 }

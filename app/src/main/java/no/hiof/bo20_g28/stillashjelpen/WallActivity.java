@@ -1,4 +1,5 @@
 package no.hiof.bo20_g28.stillashjelpen;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -76,6 +77,7 @@ public class WallActivity extends AppCompatActivity {
                 }).attach();
 
         setTabLayout();
+
     }
 
     private int[] tabIcons = {
@@ -109,7 +111,7 @@ public class WallActivity extends AppCompatActivity {
     private void setUpNavigationDrawer() {
         DrawerLayout drawerlayout = findViewById(R.id.drawer_layout);
         NavigationDrawerFragment navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentNavigationDrawer);
-        if(navigationDrawerFragment != null) {
+        if (navigationDrawerFragment != null) {
             navigationDrawerFragment.setupDrawer(drawerlayout, toolbar);
         }
     }

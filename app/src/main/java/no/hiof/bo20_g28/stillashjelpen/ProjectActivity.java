@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -73,6 +74,8 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
         databaseWalls = FirebaseDatabase.getInstance().getReference("walls");
         databaseMessages = FirebaseDatabase.getInstance().getReference("messages");
     }
+
+
 
     private void getMessagesFromDatabase(String userId, DataSnapshot dataSnapshot){
         messages.clear();
@@ -214,6 +217,35 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
         startActivity(i);
     }
 
+    public void updateProjectFromFirebase(){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference fDatabaseRoot = database.getReference().child("projects");
+
+        fDatabaseRoot.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot projectSnapshot : dataSnapshot.getChildren()) {
+                    if (dataSnapshot.getValue() != null) {
+                        Project project = projectSnapshot.getValue(Project.class);
+                        if (project.getProjectId().equals(thisProject.getProjectId())) {
+                            Intent i = new Intent(getApplicationContext(), ControlSchemeActivity.class);
+                            i.putExtra("passedProject", project);
+                            startActivity(i);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("FirebaseError", databaseError.toException());
+            }
+        });
+    }
+
     //------------------------Button Click Handling-------------------------------------------------
 
 
@@ -226,9 +258,11 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
     }
 
     public void controlSchemeButtonClicked(View view) {
-        Intent i = new Intent(this, ControlSchemeActivity.class);
+        updateProjectFromFirebase();
+        /*Intent i = new Intent(this, ControlSchemeActivity.class);
         i.putExtra("passedProject", thisProject);
-        startActivity(i);    }
+        startActivity(i);*/
+    }
 
     public void deleteProjectImageButtonClicked(View view) {
         deleteProjectDialogbox(thisProject.getProjectId());
@@ -344,5 +378,6 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
             navigationDrawerFragment.setupDrawer(drawerlayout, toolbar);
         }
     }
+
 }
 

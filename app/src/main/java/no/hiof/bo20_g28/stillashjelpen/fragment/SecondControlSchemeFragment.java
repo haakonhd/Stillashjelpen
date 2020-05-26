@@ -88,6 +88,7 @@ public class SecondControlSchemeFragment extends Fragment {
         thisCs.setWallAnchorTestResult(csWallAnchorTestResultEditText.getText().toString().trim());
 
         updateThisProjectsControlScheme();
+
         Toast.makeText(getContext(), "Kontroll-skjemaet er oppdatert",Toast.LENGTH_SHORT).show();
     }
 
