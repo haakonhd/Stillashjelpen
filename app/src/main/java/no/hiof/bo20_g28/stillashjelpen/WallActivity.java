@@ -63,7 +63,7 @@ public class WallActivity extends AppCompatActivity {
             Objects.requireNonNull(getSupportActionBar()).setTitle(thisProject.getProjectName() + " > " + thisWall.getWallName());
         }
         catch(Exception e) {
-            Objects.requireNonNull(getSupportActionBar()).setTitle("Vegg-side");
+            Objects.requireNonNull(getSupportActionBar()).setTitle("Hurtigkalkulering");
         }
 
         setUpNavigationDrawer();
