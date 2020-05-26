@@ -335,10 +335,17 @@ public class WallInfoFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        if(WallActivity.wallAnchorDistance > 0) wallAnchorDistanceTextView.setText("Maksimal forankringsavstand: " + String.format("%.2f", WallActivity.wallAnchorDistance) + " m");
+        if(WallActivity.wallAnchorDistance > 0)
+            wallAnchorDistanceTextView.setText("Maksimal forankringsavstand: " + String.format("%.2f", WallActivity.wallAnchorDistance) + " m");
+        else
+            wallAnchorDistanceTextView.setText("Maksimal forankringsavstand: - ");
         if(WallActivity.soleBoardArea > 0) {
             soleBoardAreaTextView.setText(Html.fromHtml("Underlagsplank-areal for innerspir: " + WallActivity.soleBoardArea + " <font>cm<sup><small>2</small></sup></font>"));
             soleBoardAreaOuterTextView.setText(Html.fromHtml("Underlagsplank-areal for ytterspir: " + WallActivity.soleBoardArea/2 + " <font>cm<sup><small>2</small></sup></font>"));
+        }
+        else{
+            soleBoardAreaTextView.setText(Html.fromHtml("Underlagsplank-areal for innerspir: - "));
+            soleBoardAreaOuterTextView.setText(Html.fromHtml("Underlagsplank-areal for ytterspir: - "));
         }
     }
 
@@ -485,8 +492,14 @@ public class WallInfoFragment extends Fragment{
                     String area = dataSnapshot.getValue().toString();
                     int areaInt = Integer.parseInt(area);
 
-                    soleBoardAreaTextView.setText(Html.fromHtml("Underlagsplank-areal for innerspir: " + areaInt + " <font>cm<sup><small>2</small></sup></font>"));
-                    soleBoardAreaOuterTextView.setText(Html.fromHtml("Underlagsplank-areal for ytterspir: " + areaInt / 2 + " <font>cm<sup><small>2</small></sup></font>"));
+                    if(areaInt > 0) {
+                        soleBoardAreaTextView.setText(Html.fromHtml("Underlagsplank-areal for innerspir: " + areaInt + " <font>cm<sup><small>2</small></sup></font>"));
+                        soleBoardAreaOuterTextView.setText(Html.fromHtml("Underlagsplank-areal for ytterspir: " + areaInt /2 + " <font>cm<sup><small>2</small></sup></font>"));
+                    }
+                    else{
+                        soleBoardAreaTextView.setText(Html.fromHtml("Underlagsplank-areal for innerspir: - "));
+                        soleBoardAreaOuterTextView.setText(Html.fromHtml("Underlagsplank-areal for ytterspir: - "));
+                    }
                 }
             }
 
@@ -502,7 +515,9 @@ public class WallInfoFragment extends Fragment{
                 if (dataSnapshot.getValue() != null) {
                     String maxDistanceString = dataSnapshot.getValue().toString();
                     double maxDistance = Double.parseDouble(maxDistanceString);
-                    wallAnchorDistanceTextView.setText("Maksimal forankringsavstand: " + String.format("%.2f", maxDistance) + " m");
+
+                    if(maxDistance > 0) wallAnchorDistanceTextView.setText("Maksimal forankringsavstand: " + String.format("%.2f", maxDistance) + " m");
+                    else wallAnchorDistanceTextView.setText("Maksimal forankringsavstand: - ");
                 }
             }
 

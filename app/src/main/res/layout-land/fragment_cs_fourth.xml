@@ -8,85 +8,81 @@
     android:fitsSystemWindows="true"
     tools:context=".fragment.FourthControlSchemeFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <TextView
+        android:id="@+id/defectFixedRecyclerViewLabel"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Mangler utbedret"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/defectFixedRecyclerView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/newDefectFixedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/border_filled"
+        android:text="Ny mangel utbedret"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/defectFixedRecyclerView"
+        app:layout_constraintStart_toStartOf="@+id/defectFixedRecyclerView" />
+
+    <Button
+        android:id="@+id/newDefectButton"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/border_filled"
+        android:text="Ny mangel funnet"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/defectRecyclerView"
+        app:layout_constraintStart_toStartOf="@+id/defectRecyclerView" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/defectRecyclerView"
+        android:layout_width="350dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/newDefectButton"
+        app:layout_constraintEnd_toStartOf="@+id/defectFixedRecyclerView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/defectRecyclerViewLabel" />
 
-        <TextView
-            android:id="@+id/defectFixedRecyclerViewLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Mangler Utbedret"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/defectRecyclerViewLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Mangler funnet"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/defectRecyclerView"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/defectFixedRecyclerView"
-            android:layout_width="360dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/newDefectFixedButton"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/defectFixedRecyclerViewLabel"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <Button
-            android:id="@+id/newDefectFixedButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/border_filled"
-            android:text="Ny mangel utbedret"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/defectFixedRecyclerView"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/defectRecyclerViewLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Mangler"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@+id/defectRecyclerView"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/newDefectButton"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/border_filled"
-            android:text="Ny Mangel"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/defectRecyclerView" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/defectRecyclerView"
-            android:layout_width="350dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/newDefectButton"
-            app:layout_constraintStart_toEndOf="@+id/defectFixedRecyclerView"
-            app:layout_constraintTop_toBottomOf="@+id/defectRecyclerViewLabel" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/defectFixedRecyclerView"
+        android:layout_width="360dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/newDefectFixedButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/defectRecyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/defectFixedRecyclerViewLabel" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -173,7 +173,7 @@ public class FifthControlSchemeFragment extends Fragment {
         // the mail subject
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Rapportskjema for " + thisProject.getProjectName());
         if (!file.exists() || !file.canRead()) {
-            CharSequence text = "An unknown error has occured. Could not send email.";
+            CharSequence text = "En ukjent feil har oppstått. Kunne ikke sende mail";
             int duration = Toast.LENGTH_SHORT;
 
             Toast toast = Toast.makeText(getActivity(), text, duration);
@@ -214,7 +214,7 @@ public class FifthControlSchemeFragment extends Fragment {
         }
         document.close();
 
-        CharSequence text = "PDF saved to the downloads folder.";
+        CharSequence text = "PDF lagret til \"nedlastninger\"-mappen.";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(getActivity(), text, duration);

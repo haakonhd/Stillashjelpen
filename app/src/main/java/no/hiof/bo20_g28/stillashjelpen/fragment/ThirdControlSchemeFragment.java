@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -239,6 +240,7 @@ public class ThirdControlSchemeFragment extends Fragment implements ChecklistRec
         View v = getLayoutInflater().inflate(R.layout.report_cs_defect_dialog, null);
         builder.setTitle("Rapporter mangel");
         EditText editText = v.findViewById(R.id.defectDescriptionEditText);
+        editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(30)});
         editText.setText(checkItemText + ": ");
 
         builder.setView(v);
