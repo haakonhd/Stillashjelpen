@@ -87,7 +87,7 @@ public class FourthControlSchemeFragment extends Fragment {
             builder.setTitle("Register ny Mangel");
 
             EditText editText = viewInflate.findViewById(R.id.defectDescriptionEditText);
-            editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(28)});
+            editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(30)});
             builder.setView(viewInflate);
 
             builder.setPositiveButton("Rapporter", (dialog, which) -> {
@@ -117,7 +117,7 @@ public class FourthControlSchemeFragment extends Fragment {
             builder.setTitle("Register ny Mangel Utbedret");
 
             EditText editText = viewInflate.findViewById(R.id.defectDescriptionEditText);
-            editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(16)});
+            editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(20)});
 
             builder.setView(viewInflate);
 

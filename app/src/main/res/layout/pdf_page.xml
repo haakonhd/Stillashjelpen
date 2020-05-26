@@ -673,7 +673,7 @@
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout5"
-        android:paddingStart="2mm">
+        android:paddingStart="1mm">
 
         <TextView
             android:id="@+id/textView46"
@@ -787,6 +787,7 @@
         android:id="@+id/constraintLayout9"
         android:layout_width="0dp"
         android:layout_height="15mm"
+        android:paddingStart="1mm"
         android:background="@drawable/border_black"
         app:layout_constraintEnd_toEndOf="@+id/constraintLayout8"
         app:layout_constraintStart_toStartOf="parent"

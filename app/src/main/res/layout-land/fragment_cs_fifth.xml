@@ -62,7 +62,7 @@
             android:layout_marginEnd="40dp"
             android:background="@drawable/border_filled"
             android:paddingHorizontal="20dp"
-            android:text="Save PDF to device"
+            android:text="Lagre PDF til enhet"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="18sp"

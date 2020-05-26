@@ -17,6 +17,16 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <TextView
+        android:id="@+id/textView38"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nytt stillassystem"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +34,8 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/textView6"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView38"
+        app:layout_constraintVertical_chainStyle="spread" />
 
     <TextView
         android:id="@+id/textView6"
@@ -70,9 +81,9 @@
         android:layout_marginStart="16dp"
         android:background="@drawable/et_style"
         android:inputType="textPersonName"
+        android:paddingStart="6dp"
         android:textAlignment="viewStart"
         android:textSize="20sp"
-        android:paddingStart="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/textView5" />
@@ -135,18 +146,19 @@
         android:id="@+id/saveNewScaffoldSystemButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="60dp"
         android:background="@drawable/border_filled"
+        android:onClick="saveNewScaffoldSystemButtonClicked"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:text="Lagre"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:onClick="saveNewScaffoldSystemButtonClicked"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.526" />
 
     <TextView
         android:id="@+id/newLoadClassLabelTextView"
@@ -195,11 +207,13 @@
         android:id="@+id/deleteScaffoldSystemImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="28dp"
         android:background="@drawable/border_filled"
-        android:padding="2dp"
         android:onClick="deleteScaffoldSystemImageButtonClicked"
-        app:layout_constraintEnd_toEndOf="@+id/saveNewScaffoldSystemButton"
-        app:layout_constraintTop_toTopOf="@+id/newScaffoldSystemNameEditText"
+        android:padding="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_delete_white_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
