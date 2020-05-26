@@ -445,16 +445,15 @@ public class WallAnchorDistanceFragment extends Fragment {
         textView.setPadding(40,20,40,20);
         if(inputsArefilled()) {
             textView.setText(Html.fromHtml("Formel: <br><div style='text-align:center;'> " +
-                    "<u>c</u><sub>s</sub> <u>x c</u><sub>f</sub><u> x faglengde x tetthetsfaktor x q</u><sub>1</sub><u> x 0,7</u>" +
+                    "<u>                                  F</u><sub>w</sub><u>                                  </u>" +
                     "<br>" +
-                    "F<sub>w</sub>" +
+                    "c<sub>s</sub> x c<sub>f</sub> x faglengde x tetthetsfaktor x q<sub>1</sub> x 0,7" +
                     "</div>" +
-                    "Utregning: <br><div style='text-align:center;'><u>"+
-                    constructionFactor + " x " + powerFactor + " x " + bayLength + " x " + densityFactor + " x " + velocityPressure + " x 0.7 </u><br>" +
-                    "(" + anchorForce + " x 1.2)</div>"
+                    "Utregning: <br><div style='text-align:center;'><u>                        "+ anchorForce + " x 1.2                         </u><br>" +
+                    constructionFactor + " x " + powerFactor + " x " + bayLength + " x " + densityFactor + " x " + velocityPressure + " x 0.7 </div>"
             ));
-//            return (constructionFactor * powerFactor * bayLength * densityFactor * velocityPressure * 0.7) / (anchorForce / 1.2);
-//            return ((anchorForce / 1.2) / (constructionFactor * powerFactor * bayLength * densityFactor * velocityPressure * 0.7));
+//            gammel: return (constructionFactor * powerFactor * bayLength * densityFactor * velocityPressure * 0.7) / (anchorForce / 1.2);
+//            ny: return ((anchorForce / 1.2) / (constructionFactor * powerFactor * bayLength * densityFactor * velocityPressure * 0.7));
         }
         else{
             textView.setText("Vennligst fyll ut alle felter");
