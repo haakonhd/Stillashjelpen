@@ -31,7 +31,7 @@ public class NewScaffoldingSystemActivity extends AppCompatActivity {
 
     private EditText newScaffoldSystemNameEditText, newBayLengthEditText, newBayWidthEditText, newMaxHeightEditText;
     private SeekBar newLoadClassSeekBar;
-    private TextView newLoadClassLabelTextView;
+    private TextView newLoadClassLabelTextView, newSsTitleTextView;
     private ImageButton deleteScaffoldSystemImageButton;
 
     private final List<String> scaffoldingSystemList = new ArrayList<String>();
@@ -57,6 +57,7 @@ public class NewScaffoldingSystemActivity extends AppCompatActivity {
         from = i.getStringExtra("from");
 
         newScaffoldSystemNameEditText = findViewById(R.id.newScaffoldSystemNameEditText);
+        newSsTitleTextView = findViewById(R.id.newSsTitleTextView);
         newBayLengthEditText = findViewById(R.id.newBayLenghtEditText);
         newBayWidthEditText = findViewById(R.id.newBayWidthEditText);
         newMaxHeightEditText = findViewById(R.id.newMaxHeightEditText);
@@ -70,6 +71,7 @@ public class NewScaffoldingSystemActivity extends AppCompatActivity {
         if(from.equals("old")){
             setPresetInputs();
             deleteScaffoldSystemImageButton.setVisibility(View.VISIBLE);
+            newSsTitleTextView.setText("Endre stillassystem");
         }
         if(from.equals("new")){
             deleteScaffoldSystemImageButton.setVisibility(View.INVISIBLE);

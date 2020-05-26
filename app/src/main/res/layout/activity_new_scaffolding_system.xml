@@ -17,7 +17,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <TextView
-        android:id="@+id/textView38"
+        android:id="@+id/newSsTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nytt stillassystem"
@@ -34,7 +34,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/textView6"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/textView38"
+        app:layout_constraintTop_toBottomOf="@+id/newSsTitleTextView"
         app:layout_constraintVertical_chainStyle="spread" />
 
     <TextView
