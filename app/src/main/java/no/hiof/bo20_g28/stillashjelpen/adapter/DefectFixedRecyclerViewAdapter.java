@@ -21,12 +21,12 @@ import no.hiof.bo20_g28.stillashjelpen.model.ControlSchemeDefectFixed;
 
 public class DefectFixedRecyclerViewAdapter  extends RecyclerView.Adapter<DefectFixedRecyclerViewAdapter.ViewHolder> {
 
-    private List<ControlSchemeDefectFixed> defectFixedDataList;
+    private List<ControlSchemeDefectFixed> mData;
     private LayoutInflater layoutInflater;
     private DefectFixedRecyclerViewAdapter.ItemClickListener clickListener;
 
     public DefectFixedRecyclerViewAdapter(Context context, List<ControlSchemeDefectFixed> defectFixedDataList) {
-        this.defectFixedDataList = defectFixedDataList;
+        this.mData = defectFixedDataList;
         this.layoutInflater = LayoutInflater.from(context);
     }
 
@@ -46,7 +46,7 @@ public class DefectFixedRecyclerViewAdapter  extends RecyclerView.Adapter<Defect
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ControlSchemeDefectFixed controlSchemeDefectFixed = defectFixedDataList.get(position);
+        ControlSchemeDefectFixed controlSchemeDefectFixed = mData.get(position);
 
 //        holder.controlDate.setText(controlSchemeDefectFixed.getControlDate().toString());
         holder.controlDate.setText(getSimpleDateFormat(controlSchemeDefectFixed.getControlDate()));
@@ -73,18 +73,28 @@ public class DefectFixedRecyclerViewAdapter  extends RecyclerView.Adapter<Defect
 
         @Override
         public void onClick(View view) {
-            if (clickListener != null) clickListener.onItemClick(view, getAdapterPosition());
+            if (clickListener != null) {
+                try {
+                    clickListener.onDefectFixedItemClick(view, getAdapterPosition());
+                }
+                catch (ClassCastException e) {
+                    throw new ClassCastException(e.getMessage());
+                }
+            }
+
         }
     }
 
     @Override
     public int getItemCount() {
-        return defectFixedDataList.size();
+        return mData.size();
     }
 
+    public ControlSchemeDefectFixed getItem(int id) {
+        return mData.get(id);
+    }
 
-    // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onItemClick(View view, int position);
+        void onDefectFixedItemClick(View view, int Position);
     }
 }

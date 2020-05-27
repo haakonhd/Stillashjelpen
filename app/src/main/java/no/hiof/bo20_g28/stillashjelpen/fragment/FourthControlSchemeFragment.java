@@ -43,7 +43,7 @@ import no.hiof.bo20_g28.stillashjelpen.model.Project;
 import static no.hiof.bo20_g28.stillashjelpen.ControlSchemeActivity.getControlSchemeDefectFixed;
 import static no.hiof.bo20_g28.stillashjelpen.ControlSchemeActivity.getControlSchemeItems;
 
-public class FourthControlSchemeFragment extends Fragment {
+public class FourthControlSchemeFragment extends Fragment implements  DefectFixedRecyclerViewAdapter.ItemClickListener, DefectRecyclerViewAdapter.ItemClickListener {
     public static final String ARG_OBJECT = "object";
     TextView textView;
     private View view;
@@ -64,6 +64,9 @@ public class FourthControlSchemeFragment extends Fragment {
     private void fillItemsFromDb() {
         schemeDefectData = thisProject.getControlScheme().getControlSchemeDefects();
         schemeDefectFixedData = thisProject.getControlScheme().getControlSchemeDefectFixed();
+
+        fillRecyclerList();
+        fillDefectRecyclerList();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,6 +74,7 @@ public class FourthControlSchemeFragment extends Fragment {
         Log.d("FOURTH", "Entered 4th control");
         Intent i = getActivity().getIntent();
         thisProject = (Project) i.getSerializableExtra("passedProject");
+        setHasOptionsMenu(true);
 
         assert thisProject != null;
         fillItemsFromDb();
@@ -130,7 +134,6 @@ public class FourthControlSchemeFragment extends Fragment {
 
                 if(!text.equals("")) {
                     thisProject.getControlScheme().addControlSchemeDefectFixed(new ControlSchemeDefectFixed(dateFound, dateFixed, text));
-
                     DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("projects");
                     DatabaseReference projectRef = fDatabase.child(thisProject.getProjectId());
                     projectRef.setValue(thisProject);
@@ -149,6 +152,8 @@ public class FourthControlSchemeFragment extends Fragment {
     }
 
 
+
+
     private void fillRecyclerList() {
         controlSchemeDefectFixedRecyclerView = view.findViewById(R.id.defectFixedRecyclerView);
         controlSchemeDefectFixedRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -163,4 +168,23 @@ public class FourthControlSchemeFragment extends Fragment {
         controlSchemeDefectRecyclerView.setAdapter(defectRecyclerViewAdapter);
     }
 
+    @Override
+    public void onDefectFixedItemClick(View view, int Position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        builder.setTitle("Slett mangel utbedret");
+        builder.setPositiveButton("Ok", (dialog, which) -> {
+            DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("projects");
+            DatabaseReference projectRef = fDatabase.child(thisProject.getProjectId());
+            projectRef.child(String.valueOf(Position)).removeValue();
+
+        }).setNegativeButton("Avbryt", (dialog, which) -> dialog.cancel());
+
+        builder.show();
+    }
+
+    @Override
+    public void onDefectItemClick(View view, int Position) {
+
+    }
 }

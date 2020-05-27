@@ -67,11 +67,14 @@ public class DefectRecyclerViewAdapter extends RecyclerView.Adapter<DefectRecycl
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            if (mClickListener != null) mClickListener.onDefectItemClick(view, getAdapterPosition());
         }
     }
-
-    public interface ItemClickListener {
-        void onItemClick(View view, int Position);
+    public ControlSchemeDefect getItem(int id) {
+        return mData.get(id);
     }
+    public interface ItemClickListener {
+        void onDefectItemClick(View view, int Position);
+    }
+
 }
