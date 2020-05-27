@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -63,7 +64,7 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Objects.requireNonNull(getSupportActionBar()).setTitle("Prosjekt - " + thisProject.getProjectName());
+        Objects.requireNonNull(getSupportActionBar()).setTitle(thisProject.getProjectName());
 
         setUpNavigationDrawer();
         if(from.equals("deleteWall")){
