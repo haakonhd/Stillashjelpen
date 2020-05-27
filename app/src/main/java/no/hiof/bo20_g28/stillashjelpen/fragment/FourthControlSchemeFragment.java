@@ -117,6 +117,7 @@ public class FourthControlSchemeFragment extends Fragment {
             builder.setTitle("Register ny Mangel Utbedret");
 
             EditText editText = viewInflate.findViewById(R.id.defectDescriptionEditText);
+            editText.setHint("Signert av...");
             editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(20)});
 
             builder.setView(viewInflate);

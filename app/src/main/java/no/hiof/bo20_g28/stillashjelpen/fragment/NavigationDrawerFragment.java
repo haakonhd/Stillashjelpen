@@ -63,6 +63,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationView
         navn_header_company_name.setText("Stillashjelpen");
         if (firebaseAuth.getCurrentUser() != null) {
             nav_header_company_email.setText(firebaseAuth.getCurrentUser().getEmail());
+//            nav_header_company_email.setText("stillashjelpen@byggefolka.no");
         }
 
         navigationView = view.findViewById(R.id.navigationView);
