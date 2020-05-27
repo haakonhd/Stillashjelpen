@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     private ProjectRecyclerViewAdapter projectRecyclerViewAdapter;
     private ScaffoldSystemRecyclerViewAdapter scaffoldSystemRecyclerViewAdapter;
     private RecyclerView mainRecyclerView;
-    private TextView testText;
+    private TextView mainTitleTextView;
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private final List<String> scaffoldingSystemList = new ArrayList<String>();
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         drawer = findViewById(R.id.drawer_layout);
         setUpNavigationDrawer();
 
-        testText = findViewById(R.id.testText);
+        mainTitleTextView = findViewById(R.id.mainTitleTextView);
         mainRecyclerView = findViewById(R.id.mainRecyclerView);
         showProjectsButton = findViewById(R.id.showProjectsButton);
         showScaffoldSystemsButton = findViewById(R.id.showScaffoldSystemsButton);
@@ -405,6 +405,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         showScaffoldSystemsButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         showProjectsButton.setBackgroundResource(R.drawable.border);
         showProjectsButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        mainTitleTextView.setText("Stillassystemer");
     }
 
     private void showProjects(){
@@ -413,5 +414,6 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         showProjectsButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         showScaffoldSystemsButton.setBackgroundResource(R.drawable.border);
         showScaffoldSystemsButton.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        mainTitleTextView.setText("Prosjekter");
     }
 }
