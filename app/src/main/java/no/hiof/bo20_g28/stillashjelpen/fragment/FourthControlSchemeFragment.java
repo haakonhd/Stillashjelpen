@@ -166,13 +166,14 @@ public class FourthControlSchemeFragment extends Fragment implements DefectFixed
         controlSchemeDefectRecyclerView = view.findViewById(R.id.defectRecyclerView);
         controlSchemeDefectRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         defectRecyclerViewAdapter = new DefectRecyclerViewAdapter(getActivity(), schemeDefectData);
+        defectRecyclerViewAdapter.setClickListener(this);
         controlSchemeDefectRecyclerView.setAdapter(defectRecyclerViewAdapter);
     }
 
     @Override
     public void onDefectFixedItemClick(View view, int Position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Slett mangel utbedret");
+        builder.setTitle("Slett mangler utbedret");
         builder.setPositiveButton("Ok", (dialog, which) -> {
             thisProject.getControlScheme().removeControlSchemeDefectFixedItemById(Position);
             DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("projects");
@@ -201,11 +202,11 @@ public class FourthControlSchemeFragment extends Fragment implements DefectFixed
     @Override
     public void onDefectItemClick(View view, int Position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Slett mangel utbedret");
+        builder.setTitle("Slett mangler");
         builder.setPositiveButton("Ok", (dialog, which) -> {
-            thisProject.getControlScheme().removeControlSchemeDefectFixedItemById(Position);
+            thisProject.getControlScheme().removeControlSchemeDefectItemById(Position);
             DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("projects");
-            DatabaseReference projectRef = fDatabase.child(thisProject.getProjectId()).child("controlScheme").child("controlSchemeDefectFixed");
+            DatabaseReference projectRef = fDatabase.child(thisProject.getProjectId()).child("controlScheme").child("controlSchemeDefects");
             projectRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
