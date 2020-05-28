@@ -92,6 +92,7 @@ public class FourthControlSchemeFragment extends Fragment implements DefectFixed
             builder.setTitle("Register ny Mangel");
 
             EditText editText = viewInflate.findViewById(R.id.defectDescriptionEditText);
+            editText.setHint("Mangel funnet beskrivelse...");
             editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(30)});
             builder.setView(viewInflate);
 
