@@ -55,6 +55,14 @@ public class ControlScheme implements Serializable {
         this.controlSchemeDefectFixed = controlSchemeDefects;
     }
 
+    public void removeControlSchemeDefectFixedItemById(int index) {
+        controlSchemeDefectFixed.remove(index);
+    }
+
+    public void removeControlSchemeDefectItemById(int index) {
+        controlSchemeDefects.remove(index);
+    }
+
     public void addControlSchemeDefect(ControlSchemeDefect controlSchemeDefect){
         this.controlSchemeDefects.add(controlSchemeDefect);
     }

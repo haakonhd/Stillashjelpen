@@ -1,5 +1,6 @@
 package no.hiof.bo20_g28.stillashjelpen.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +21,7 @@ import no.hiof.bo20_g28.stillashjelpen.fragment.FourthControlSchemeFragment;
 import no.hiof.bo20_g28.stillashjelpen.model.ControlSchemeDefectFixed;
 
 public class DefectFixedRecyclerViewAdapter  extends RecyclerView.Adapter<DefectFixedRecyclerViewAdapter.ViewHolder> {
-
+    private Context context;
     private List<ControlSchemeDefectFixed> mData;
     private LayoutInflater layoutInflater;
     private DefectFixedRecyclerViewAdapter.ItemClickListener clickListener;
@@ -28,6 +29,7 @@ public class DefectFixedRecyclerViewAdapter  extends RecyclerView.Adapter<Defect
     public DefectFixedRecyclerViewAdapter(Context context, List<ControlSchemeDefectFixed> defectFixedDataList) {
         this.mData = defectFixedDataList;
         this.layoutInflater = LayoutInflater.from(context);
+        this.context = context;
     }
 
     @NonNull
@@ -38,21 +40,31 @@ public class DefectFixedRecyclerViewAdapter  extends RecyclerView.Adapter<Defect
         return new DefectFixedRecyclerViewAdapter.ViewHolder(view);
     }
 
+    @SuppressLint("SimpleDateFormat")
     private static String getSimpleDateFormat(Date date){
         Format formatter;
         formatter = new SimpleDateFormat("dd/mm/yyyy");
         return formatter.format(date);
     }
 
+    public void setClickListener(ItemClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ControlSchemeDefectFixed controlSchemeDefectFixed = mData.get(position);
 
-//        holder.controlDate.setText(controlSchemeDefectFixed.getControlDate().toString());
         holder.controlDate.setText(getSimpleDateFormat(controlSchemeDefectFixed.getControlDate()));
-//        holder.fixedDate.setText(controlSchemeDefectFixed.getDefectFixedDate().toString());
         holder.fixedDate.setText(getSimpleDateFormat(controlSchemeDefectFixed.getDefectFixedDate()));
         holder.signature.setText(controlSchemeDefectFixed.getSignature());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickListener.onDefectFixedItemClick(holder.itemView, position);
+            }
+        });
 
         Log.d("DefectFixed", (String) holder.controlDate.getText());
     }
@@ -73,15 +85,8 @@ public class DefectFixedRecyclerViewAdapter  extends RecyclerView.Adapter<Defect
 
         @Override
         public void onClick(View view) {
-            if (clickListener != null) {
-                try {
+            if (clickListener != null)
                     clickListener.onDefectFixedItemClick(view, getAdapterPosition());
-                }
-                catch (ClassCastException e) {
-                    throw new ClassCastException(e.getMessage());
-                }
-            }
-
         }
     }
 
@@ -93,6 +98,7 @@ public class DefectFixedRecyclerViewAdapter  extends RecyclerView.Adapter<Defect
     public ControlSchemeDefectFixed getItem(int id) {
         return mData.get(id);
     }
+
 
     public interface ItemClickListener {
         void onDefectFixedItemClick(View view, int Position);
