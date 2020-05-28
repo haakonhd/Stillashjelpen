@@ -168,6 +168,7 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
         DatabaseReference messageRef = databaseReference.child("messages");
 
         messageRef.child(messageId).removeValue();
+        Toast.makeText(getApplicationContext(),"Beskjed slettet", Toast.LENGTH_LONG).show();
     }
 
     private void deleteWallFromDatabase(String wallId){
@@ -283,7 +284,7 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(i);
                 deleteProjectFromDatabase(projectId);
-                Toast.makeText(getApplicationContext(),"Prosjekt \"" + thisProject.getProjectName() + "\" slettet", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Prosjekt \"" + thisProject.getProjectName() + "\" slettet", Toast.LENGTH_LONG).show();
             }
         });
         builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {

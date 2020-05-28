@@ -50,9 +50,6 @@ public class WallAnchorDistanceFragment extends Fragment {
     private static int colorUnselectedButton = Color.parseColor("#9A9A9A");
     private static int colorSelectedButton = Color.parseColor("#FF3DA8D8");
 
-
-
-
     private Cover selectedCover;
     private ForceFactor selectedForceFactor;
     private double anchorForce;
@@ -432,7 +429,7 @@ public class WallAnchorDistanceFragment extends Fragment {
         DatabaseReference wallRef = fDatabase.child(thisWall.getWallId());
         wallRef.setValue(thisWall);
         CharSequence text = "Utregning lagret";
-        int duration = Toast.LENGTH_SHORT;
+        int duration = Toast.LENGTH_LONG;
 
         Toast toast = Toast.makeText(getActivity(), text, duration);
         toast.show();
