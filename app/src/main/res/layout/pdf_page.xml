@@ -511,7 +511,7 @@
         <TableLayout
             android:id="@+id/defectsTable"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="52mm"
             android:background="@drawable/border_black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -871,7 +871,7 @@
             <TextView
                 android:id="@+id/textView35"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="4.5mm"
                 android:background="@drawable/border_black"
                 android:paddingVertical="0.7mm"
                 android:paddingHorizontal="1mm"
@@ -884,7 +884,7 @@
             <TextView
                 android:id="@+id/textView36"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="4.5mm"
                 android:background="@drawable/border_black"
                 android:paddingVertical="0.7mm"
                 android:text="Mangler utbedret dato:"
@@ -895,7 +895,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
-                android:layout_height="9.7mm"
+                android:layout_height="8.9mm"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -918,8 +918,8 @@
 
         <LinearLayout
             android:id="@+id/defectFixedTable"
-            android:layout_width="144mm"
-            android:layout_height="match_parent"
+            android:layout_width="144.5mm"
+            android:layout_height="18mm"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

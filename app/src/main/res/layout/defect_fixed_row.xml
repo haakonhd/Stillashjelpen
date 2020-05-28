@@ -1,35 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/column"
-    android:orientation="vertical"
     android:layout_width="12mm"
-    android:layout_height="match_parent"
-    android:layout_weight="1"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="18mm">
+
     <TextView
         android:id="@+id/row1"
         android:layout_width="12mm"
-        android:paddingHorizontal="1mm"
-        android:layout_height="wrap_content"
+        android:layout_height="4.5mm"
         android:background="@drawable/border_black"
-        android:textSize="12sp"
-        android:textAlignment="center"
+        android:paddingHorizontal="1mm"
         android:paddingVertical="0.9mm"
-        />
+        android:textAlignment="center"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/row2"
+        app:layout_constraintEnd_toEndOf="@+id/row2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/row2"
         android:layout_width="12mm"
-        android:paddingHorizontal="1mm"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:textAlignment="center"
+        android:layout_height="4.5mm"
         android:background="@drawable/border_black"
+        android:paddingHorizontal="1mm"
         android:paddingVertical="0.9mm"
-        />
+        android:textAlignment="center"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout13"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/row1" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="9.1mm"
-        android:background="@drawable/border_black">
+        android:id="@+id/constraintLayout13"
+        android:layout_width="12mm"
+        android:layout_height="8.9mm"
+        android:background="@drawable/border_black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/row2">
 
         <TextView
             android:id="@+id/row3"
@@ -44,4 +56,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
@@ -16,6 +18,7 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.text.InputType;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,6 +27,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -181,7 +185,6 @@ public class FifthControlSchemeFragment extends Fragment {
             return;
         }
         Uri uri = Uri.fromFile(file);
-//        Uri uri = FileProvider.getUriForFile(getActivity(), BuildConfig.APPLICATION_ID + ".provider",file);
         // the attachment
         emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
 
@@ -197,11 +200,12 @@ public class FifthControlSchemeFragment extends Fragment {
         startActivity(Intent.createChooser(emailIntent , "Send rapportskjema som mail"));
     }
 
+    //Saves PDF file to storage
     public void saveFile(String fileName){
+        // Android needs permission from the user to save files to the external storage
         requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE}, 1);
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Stillashjelpen");
 
-//        document = getPdfDocument();
         document = createPdf();
         if(!file.exists()){
             file.mkdir();
@@ -237,37 +241,45 @@ public class FifthControlSchemeFragment extends Fragment {
         document.close();
     }
 
-    public static Bitmap loadBitmapFromView(View v, int width, int height) {
-        Bitmap b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(b);
-        v.draw(c);
-        return b;
+    //turns the view into a bitmap-image
+    public static Bitmap loadBitmapFromView(View view, int width, int height) {
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+        return bitmap;
     }
 
+    //creates a pdf from the bitmap image
     private PdfDocument createPdf() {
         bitmap = loadBitmapFromView(pdfContent, pdfContent.getWidth(), pdfContent.getHeight());
         WindowManager wm = (WindowManager)getActivity().getSystemService(Context.WINDOW_SERVICE);
-        //  Display display = wm.getDefaultDisplay();
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        float hight = displaymetrics.heightPixels;
+        float height = displaymetrics.heightPixels;
         float width = displaymetrics.widthPixels;
-        int convertHight = (int) hight, convertWidth = (int) width;
-        //        Resources mResources = getResources();
-        //        Bitmap bitmap = BitmapFactory.decodeResource(mResources, R.drawable.screenshot);
+        int convertHeight = (int) height, convertWidth = (int) width;
+
         PdfDocument document = new PdfDocument();
-        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(convertWidth, convertHight, 1).create();
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(convertWidth, convertHeight, 1).create();
         PdfDocument.Page page = document.startPage(pageInfo);
         Canvas canvas = page.getCanvas();
         Paint paint = new Paint();
         canvas.drawPaint(paint);
-        bitmap = Bitmap.createScaledBitmap(bitmap, convertWidth, convertHight, true);
+//        bitmap = Bitmap.createScaledBitmap(bitmap, convertWidth, convertHeight, true);
+        bitmap = scaleBitmapAndKeepRation(bitmap, convertHeight, convertWidth);
         paint.setColor(Color.BLUE);
         canvas.drawBitmap(bitmap, 0, 0, null);
         document.finishPage(page);
         return document;
     }
 
+    public static Bitmap scaleBitmapAndKeepRation(Bitmap targetBmp,int reqHeightInPixels,int reqWidthInPixels)
+    {
+        Matrix matrix = new Matrix();
+        matrix .setRectToRect(new RectF(0, 0, targetBmp.getWidth(), targetBmp.getHeight()), new RectF(0, 0, reqWidthInPixels, reqHeightInPixels), Matrix.ScaleToFit.CENTER);
+        Bitmap scaledBitmap = Bitmap.createBitmap(targetBmp, 0, 0, targetBmp.getWidth(), targetBmp.getHeight(), matrix, true);
+        return scaledBitmap;
+    }
 
     private void setPdfValues(){
         ControlScheme cs = thisProject.getControlScheme();
@@ -415,70 +427,36 @@ public class FifthControlSchemeFragment extends Fragment {
 
         int remainingRows = 13;
 
-        // creating first row with descriptions
-        TableRow firstRow = new TableRow(getActivity());
-
-        TextView dateTextView1 = new TextView(getActivity());
+        View defectFoundRow1 = layoutInflater.inflate(R.layout.defect_found_row, null);
+        TextView dateTextView1 = defectFoundRow1.findViewById(R.id.dateTextView);
+        dateTextView1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        dateTextView1.setTypeface(null, Typeface.BOLD);
+        TextView descriptionTextView1 = defectFoundRow1.findViewById(R.id.defectDescriptionTextView);
+        descriptionTextView1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        descriptionTextView1.setTypeface(null, Typeface.BOLD);
         dateTextView1.setText("Dato");
-        dateTextView1.setTypeface(dateTextView1.getTypeface(), Typeface.BOLD);
-        dateTextView1.setPadding(8,8,5,12);
-        dateTextView1.setBackgroundResource(R.drawable.border_black);
-
-        TextView defectDescriptionTextView1 = new TextView(getActivity());
-        defectDescriptionTextView1.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
-        defectDescriptionTextView1.setText("Tekst - mangler");
-        defectDescriptionTextView1.setTypeface(defectDescriptionTextView1.getTypeface(), Typeface.BOLD);
-        defectDescriptionTextView1.setPadding(8,8,5,12);
-        defectDescriptionTextView1.setBackgroundResource(R.drawable.border_black);
-
-        firstRow.addView(dateTextView1);
-        firstRow.addView(defectDescriptionTextView1);
+        descriptionTextView1.setText("Tekst - mangler");
+        table.addView(defectFoundRow1);
 
         remainingRows--;
-        table.addView(firstRow);
-
         //Creating rows for the defects found
         for(ControlSchemeDefect defect : defects){
-            TableRow row = new TableRow(getActivity());
-
-            TextView dateTextView = new TextView(getActivity());
-//            dateTextView.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
+            View defectFoundRow = layoutInflater.inflate(R.layout.defect_found_row, null);
+            TextView dateTextView = defectFoundRow.findViewById(R.id.dateTextView);
+            TextView descriptionTextView = defectFoundRow.findViewById(R.id.defectDescriptionTextView);
             dateTextView.setText(getReadableDate(defect.getfoundDate()));
-            dateTextView.setPadding(8,8,5,8);
-            dateTextView.setBackgroundResource(R.drawable.border_black);
+            descriptionTextView.setText(defect.getDefectDescription());
 
-            TextView defectDescriptionTextView = new TextView(getActivity());
-            defectDescriptionTextView.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
-            defectDescriptionTextView.setText(defect.getDefectDescription());
-            defectDescriptionTextView.setPadding(8,8,5,8);
-            defectDescriptionTextView.setBackgroundResource(R.drawable.border_black);
-
-            row.addView(dateTextView);
-            row.addView(defectDescriptionTextView);
-
-            remainingRows--;
-            table.addView(row);
+            table.addView(defectFoundRow);
         }
 
         //filling out the empty spaces
         for(int i = 0; i < remainingRows; i++){
-            TableRow row = new TableRow(getActivity());
-
-            TextView dateTextView = new TextView(getActivity());
-            dateTextView.setPadding(8,2,5,8);
-            dateTextView.setBackgroundResource(R.drawable.border_black);
-
-            TextView defectDescriptionTextView = new TextView(getActivity());
-            defectDescriptionTextView.setLayoutParams(new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT, 1f));
-            defectDescriptionTextView.setPadding(8,2,5,8);
-            defectDescriptionTextView.setBackgroundResource(R.drawable.border_black);
-
-            row.addView(dateTextView);
-            row.addView(defectDescriptionTextView);
-
-            table.addView(row);
+            View defectFoundRow = layoutInflater.inflate(R.layout.defect_found_row, null);
+            table.addView(defectFoundRow);
         }
     }
+
 
     private void fillDefectsFixedTable(){
         ArrayList<ControlSchemeDefectFixed> defects = thisProject.getControlScheme().getControlSchemeDefectFixed();
