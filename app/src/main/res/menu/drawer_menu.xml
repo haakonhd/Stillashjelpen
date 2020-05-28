@@ -7,14 +7,6 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
             android:title="Hjem" />
-        <item
-            android:id="@+id/nav_messages"
-            android:icon="@drawable/ic_message"
-            android:title="Meldinger" />
-        <item
-            android:id="@+id/nav_projects"
-            android:icon="@drawable/ic_project"
-            android:title="Alle Prosjekter" />
 
         <item
             android:id="@+id/nav_calculator"
