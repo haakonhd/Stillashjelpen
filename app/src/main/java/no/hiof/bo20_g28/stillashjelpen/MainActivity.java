@@ -310,18 +310,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //TODO Better sanitation and handling of input
-                if(!spinner.getSelectedItem().toString().equalsIgnoreCase("Velg en type stillassystem")) {
-                    if(input.getText().toString().length() > 0) {
-                        addNewProjectToDatabase(input.getText().toString(), spinner.getSelectedItem().toString());
-                    }
-                    else{
-                        Toast.makeText(getApplicationContext(), "Mislykket - Gi prosjektet et navn", Toast.LENGTH_LONG).show();
-                    }
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "Mislykket - Velg en type stillas", Toast.LENGTH_LONG).show();
-                }
+
             }
         });
         builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
@@ -332,8 +321,26 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         });
 
         builder.setView(view);
-        AlertDialog ad = builder.create();
-        ad.show();
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO Better sanitation and handling of input
+                if(!spinner.getSelectedItem().toString().equalsIgnoreCase("Velg en type stillassystem")) {
+                    if(input.getText().toString().length() > 0) {
+                        addNewProjectToDatabase(input.getText().toString(), spinner.getSelectedItem().toString());
+                        dialog.dismiss();
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Mislykket - Gi prosjektet et navn", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Mislykket - Velg en type stillas", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private void openFastClacDialogbox() {
