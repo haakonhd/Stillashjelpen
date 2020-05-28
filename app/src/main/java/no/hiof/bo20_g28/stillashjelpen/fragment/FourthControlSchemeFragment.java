@@ -43,7 +43,7 @@ import no.hiof.bo20_g28.stillashjelpen.model.Project;
 import static no.hiof.bo20_g28.stillashjelpen.ControlSchemeActivity.getControlSchemeDefectFixed;
 import static no.hiof.bo20_g28.stillashjelpen.ControlSchemeActivity.getControlSchemeItems;
 
-public class FourthControlSchemeFragment extends Fragment {
+public class FourthControlSchemeFragment extends Fragment implements DefectFixedRecyclerViewAdapter.ItemClickListener, DefectRecyclerViewAdapter.ItemClickListener {
     public static final String ARG_OBJECT = "object";
     TextView textView;
     private View view;
@@ -54,6 +54,7 @@ public class FourthControlSchemeFragment extends Fragment {
     private Project thisProject;
     private ArrayList<ControlSchemeDefect> schemeDefectData = new ArrayList<>();
     private ArrayList<ControlSchemeDefectFixed> schemeDefectFixedData = new ArrayList<>();
+    private int loopCounter = 0;
 
     @Override
     public void onResume() {
@@ -64,6 +65,9 @@ public class FourthControlSchemeFragment extends Fragment {
     private void fillItemsFromDb() {
         schemeDefectData = thisProject.getControlScheme().getControlSchemeDefects();
         schemeDefectFixedData = thisProject.getControlScheme().getControlSchemeDefectFixed();
+
+        fillRecyclerList();
+        fillDefectRecyclerList();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,6 +75,7 @@ public class FourthControlSchemeFragment extends Fragment {
         Log.d("FOURTH", "Entered 4th control");
         Intent i = getActivity().getIntent();
         thisProject = (Project) i.getSerializableExtra("passedProject");
+        setHasOptionsMenu(true);
 
         assert thisProject != null;
         fillItemsFromDb();
@@ -131,7 +136,6 @@ public class FourthControlSchemeFragment extends Fragment {
 
                 if(!text.equals("")) {
                     thisProject.getControlScheme().addControlSchemeDefectFixed(new ControlSchemeDefectFixed(dateFound, dateFixed, text));
-
                     DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("projects");
                     DatabaseReference projectRef = fDatabase.child(thisProject.getProjectId());
                     projectRef.setValue(thisProject);
@@ -142,7 +146,6 @@ public class FourthControlSchemeFragment extends Fragment {
                 dialog.cancel();
             });
 
-
             builder.show();
         });
 
@@ -150,10 +153,13 @@ public class FourthControlSchemeFragment extends Fragment {
     }
 
 
+
+
     private void fillRecyclerList() {
         controlSchemeDefectFixedRecyclerView = view.findViewById(R.id.defectFixedRecyclerView);
         controlSchemeDefectFixedRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         defectFixedRecyclerViewAdapter = new DefectFixedRecyclerViewAdapter(getActivity(), schemeDefectFixedData);
+        defectFixedRecyclerViewAdapter.setClickListener(this);
         controlSchemeDefectFixedRecyclerView.setAdapter(defectFixedRecyclerViewAdapter);
     }
 
@@ -161,7 +167,64 @@ public class FourthControlSchemeFragment extends Fragment {
         controlSchemeDefectRecyclerView = view.findViewById(R.id.defectRecyclerView);
         controlSchemeDefectRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         defectRecyclerViewAdapter = new DefectRecyclerViewAdapter(getActivity(), schemeDefectData);
+        defectRecyclerViewAdapter.setClickListener(this);
         controlSchemeDefectRecyclerView.setAdapter(defectRecyclerViewAdapter);
     }
 
+    @Override
+    public void onDefectFixedItemClick(View view, int Position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Slett mangler utbedret");
+        builder.setPositiveButton("Ok", (dialog, which) -> {
+            thisProject.getControlScheme().removeControlSchemeDefectFixedItemById(Position);
+            DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("projects");
+            DatabaseReference projectRef = fDatabase.child(thisProject.getProjectId()).child("controlScheme").child("controlSchemeDefectFixed");
+            projectRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        if(loopCounter == Position) {
+                            child.getRef().removeValue();
+                            fillItemsFromDb();
+                        }
+                        loopCounter++;
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) { }
+            });
+            loopCounter = 0;
+            fillItemsFromDb();
+        }).setNegativeButton("Avbryt", (dialog, which) -> dialog.cancel());
+        builder.show();
+    }
+
+
+    @Override
+    public void onDefectItemClick(View view, int Position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Slett mangler");
+        builder.setPositiveButton("Ok", (dialog, which) -> {
+            thisProject.getControlScheme().removeControlSchemeDefectItemById(Position);
+            DatabaseReference fDatabase = FirebaseDatabase.getInstance().getReference("projects");
+            DatabaseReference projectRef = fDatabase.child(thisProject.getProjectId()).child("controlScheme").child("controlSchemeDefects");
+            projectRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        if(loopCounter == Position) {
+                            child.getRef().removeValue();
+                            fillItemsFromDb();
+                        }
+                        loopCounter++;
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) { }
+            });
+            loopCounter = 0;
+            fillItemsFromDb();
+        }).setNegativeButton("Avbryt", (dialog, which) -> dialog.cancel());
+        builder.show();
+    }
 }

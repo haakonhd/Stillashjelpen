@@ -21,7 +21,7 @@ public class DefectRecyclerViewAdapter extends RecyclerView.Adapter<DefectRecycl
 
     private List<ControlSchemeDefect> mData;
     private LayoutInflater mInflater;
-    private DefectRecyclerViewAdapter.ItemClickListener mClickListener;
+    private DefectRecyclerViewAdapter.ItemClickListener clickListener;
 
 
     public DefectRecyclerViewAdapter(Context context, List<ControlSchemeDefect> data) {
@@ -47,8 +47,17 @@ public class DefectRecyclerViewAdapter extends RecyclerView.Adapter<DefectRecycl
         ControlSchemeDefect schemeDefect = mData.get(position);
         holder.defectMessageTextView.setText(schemeDefect.getDefectDescription());
         holder.defectDateFound.setText(getSimpleDateFormat(schemeDefect.getfoundDate()));
-    }
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickListener.onDefectItemClick(holder.itemView, position);
+            }
+        });
+    }
+    public void setClickListener(ItemClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
     @Override
     public int getItemCount() {
         return mData.size();
@@ -67,11 +76,14 @@ public class DefectRecyclerViewAdapter extends RecyclerView.Adapter<DefectRecycl
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            if (clickListener != null) clickListener.onDefectItemClick(view, getAdapterPosition());
         }
     }
-
-    public interface ItemClickListener {
-        void onItemClick(View view, int Position);
+    public ControlSchemeDefect getItem(int id) {
+        return mData.get(id);
     }
+    public interface ItemClickListener {
+        void onDefectItemClick(View view, int Position);
+    }
+
 }
