@@ -305,6 +305,7 @@ public class ProjectActivity extends AppCompatActivity implements WallRecyclerVi
         final EditText input = new EditText(this);
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setHint("Skriv kommentar her");
         builder.setView(input);
 
         // Set up the buttons

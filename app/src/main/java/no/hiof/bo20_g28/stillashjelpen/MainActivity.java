@@ -313,6 +313,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
 
         // Set up the input
         final EditText input = (EditText) view.findViewById(R.id.editText);
+        input.setHint("Skriv prosjektnavn her");
 
         // Set up the buttons
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
