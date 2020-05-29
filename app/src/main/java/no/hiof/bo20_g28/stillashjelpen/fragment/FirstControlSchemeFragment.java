@@ -86,7 +86,7 @@ public class FirstControlSchemeFragment extends Fragment {
         thisCs.setUserControlDate(userControlDateEditText.getText().toString().trim());
 
         updateThisProjectsControlScheme();
-        Toast.makeText(getContext(), "Kontroll-skjemaet er oppdatert",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Kontroll-skjemaet er oppdatert",Toast.LENGTH_LONG).show();
     }
 
     public void openDatePickerDialog(final View v) {

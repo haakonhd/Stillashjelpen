@@ -1,14 +1,10 @@
 package no.hiof.bo20_g28.stillashjelpen;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,10 +12,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -60,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public boolean checkIfInputExists(String email, String password){
         if(email.equals("") || password.equals("")) {
-            Toast.makeText(this, "Fyll ut både email- og passord-felt", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Fyll ut både email- og passord-felt", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
@@ -72,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
         Matcher matcher = pattern.matcher(email);
 
         if(!matcher.matches()){
-            Toast.makeText(this, "Email har ikke et korrekt format", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Email har ikke et korrekt format", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
@@ -80,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public boolean verifyPassword(String password){
         if(password.length() < 6){
-            Toast.makeText(this, "Passord må bestå av minimum 6 tegn", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Passord må bestå av minimum 6 tegn", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
@@ -98,11 +96,11 @@ public class RegisterActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             Intent i = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(i);
-                            Toast.makeText(getApplicationContext(),"Registreringen er fullført", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Registreringen er fullført og du er nå logget inn", Toast.LENGTH_LONG).show();
                         }
                         else{
                             progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(),"Registreringen feilet", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Registreringen feilet", Toast.LENGTH_LONG).show();
                         }
                     }
                 });

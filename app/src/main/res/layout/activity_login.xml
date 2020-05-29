@@ -67,7 +67,7 @@
         android:shadowColor="#FFFFFF"
         android:text="Logg inn"
         android:textAllCaps="false"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="@+id/passwordTextView"

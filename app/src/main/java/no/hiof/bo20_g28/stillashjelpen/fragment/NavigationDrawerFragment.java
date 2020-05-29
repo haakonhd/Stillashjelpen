@@ -82,7 +82,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationView
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.nav_logout) {
-            Toast.makeText(getActivity(), "Du har blitt logget ut", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Du har blitt logget ut", Toast.LENGTH_LONG).show();
             logOut();
         } else if (item.getItemId() == R.id.nav_home) {
             Intent i = new Intent(getActivity(), MainActivity.class);
@@ -92,7 +92,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationView
             getFastCalcScaffoldingSystemNamesFromFirebase();
         }
         else
-            Toast.makeText(getActivity(), "To be added.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "To be added.", Toast.LENGTH_LONG).show();
 
         return true;
     }
@@ -175,7 +175,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationView
                     startActivity(i);
                 }
                 else{
-                    Toast.makeText(getContext(), "Mislykket - Velg en type stillas", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Mislykket - Velg en type stillas", Toast.LENGTH_LONG).show();
                 }
             }
         });

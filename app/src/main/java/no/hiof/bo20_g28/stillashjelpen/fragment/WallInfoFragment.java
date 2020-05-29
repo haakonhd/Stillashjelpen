@@ -210,7 +210,7 @@ public class WallInfoFragment extends Fragment{
                 progressDialog.dismiss();
                 deleteWallsOldPicture();
                 updateWallWithImage(fileName);
-                Toast.makeText(getContext(), "Bilde lagret", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Bilde lagret", Toast.LENGTH_LONG).show();
                 addPhotoToImageView(formattedBitmap);
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -218,7 +218,7 @@ public class WallInfoFragment extends Fragment{
             public void onFailure(@NonNull Exception e) {
                 // Error, Image not uploaded
                 progressDialog.dismiss();
-                Toast.makeText(getContext(), "Lagring mislyktes", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Lagring mislyktes", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -382,7 +382,7 @@ public class WallInfoFragment extends Fragment{
         if(connectedToFirebase) {
             takePictureIntent();
         }else{
-            Toast.makeText(getActivity(), "Applikasjonen er ikke koblet til databasen. Ikke mulig å ta bilder", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Applikasjonen er ikke koblet til databasen. Ikke mulig å ta bilder", Toast.LENGTH_LONG).show();
         }
     }
 

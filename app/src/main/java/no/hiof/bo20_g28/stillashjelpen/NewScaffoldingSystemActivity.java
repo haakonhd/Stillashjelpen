@@ -111,7 +111,7 @@ public class NewScaffoldingSystemActivity extends AppCompatActivity {
                     i.putExtra(from, "scaffoldSystem");
                     startActivity(i);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Navnet er allerede i bruk", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Stillasnavnet er allerede i bruk", Toast.LENGTH_LONG).show();
                 }
             }else{
                 if(from.equals("old")){
@@ -188,7 +188,7 @@ public class NewScaffoldingSystemActivity extends AppCompatActivity {
 
         scaffoldingSystemsRef.setValue(ss);
 
-        Toast.makeText(getApplicationContext(), "Nytt stillassystem er registrert", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Nytt stillassystem er registrert", Toast.LENGTH_LONG).show();
     }
 
     private void updateScaffoldingSystem(String name, double bayLength, double bayWidth, int scaffoldLoadClass, int maxHeight) {
@@ -203,7 +203,7 @@ public class NewScaffoldingSystemActivity extends AppCompatActivity {
         DatabaseReference scaffoldingSystemsRef = fDatabase.child(thisScaffoldSystem.getScaffoldingSystemId());
         scaffoldingSystemsRef.setValue(thisScaffoldSystem);
 
-        Toast.makeText(getApplicationContext(), "Stillassystemet er oppdatert", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Stillassystemet er oppdatert", Toast.LENGTH_LONG).show();
     }
 
     private void startNewLoadClassSeekBar(){
@@ -271,7 +271,7 @@ public class NewScaffoldingSystemActivity extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 i.putExtra("from", "scaffoldSystem");
                 startActivity(i);
-                Toast.makeText(getApplicationContext(), "Stillassystemet er slettet", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Stillassystemet er slettet", Toast.LENGTH_LONG).show();
             }
         });
         builder.setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {

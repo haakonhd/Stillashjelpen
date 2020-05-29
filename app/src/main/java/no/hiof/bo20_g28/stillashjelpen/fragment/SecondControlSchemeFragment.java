@@ -90,7 +90,7 @@ public class SecondControlSchemeFragment extends Fragment {
 
         updateThisProjectsControlScheme();
 
-        Toast.makeText(getContext(), "Kontroll-skjemaet er oppdatert",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Kontroll-skjemaet er oppdatert",Toast.LENGTH_LONG).show();
     }
 
     public void updateTypeButtons(View view){

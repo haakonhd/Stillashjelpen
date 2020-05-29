@@ -341,11 +341,11 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
                         dialog.dismiss();
                     }
                     else{
-                        Toast.makeText(getApplicationContext(), "Mislykket - Gi veggen et navn", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Mislykket - Gi prosjektet et navn", Toast.LENGTH_LONG).show();
                     }
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "Mislykket - Velg en type stillas", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Mislykket - Velg en type stillas", Toast.LENGTH_LONG).show();
                 }
             }
         });

@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = passwordTextView.getText().toString().trim();
 
         if(email.equals("") || password.equals("")) {
-            Toast.makeText(this, "Du må fylle ut både epost og passord", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Du må fylle ut både epost og passord", Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -84,11 +84,11 @@ public class LoginActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             Intent i = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(i);
-                            Toast.makeText(getApplicationContext(),"Innlogging fullført", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Innlogging fullført", Toast.LENGTH_LONG).show();
                         }
                         else{
                             progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(),"Innloggingen feilet", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Innloggingen feilet", Toast.LENGTH_LONG).show();
                         }
                     }
                 });

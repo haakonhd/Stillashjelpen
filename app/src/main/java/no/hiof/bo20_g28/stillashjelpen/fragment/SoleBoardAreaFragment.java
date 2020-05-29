@@ -569,7 +569,7 @@ public class SoleBoardAreaFragment extends Fragment {
         wallRef.setValue(thisWall);
 
         CharSequence text = "Utregning lagret";
-        int duration = Toast.LENGTH_SHORT;
+        int duration = Toast.LENGTH_LONG;
 
         Toast toast = Toast.makeText(getActivity(), text, duration);
         toast.show();
