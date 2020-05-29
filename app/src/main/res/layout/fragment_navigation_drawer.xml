@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:headerLayout="@layout/nav_header"
+    android:importantForAccessibility="yes"
+    android:focusable="true"
     app:menu="@menu/drawer_menu">
 
 </com.google.android.material.navigation.NavigationView>

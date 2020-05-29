@@ -163,6 +163,8 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu"
+        android:importantForAccessibility="yes"
+        android:focusable="true"
         app:itemTextAppearance="?android:attr/textAppearanceMedium" />
 
 

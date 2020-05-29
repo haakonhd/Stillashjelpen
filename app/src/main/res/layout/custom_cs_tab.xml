@@ -3,6 +3,8 @@
     android:id="@+id/nav_cs_tab"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:importantForAccessibility="yes"
+    android:focusable="true"
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:layout_marginHorizontal="10dp">

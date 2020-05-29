@@ -393,7 +393,7 @@ public class WallAnchorDistanceFragment extends Fragment {
         setDensityFactor();
         setVelocityPressure();
         //  Fw / cs x cf x faglengde x tetthetsfaktor x q1 x 0.7
-        return (float) ((anchorForce / 1.2) / (constructionFactor * powerFactor * bayLength * densityFactor * velocityPressure * 0.7));
+        return (float) ((anchorForce * 1.2) / (constructionFactor * powerFactor * bayLength * densityFactor * velocityPressure * 0.7));
     }
 
     private void getPresetInputsFromScaffoldingSystem(){

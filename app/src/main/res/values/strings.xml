@@ -41,4 +41,22 @@
     <string name="stillash_yde">Stillashøyde</string>
     <string name="m">m</string>
     <string name="pdf">Pdf</string>
+    <string name="passedProject">passedProject</string>
+    <string name="kontrollSkjemaForProsjekt">\"Kontrollskjema for prosjekt: \"</string>
+    <string name="cl_baerende">Bærende konstruksjon</string>
+    <string name="cl_skilting">Skilting av stillas</string>
+    <string name="cl_atkomst">Atkomst</string>
+    <string name="cl_stillasgulv">Stillasgulv</string>
+    <string name="cl_rekkverk">Rekkverk</string>
+    <string name="cl_handlist">Håndlist</string>
+    <string name="cl_knelist">Knelist</string>
+    <string name="cl_fotlist">Fotlist</string>
+    <string name="cl_skvett">Skvett/skjerm</string>
+    <string name="cl_prenning_nett">Presenning/Nett</string>
+    <string name="cl_fundamentering">Fundamentering</string>
+    <string name="cl_avstivning">Avstivning</string>
+    <string name="cl_forankring">Forankring</string>
+    <string name="cl_feste">Feste for forankring</string>
+    <string name="projects">projects</string>
+    <string name="firebaseError">FirebaseError</string>
 </resources>

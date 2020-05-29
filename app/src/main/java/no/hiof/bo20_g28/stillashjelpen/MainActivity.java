@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.accessibility.AccessibilityEvent;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -68,6 +69,13 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
         Objects.requireNonNull(getSupportActionBar()).setTitle("Hjem");
 
         drawer = findViewById(R.id.drawer_layout);
+        drawer.post(new Runnable() {
+            @Override
+            public void run() {
+                drawer.requestFocus();
+                drawer.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED);
+            }
+        });
         setUpNavigationDrawer();
 
         mainTitleTextView = findViewById(R.id.mainTitleTextView);
@@ -346,6 +354,7 @@ public class MainActivity extends AppCompatActivity implements ProjectRecyclerVi
     private void openFastClacDialogbox() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.choose_scaffoldingsystem_dialog_box, null);
+
         builder.setTitle("Velg stillassystem");
 
         final Spinner spinner = (Spinner) view.findViewById(R.id.fastCalcScaffoldingSystemsSpinner);

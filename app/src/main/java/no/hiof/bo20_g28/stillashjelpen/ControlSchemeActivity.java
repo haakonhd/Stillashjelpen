@@ -1,5 +1,6 @@
 package no.hiof.bo20_g28.stillashjelpen;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,6 +39,7 @@ public class ControlSchemeActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private Project thisProject;
     private Toolbar toolbar;
+    private static Context context;
     private static ArrayList<ChecklistItem> checklistItems = new ArrayList<>();
     private static ArrayList<ControlSchemeDefectFixed> controlSchemeDefectFixedItems = new ArrayList<>();
     private static ArrayList<ControlSchemeDefect> controlSchemeDefectItems = new ArrayList<>();
@@ -51,15 +53,16 @@ public class ControlSchemeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_control_scheme);
+        context = this;
 
         Intent intent = getIntent();
-        thisProject = (Project) intent.getSerializableExtra("passedProject");
+        thisProject = (Project) intent.getSerializableExtra(getString(R.string.passedProject));
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Objects.requireNonNull(getSupportActionBar()).setElevation(0);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Kontrollskjema for prosjekt: " + thisProject.getProjectName());
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.kontrollSkjemaForProsjekt) + thisProject.getProjectName());
 
 
         setUpNavigationDrawer();
@@ -107,42 +110,21 @@ public class ControlSchemeActivity extends AppCompatActivity {
     public static ArrayList<ChecklistItem> getChecklistItemsFromPreset(){
         int id = 0;
         checklistItems.clear();
-        checklistItems.add(new ChecklistItem(true, id++, "Skilting av stillas", 0));
-        checklistItems.add(new ChecklistItem(true, id++, "Bærende konstruksjon", 0));
-        checklistItems.add(new ChecklistItem(true, id++, "Atkomst", 0));
-        checklistItems.add(new ChecklistItem(true, id++, "Stillasgulv", 0));
-        checklistItems.add(new ChecklistItem(true, id++, "Rekkverk", 0));
-        checklistItems.add(new ChecklistItem(true, id++, "Håndlist", 0));
-        checklistItems.add(new ChecklistItem(true, id++, "Knelist", 0));
-        checklistItems.add(new ChecklistItem(true, id++, "Fotlist", 0));
-        checklistItems.add(new ChecklistItem(true, id++, "Skvett/skjerm", 0));
-        checklistItems.add(new ChecklistItem(true, id++, "Presenning/Nett", 0));
-        checklistItems.add(new ChecklistItem(true, id++, "Fundamentering", 0));
-        checklistItems.add(new ChecklistItem(true, id++, "Avstivning", 0));
-        checklistItems.add(new ChecklistItem(true, id++, "Forankring", 0));
-        checklistItems.add(new ChecklistItem(true, id++, "Feste for forankring", 0));
+        checklistItems.add(new ChecklistItem(true, id++, context.getString(R.string.cl_skilting), 0));
+        checklistItems.add(new ChecklistItem(true, id++,  context.getString(R.string.cl_baerende), 0));
+        checklistItems.add(new ChecklistItem(true, id++, context.getString(R.string.cl_atkomst), 0));
+        checklistItems.add(new ChecklistItem(true, id++, context.getString(R.string.cl_stillasgulv), 0));
+        checklistItems.add(new ChecklistItem(true, id++, context.getString(R.string.cl_rekkverk), 0));
+        checklistItems.add(new ChecklistItem(true, id++, context.getString(R.string.cl_handlist), 0));
+        checklistItems.add(new ChecklistItem(true, id++, context.getString(R.string.cl_knelist), 0));
+        checklistItems.add(new ChecklistItem(true, id++, context.getString(R.string.cl_fotlist), 0));
+        checklistItems.add(new ChecklistItem(true, id++, context.getString(R.string.cl_skvett), 0));
+        checklistItems.add(new ChecklistItem(true, id++, context.getString(R.string.cl_prenning_nett), 0));
+        checklistItems.add(new ChecklistItem(true, id++, context.getString(R.string.cl_fundamentering), 0));
+        checklistItems.add(new ChecklistItem(true, id++, context.getString(R.string.cl_avstivning), 0));
+        checklistItems.add(new ChecklistItem(true, id++, context.getString(R.string.cl_forankring), 0));
+        checklistItems.add(new ChecklistItem(true, id++, context.getString(R.string.cl_feste), 0));
         return checklistItems;
-    }
-
-
-
-
-    public static ArrayList<ControlSchemeDefectFixed> getControlSchemeDefectFixed() {
-        controlSchemeDefectFixedItems.clear();
-        controlSchemeDefectFixedItems.add(new ControlSchemeDefectFixed(new Date(), new Date(), "Bjarne"));
-        controlSchemeDefectFixedItems.add(new ControlSchemeDefectFixed(new Date(), new Date(), "Leif"));
-        controlSchemeDefectFixedItems.add(new ControlSchemeDefectFixed(new Date(), new Date(), "Knut"));
-        controlSchemeDefectFixedItems.add(new ControlSchemeDefectFixed(new Date(), new Date(), "Brynjar"));
-        return controlSchemeDefectFixedItems;
-    }
-
-    public static ArrayList<ControlSchemeDefect> getControlSchemeItems() {
-        controlSchemeDefectItems.clear();
-        controlSchemeDefectItems.add(new ControlSchemeDefect(new Date(), "Skilting av stillas"));
-        controlSchemeDefectItems.add(new ControlSchemeDefect(new Date(), "Stillasgulv"));
-        controlSchemeDefectItems.add(new ControlSchemeDefect(new Date(), "Forankring"));
-
-        return controlSchemeDefectItems;
     }
 
     private void setUpNavigationDrawer() {
@@ -163,7 +145,7 @@ public class ControlSchemeActivity extends AppCompatActivity {
     public void updateProjectFromFirebase(){
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference fDatabaseRoot = database.getReference().child("projects");
+        DatabaseReference fDatabaseRoot = database.getReference().child(getString(R.string.projects));
 
         fDatabaseRoot.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -179,7 +161,7 @@ public class ControlSchemeActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w("FirebaseError", databaseError.toException());
+                Log.w(getString(R.string.firebaseError), databaseError.toException());
             }
         });
     }

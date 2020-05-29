@@ -40,8 +40,6 @@ import no.hiof.bo20_g28.stillashjelpen.model.ControlSchemeDefect;
 import no.hiof.bo20_g28.stillashjelpen.model.ControlSchemeDefectFixed;
 import no.hiof.bo20_g28.stillashjelpen.model.Project;
 
-import static no.hiof.bo20_g28.stillashjelpen.ControlSchemeActivity.getControlSchemeDefectFixed;
-import static no.hiof.bo20_g28.stillashjelpen.ControlSchemeActivity.getControlSchemeItems;
 
 public class FourthControlSchemeFragment extends Fragment implements DefectFixedRecyclerViewAdapter.ItemClickListener, DefectRecyclerViewAdapter.ItemClickListener {
     public static final String ARG_OBJECT = "object";

@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:importantForAccessibility="yes"
+    android:focusable="true"
     android:gravity="center_horizontal"
     android:layout_marginHorizontal="10dp">
 
