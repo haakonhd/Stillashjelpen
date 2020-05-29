@@ -272,7 +272,7 @@
             android:paddingEnd="12dp"
             android:text="Vis utregning"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp" />
 
         <Button
@@ -285,7 +285,7 @@
             android:paddingEnd="12dp"
             android:text="Lagre"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp" />
     </LinearLayout>
 
